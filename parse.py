@@ -7,7 +7,8 @@ from pathlib import Path
 
 def get_livro(filename="livros/Papéis avulsos_files/tx_Papeisavulsos.html"):
     with open(filename, encoding="cp1252") as f:
-        return BeautifulSoup(f, "html.parser")
+        livro = BeautifulSoup(f, "html.parser")
+    return livro
 
 
 def find_titulo_contos(text):
@@ -34,11 +35,14 @@ def pg_break(b):
     return b.new_tag(name="mpb:pagebreak")
 
 
-def ajusta_titulos(livro):
+def ajusta_titulos_contos(livro):
     comentarios_titulo = livro.find_all(text=find_titulo_contos)
     for titulo in comentarios_titulo:
         header = titulo.find_next("p")
         header.name = "h2"
+        # header.text = header.text.strip()
+        # header.string = header.string.strip()
+        header.attrs["style"] = "page-break-before:always"  # será que tem ser style?
         del header.attrs["align"]
         header.insert_before(pg_break(livro))
 
@@ -52,7 +56,7 @@ def parse_nota(nota: BeautifulSoup):
 def get_notas_dict(livro):
     notas = []
     for nota in livro.find_all("script"):
-        if nota.string and "HelpBallon" in nota.string:
+        if nota.string and "HelpBalloon(" in nota.string:
             notas.append(parse_nota(nota))
     return dict(notas)
 
@@ -77,7 +81,7 @@ def append_notas(livro: BeautifulSoup, notas: dict):
     livro.body.append(h2)
     for nota, texto in notas.items():
         p = livro.new_tag("p", id=nota)
-        p.append(texto)
+        p.append(BeautifulSoup(texto, "html.parser"))
         livro.body.append(p)
 
 
@@ -91,15 +95,14 @@ def reorganiza_notas(livro):
 
 def processa_livro(filename):
     livro = get_livro(filename)
-    ajusta_titulos(livro)
+    ajusta_titulo_livro(livro)
+    ajusta_titulos_contos(livro)
     reorganiza_notas(livro)
     p = Path("kindle")
     p.mkdir(exist_ok=True)
     p = p / (get_nome_livro(livro) + ".html")
     with open(p, "w", encoding="utf8") as f:
         f.write(livro.prettify())
-
-    print("-" * 10)
 
 
 if __name__ == "__main__":

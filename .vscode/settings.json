@@ -4,5 +4,11 @@
         "titleBar.activeBackground": "#651E7F",
         "titleBar.activeForeground": "#FDF9FE"
     },
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "python.testing.pytestArgs": [
+        "."
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.pytestEnabled": true
 }
