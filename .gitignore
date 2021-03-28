@@ -5,3 +5,8 @@ bin
 lib64
 *.pdf
 *.mobi
+*.pyc
+*.pyi
+*.cpython*
+kindle
+Scripts
