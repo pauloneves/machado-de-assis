@@ -1,0 +1,7 @@
+epub
+include
+lib
+bin
+lib64
+*.pdf
+*.mobi
