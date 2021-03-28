@@ -91,7 +91,7 @@ def test_ajusta_referencia():
     parse.ajusta_referencia(ref)
     assert ref.attrs["href"] == "#mynewanchorNTA1", ref
     assert ref.text == "texto"
-    assert ref.attrs["id"] == "origmynewanchorNTA1"
+    assert ref.attrs["id"] == "orig_mynewanchorNTA1"
 
 
 def ajusta_todas_referencias():
@@ -113,4 +113,6 @@ def test_append_notas(livro):
     h2 = livro.find("h2")
     assert h2
     assert len(h2.find_next_siblings("p")) == len(notas)
-    assert h2.find_next("p").text.endswith("«")
+    uma_nota = h2.find_next("p")
+    assert uma_nota.text.endswith("«")
+    assert uma_nota.find("a").attrs["href"].startswith("#orig_"), uma_nota.attrs["href"]

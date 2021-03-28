@@ -65,7 +65,7 @@ def ajusta_referencia(ref: BeautifulSoup):
     attrs = ref.attrs
     assert "href" in attrs and "id" in attrs and "onclick" in attrs, f"{ref} {attrs}"
     attrs["href"] = f"#{attrs['id']}"
-    attrs["id"] = f"orig{attrs['id']}"
+    attrs["id"] = f"orig_{attrs['id']}"
     del attrs["onclick"]
 
 
@@ -81,7 +81,7 @@ def append_notas(livro: BeautifulSoup, notas: dict):
     livro.body.append(h2)
     for nota, texto in notas.items():
         p = livro.new_tag("p", id=nota)
-        refback = livro.new_tag("a", href=f"orig_{nota}")
+        refback = livro.new_tag("a", href=f"#orig_{nota}")
         refback.append("«")
         p.append(BeautifulSoup(texto, "html.parser"))
         p.append(refback)
