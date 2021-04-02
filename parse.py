@@ -66,6 +66,7 @@ def ajusta_referencia(ref: BeautifulSoup):
     assert "href" in attrs and "id" in attrs and "onclick" in attrs, f"{ref} {attrs}"
     attrs["href"] = f"#{attrs['id']}"
     attrs["id"] = f"orig_{attrs['id']}"
+    attrs["epub:type"] = "noteref"
     del attrs["onclick"]
 
 
@@ -80,12 +81,12 @@ def append_notas(livro: BeautifulSoup, notas: dict):
     livro.body.append(pg_break(livro))
     livro.body.append(h2)
     for nota, texto in notas.items():
-        p = livro.new_tag("p", id=nota)
-        refback = livro.new_tag("a", href=f"#orig_{nota}")
-        refback.append("«")
-        p.append(BeautifulSoup(texto, "html.parser"))
-        p.append(refback)
-        livro.body.append(p)
+        note = livro.new_tag("aside", id=nota, **{"epub:type": "footnote"})
+        refback = livro.new_tag("a", href=f"#orig_{nota}", style="font-size:2em")
+        refback.append("☚")
+        note.append(BeautifulSoup(texto, "html.parser"))
+        note.append(refback)
+        livro.body.append(note)
 
 
 def reorganiza_notas(livro):
