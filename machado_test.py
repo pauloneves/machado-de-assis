@@ -58,35 +58,27 @@ def test_ajusta_titulo_contos():
     assert b.h2.text.lower().startswith("o empréstimo")
     secao = b.find("div", {"class": "section"})
     assert secao.previous_sibling.name.startswith("mpb")
+    assert not b.find_all(lambda tag: "lang" in tag.attrs)
 
 
-# def test_remove_divs_inicio_contos():
-#     b = book(
-#         """<!-- *********************************** O EMPRESTIMO  ****************************************************** -->
+def test_ajusta_inicio_capitulos():
 
+    b = book(
+        """
+        <div class="espacoToptHTX"><a name="OAXIII">&nbsp;</a></div>
 
-# <div class="espacoToptHTX"><a name="OEI">&nbsp;</a></div>
+    <div id="shadow-container">
+            <div class="shadow1">
+                <div class="shadow2">
+                    <div class="shadow3">
+                        <div class="section" lang="de">
+    <!-- Inicio CAPITULO XIII -->
 
+    <p align="center"><b>XIII</b></p> <br>
+    <p align="center"><b><i><a href="#" id="mynewanchorOA74" onclick="return false;">Plus ultra</a></i>!</b>
 
-# <div id="shadow-container">
-# 		<div class="shadow1">
-# 			<div class="shadow2">
-# 				<div class="shadow3">
-# 				  <div class="section" lang="de">
-# <!-- Inicio CAPITULO I -->
-
-
-# <p align="center"><b>O EMPRÉSTIMO <a href="#" id="mynewanchorOE*" onclick="return false;"> * </a></b>
-# 					</div>
-# 				</div>
-# 			</div>
-# 		</div>
-# </div>
-# """
-#     )
-
-#     parse.ajusta_titulos_contos(b)
-#     assert len(b.find_all("div", recursive=True)) == 0
+    """
+    )
 
 
 def test_parse_nota():

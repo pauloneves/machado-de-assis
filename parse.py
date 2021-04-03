@@ -36,6 +36,9 @@ def pg_break(b):
 
 
 def ajusta_titulos_contos(livro):
+    """Títulos dos contos viram <H2>
+    limpa excesso de divs
+    """
     comentarios_titulo = livro.find_all(text=find_titulo_contos)
 
     for titulo in comentarios_titulo:
@@ -50,6 +53,10 @@ def ajusta_titulos_contos(livro):
         # header.string = header.string.strip()
         del header.attrs["align"]
         secao.insert_before(pg_break(livro))
+
+
+def ajusta_titulos_capitulos(livro):
+    pass
 
 
 def parse_nota(nota: BeautifulSoup):
