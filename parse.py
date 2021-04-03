@@ -37,14 +37,19 @@ def pg_break(b):
 
 def ajusta_titulos_contos(livro):
     comentarios_titulo = livro.find_all(text=find_titulo_contos)
+
     for titulo in comentarios_titulo:
+        secao = titulo.find_next("div", {"class": "section"})
+        del secao["lang"]
+        div_inicial = secao.parent.parent.parent.parent
+        div_inicial.replace_with(secao)
+
         header = titulo.find_next("p")
         header.name = "h2"
         # header.text = header.text.strip()
         # header.string = header.string.strip()
-        header.attrs["style"] = "page-break-before:always"  # será que tem ser style?
         del header.attrs["align"]
-        header.insert_before(pg_break(livro))
+        secao.insert_before(pg_break(livro))
 
 
 def parse_nota(nota: BeautifulSoup):
@@ -95,6 +100,10 @@ def reorganiza_notas(livro):
     notas = get_notas_dict(livro)
     ajusta_todas_referencias(livro)
     append_notas(livro, notas)
+
+
+def cria_toc(livro):
+    pass
 
 
 def processa_livro(filename):

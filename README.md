@@ -8,11 +8,14 @@ http://www.machadodeassis.net/hiperTx_romances/obras/papeisavulsos.htm
 - as notas são tags <a> no código que referencia a partir do atributo id do a
 
 ## TODO
- - [ ] considere matar o style inicial
- - [ ] tirar background color
- - [ ] colocar footnotes no fim de cada capítulo
- - [ ] [formatar footnotes](https://kdp.amazon.com/en_US/help/topic/GH4DRT75GWWAGBTU#footnote_guideline)
- - [ ] colocar TOC
+ 
+- [ ] espacoToptHTX -> antes com **** são inícios do conto, antes div é capítulo. 5 divs seguintes é falso
+- [ ] tirar os divs em cada capítulo
+- [ ] considere matar o style inicial
+- [ ] tirar background color
+- [ ] colocar footnotes no fim de cada capítulo
+- [x] [formatar footnotes](https://kdp.amazon.com/en_US/help/topic/GH4DRT75GWWAGBTU#footnote_guideline)
+- [ ] colocar TOC
 
  ## Publicação final
  - usar Calibre e exportar para KFX

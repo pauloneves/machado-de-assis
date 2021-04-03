@@ -31,12 +31,12 @@ def book(txt):
 #     )
 
 
-def test_ajusta_titulo_contos(livro):
+def test_ajusta_titulo_contos():
     b = book(
         """<!-- *********************************** O EMPRESTIMO  ****************************************************** -->
 
 
-<div class="espacoToptHTX"><a name="OEI">&nbsp;</a></div>
+<div class="'espacoToptHTX'"><a name="OEI">&nbsp;</a></div>
 
 
 <div id="shadow-container">
@@ -52,8 +52,40 @@ def test_ajusta_titulo_contos(livro):
     )
 
     parse.ajusta_titulos_contos(b)
+    print(b)
+    assert len(b.find_all("div")) == 2, "tem que remover divs"
     assert b.h2.text.lower().startswith("o empréstimo")
-    assert b.h2.previous_sibling.name.startswith("mpb")
+    secao = b.find("div", {"class": "section"})
+    assert secao.previous_sibling.name.startswith("mpb")
+
+
+# def test_remove_divs_inicio_contos():
+#     b = book(
+#         """<!-- *********************************** O EMPRESTIMO  ****************************************************** -->
+
+
+# <div class="espacoToptHTX"><a name="OEI">&nbsp;</a></div>
+
+
+# <div id="shadow-container">
+# 		<div class="shadow1">
+# 			<div class="shadow2">
+# 				<div class="shadow3">
+# 				  <div class="section" lang="de">
+# <!-- Inicio CAPITULO I -->
+
+
+# <p align="center"><b>O EMPRÉSTIMO <a href="#" id="mynewanchorOE*" onclick="return false;"> * </a></b>
+# 					</div>
+# 				</div>
+# 			</div>
+# 		</div>
+# </div>
+# """
+#     )
+
+#     parse.ajusta_titulos_contos(b)
+#     assert len(b.find_all("div", recursive=True)) == 0
 
 
 def test_parse_nota():
@@ -112,7 +144,6 @@ def test_append_notas(livro):
     parse.append_notas(livro, notas)
     h2 = livro.find("h2")
     assert h2
-    assert len(h2.find_next_siblings("p")) == len(notas)
-    uma_nota = h2.find_next("p")
-    assert uma_nota.text.endswith("«")
+    assert len(h2.find_next_siblings("aside")) == len(notas)
+    uma_nota = h2.find_next("aside")
     assert uma_nota.find("a").attrs["href"].startswith("#orig_"), uma_nota.attrs["href"]
