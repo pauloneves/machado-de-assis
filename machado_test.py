@@ -54,6 +54,7 @@ def test_ajusta_titulo_contos():
     parse.ajusta_titulos_contos(b)
     print(b)
     assert len(b.find_all("div")) == 2, "tem que remover divs"
+    assert b.h2, "títulos dos contos deveriam ser substituídos por H2"
     assert b.h2.text.lower().startswith("o empréstimo")
     secao = b.find("div", {"class": "section"})
     assert secao.previous_sibling.name.startswith("mpb")
