@@ -83,6 +83,7 @@ def test_ajusta_inicio_capitulos():
     assert b.h3
     assert "XIII" in b.h3.text
     assert "Plus ultra" in b.h3.text
+    assert b.find("div", {"class": "subsection"})
 
 
 def test_ajusta_inicio_capitulos_com_conto():

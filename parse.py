@@ -72,6 +72,7 @@ def ajusta_titulos_capitulos(livro):
             and p[1].attrs.get("align") == "center"
         ):
             ajusta_secao(secao)
+            secao.attrs["class"] = "subsection"
 
             h3 = livro.new_tag("h3")
             h3.append(p[0].b)
@@ -189,7 +190,7 @@ def processa_livro(filename="livros/Papéis avulsos_files/tx_Papeisavulsos.html"
     #     f.write(livro.prettify())
 
 
-def prepara_ebook(livro):
+def gera_ebook(livro):
     book = epub.EpubBook()
     book.set_identifier("22061970ani")
     book.set_title(livro.h1.text)
@@ -197,14 +198,74 @@ def prepara_ebook(livro):
 
     book.add_author("Machado de Assis")
 
+    capitulos = []
     for section in livro.find_all("div", {"class": "section"}):
         capitulo = epub.EpubHtml(
             title=section.h2.text,
             file_name=slugify.slugify(f"{section.id} {section.h2.text}"),
         )
-        capitulo.content = section.text
+        capitulo.content = str(section)
+        capitulos.append(capitulo)
+        book.add_item(capitulo)
+
+    # create table of contents
+    book.toc = capitulos
+
+    # add navigation files
+    book.add_item(epub.EpubNcx())
+    book.add_item(epub.EpubNav())
+
+    # define css style
+    style = """
+@namespace epub "http://www.idpf.org/2007/ops";
+
+body {
+    font-family: Cambria, Liberation Serif, Bitstream Vera Serif, Georgia, Times, Times New Roman, serif;
+}
+
+h2 {
+     text-align: left;
+     text-transform: uppercase;
+     font-weight: 200;     
+}
+
+ol {
+        list-style-type: none;
+}
+
+ol > li:first-child {
+        margin-top: 0.3em;
+}
+
+
+nav[epub|type~='toc'] > ol > li > ol  {
+    list-style-type:square;
+}
+
+
+nav[epub|type~='toc'] > ol > li > ol > li {
+        margin-top: 0.3em;
+}
+
+"""
+
+    # add css file
+    nav_css = epub.EpubItem(
+        uid="style_nav", file_name="style/nav.css", media_type="text/css", content=style
+    )
+    book.add_item(nav_css)
+
+    # create spine
+    book.spine = ["nav"] + capitulos
+
+    # create epub file
+    epub.write_epub(f"kindle/{livro.h1.text}.epub", book)
+
+
+def processa():
+    livro = processa_livro("livros/Papéis avulsos_files/tx_Papeisavulsos.html")
+    gera_ebook(livro)
 
 
 if __name__ == "__main__":
-    livro = processa_livro("livros/Papéis avulsos_files/tx_Papeisavulsos.html")
-    prepara_ebook(livro)
+    processa()
