@@ -2,7 +2,6 @@
 
 from bs4 import BeautifulSoup, Comment
 import re
-from pathlib import Path
 from ebooklib import epub
 import slugify
 
@@ -31,6 +30,9 @@ def ajusta_titulo_livro(livro):
     notas = autor.find_next("p")
     notas.name = "h2"
     del notas.attrs["align"]
+
+    section = livro.find("div", {"class": "section"})
+    del section.attrs["lang"]
 
 
 def pg_break(b):
