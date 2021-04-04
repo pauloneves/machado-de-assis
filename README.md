@@ -10,13 +10,14 @@
 
 ## TODO
 
+- [ ] referencias para toc
+- [ ] ajustar TOC
 - [x] espacoToptHTX -> antes com **** são inícios do conto, antes div é capítulo. 5 divs seguintes é falso
 - [x] tirar os divs em cada capítulo
-- [ ] considere matar o style inicial
-- [ ] tirar background color
+- [x] considere matar o style inicial
+- [x] tirar background color
 - [x] colocar footnotes no fim de cada capítulo
 - [x] [formatar footnotes](https://kdp.amazon.com/en_US/help/topic/GH4DRT75GWWAGBTU#footnote_guideline)
-- [ ] colocar TOC
 
 ## Publicação final
 

@@ -200,11 +200,15 @@ def test_cria_toc():
     """
     )
     toc = parse.prepara_toc(b)
-    print(toc)
     assert toc == [
         ("0", "conto1", []),
         ("1", "conto2", [("1.0", "capitulo1"), ("1.1", "capitulo2")]),
     ]
+
+    for h2 in b.find_all("h2"):
+        assert h2.attrs["id"]
+    for h3 in b.find_all("h3"):
+        assert h3.attrs["id"]
 
 
 def test_processa_livro():

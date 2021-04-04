@@ -137,13 +137,13 @@ def reorganiza_notas(livro):
 def prepara_toc(livro):
     toc = []
     for conto_num, h2 in enumerate(livro.find_all("h2")):
-        h2.id = conto_num
+        h2.attrs["id"] = str(conto_num)
         capitulos = []
         toc.append((str(conto_num), h2.string, capitulos))
         # usando fato que está sempre dentro de um div class=section
         for cap_num, h3 in enumerate(h2.parent.find_all("h3")):
-            h3.id = f"{conto_num}.{cap_num}"
-            capitulos.append((h3.id, h3.string))
+            h3.attrs["id"] = f"{conto_num}.{cap_num}"
+            capitulos.append((h3.attrs["id"], h3.string))
     return toc
 
 
@@ -180,6 +180,7 @@ def processa_livro(filename="livros/Papéis avulsos_files/tx_Papeisavulsos.html"
     ajusta_titulos_contos(livro)
     ajusta_titulos_capitulos(livro)
     reorganiza_notas(livro)
+    prepara_toc(livro)
     return livro
     # cria_toc(livro)
 
@@ -192,7 +193,7 @@ def processa_livro(filename="livros/Papéis avulsos_files/tx_Papeisavulsos.html"
 
 def gera_ebook(livro):
     book = epub.EpubBook()
-    book.set_identifier("22061970ani")
+    book.set_identifier("22061970ni")
     book.set_title(livro.h1.text)
     book.set_language("pt-br")
 
@@ -201,8 +202,9 @@ def gera_ebook(livro):
     capitulos = []
     for section in livro.find_all("div", {"class": "section"}):
         capitulo = epub.EpubHtml(
-            title=section.h2.text,
-            file_name=slugify.slugify(f"{section.id} {section.h2.text}"),
+            title=section.h2.text.strip().strip("*"),
+            file_name=slugify.slugify(section.h2.text) + ".html",
+            media_type="text/html",
         )
         capitulo.content = str(section)
         capitulos.append(capitulo)
@@ -225,7 +227,7 @@ body {
 
 h2 {
      text-align: left;
-     text-transform: uppercase;
+     /*text-transform: uppercase;*/
      font-weight: 200;     
 }
 
