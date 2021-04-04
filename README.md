@@ -10,8 +10,12 @@
 
 ## TODO
 
-- [ ] referencias para toc
-- [ ] ajustar TOC
+- [ ] subseções na toc
+- [ ] tirar sublinhado toc
+- [ ] o alienista e notas como capítulos
+- [ ] fru fru na formatação
+- [x] referencias para toc
+- [x] ajustar TOC
 - [x] espacoToptHTX -> antes com **** são inícios do conto, antes div é capítulo. 5 divs seguintes é falso
 - [x] tirar os divs em cada capítulo
 - [x] considere matar o style inicial
