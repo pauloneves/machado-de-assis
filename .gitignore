@@ -10,3 +10,4 @@ lib64
 *.cpython*
 kindle
 Scripts
+livros/samples/
