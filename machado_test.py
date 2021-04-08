@@ -127,6 +127,38 @@ def test_ajusta_inicio_capitulos_com_conto():
     assert len(b.find_all("h3")) == 1
 
 
+def test_ajusta_titulos_ordem_correta():
+    b = book(
+        """
+    <!-- ****************************************    O ALIENISTA  ***************************************************-->
+
+<div class="espacoToptHTX"><a name="OAI">&nbsp;</a></div>
+
+
+<div id="shadow-container">
+		<div class="shadow1">
+			<div class="shadow2">
+				<div class="shadow3">
+				  <div class="section" lang="de">
+<!-- Inicio CAPITULO I -->
+
+<p align="center"><b>O ALIENISTA <a href="#" id="mynewanchorOA*" onclick="return false;"> * </a></b>
+
+</p> <br>
+<p align="center"><b>CAPÍTULO PRIMEIRO</b> </p> <br>
+<p align="center"><b>De como <a href="#" id="mynewanchorOA1" onclick="return false;">Itaguaí</a> ganhou uma casa de orates</b>
+
+"""
+    )
+    parse.ajusta_titulos_contos(b)
+    parse.ajusta_titulos_capitulos(b)
+
+    assert b.h2.text.startswith("O ALIENISTA")
+
+    assert b.h2.find_next("h3"), "h3 deve vir depois do h2"
+    assert b.h2.find_next("h3").text.startswith("CAPÍTULO")
+
+
 def test_parse_nota():
     nota = BeautifulSoup(
         """<script type="text/javascript">
@@ -160,7 +192,7 @@ def test_ajusta_referencia():
         "html.parser",
     ).find("a")
     parse.ajusta_referencia(ref)
-    assert ref.attrs["href"] == "#mynewanchorNTA1", ref
+    assert ref.attrs["href"].endswith("#mynewanchorNTA1"), ref
     assert ref.text == "texto"
     assert ref.attrs["id"] == "orig_mynewanchorNTA1"
 
@@ -211,6 +243,13 @@ def test_cria_toc():
         assert h2.attrs["id"]
     for h3 in b.find_all("h3"):
         assert h3.attrs["id"]
+
+
+def test_ajusta_titulos(livro):
+    parse.ajusta_titulos(livro)
+    assert (
+        len(livro.find_all("div", lang="de")) == 0
+    ), "todas seções com lang foram retiradas"
 
 
 def test_processa_livro():

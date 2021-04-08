@@ -10,9 +10,11 @@
 
 ## TODO
 
+- [ ] capítulo 0, advertência, está sumido
 - [ ] subseções na toc
 - [ ] tirar sublinhado toc
 - [ ] o alienista e notas como capítulos
+- [ ] links de volta das notas não funcionam (será que incluo as notas no próprio capítulo?)
 - [ ] fru fru na formatação
 - [x] referencias para toc
 - [x] ajustar TOC
@@ -22,6 +24,26 @@
 - [x] tirar background color
 - [x] colocar footnotes no fim de cada capítulo
 - [x] [formatar footnotes](https://kdp.amazon.com/en_US/help/topic/GH4DRT75GWWAGBTU#footnote_guideline)
+
+
+## Entendo estado atual
+
+espacotopHTX > section > h1 Papeis avulsos (sem id)
+                       > h2 Nota desta edição  (id 0)
+
+subsection > h3 Advertência (sem id)
+
+Aqui temos um problema maior: vem o comentário do título do livro, depois h3#1.0 (capítulo primeiro) e então vem o h2#O ALIENISTA
+
+subsection > h3 (sem id) capítulo II
+
+todos os capítulos vêm bonitinhos, com h3 mas sem ID
+
+section > h2#2
+
+subsection > Aqui pego outro erro, vem o comentário do título do capítulo, um h3#4.0 e então um h2#4 NA ARCA
+
+
 
 ## Publicação final
 

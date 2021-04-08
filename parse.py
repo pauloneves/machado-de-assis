@@ -39,7 +39,7 @@ def pg_break(b):
     return b.new_tag(name="mpb:pagebreak")
 
 
-def ajusta_titulos_contos(livro):
+def ajusta_titulos_contos(livro: BeautifulSoup):
     """Títulos dos contos viram <H2>
     limpa excesso de divs
     """
@@ -57,14 +57,16 @@ def ajusta_titulos_contos(livro):
         secao.insert_before(pg_break(livro))
 
 
-def ajusta_secao(secao):
+def ajusta_secao(secao: BeautifulSoup, subsection=False):
     del secao["lang"]
     div_inicial = secao.parent.parent.parent.parent
     if div_inicial:
         div_inicial.replace_with(secao)
+        if subsection:
+            secao.attrs["class"] = "subsection"
 
 
-def ajusta_titulos_capitulos(livro):
+def ajusta_titulos_capitulos(livro: BeautifulSoup):
     for secao in livro.find_all("div", {"class": "section"}):
         p = secao.find_all("p")
         # capítulo começa com 2 parágrafos centralizados
@@ -73,15 +75,14 @@ def ajusta_titulos_capitulos(livro):
             and p[0].attrs.get("align") == "center"
             and p[1].attrs.get("align") == "center"
         ):
-            ajusta_secao(secao)
-            secao.attrs["class"] = "subsection"
+            ajusta_secao(secao, subsection=True)
 
             h3 = livro.new_tag("h3")
             h3.append(p[0].b)
             h3.append(livro.new_tag("br"))
             for i in p[1].b.children:
                 h3.append(i)
-            secao.insert(0, h3)
+            p[0].insert_before(h3)
             p[0].decompose()
             p[1].decompose()
 
@@ -181,19 +182,20 @@ def cria_toc(livro, nome_arq):
 
 def processa_livro(filename="livros/Papéis avulsos_files/tx_Papeisavulsos.html"):
     livro = get_livro(filename)
-    ajusta_titulo_livro(livro)
-    ajusta_titulos_contos(livro)
-    ajusta_titulos_capitulos(livro)
+    ajusta_titulos(livro)
     reorganiza_notas(livro)
     prepara_toc(livro)
     return livro
-    # cria_toc(livro)
 
-    # p = Path("kindle")
-    # p.mkdir(exist_ok=True)
-    # p = p / (get_nome_livro(livro) + ".html")
-    # with open(p, "w", encoding="utf8") as f:
-    #     f.write(livro.prettify())
+
+def ajusta_titulos(livro):
+    ajusta_titulo_livro(livro)
+    ajusta_titulos_contos(livro)
+    ajusta_titulos_capitulos(livro)
+
+    assert not len(
+        livro.find_all("div", {"class": "section", "lang": "de"})
+    ), "depois de ajustar todos os títulos não pode sobrar seções"
 
 
 def gera_ebook(livro):
@@ -205,18 +207,43 @@ def gera_ebook(livro):
     book.add_author("Machado de Assis")
 
     capitulos = []
+    toc = []
+    pos = 1
     for section in livro.find_all("div", {"class": "section"}):
+        print(pos, section.h2.text)
+        print(section.h3.text if section.h3 else "nada")
+        pos += 1
         capitulo = epub.EpubHtml(
-            title=section.h2.text.strip().strip("*"),
+            title=section.h2.text.strip(" \n*"),
             file_name=slugify.slugify(section.h2.text) + ".html",
             media_type="text/html",
         )
-        capitulo.content = str(section)
+        capitulo.set_content(str(section))
         capitulos.append(capitulo)
-        book.add_item(capitulo)
 
+        sub_capitulos = [
+            f"{capitulo.filename}#{h3.attrs['id']}" for h3 in section.find_all("h3")
+        ]
+        print(sub_capitulos)
+        book.add_item(capitulo)
+        toc.append(
+            (epub.Section(title=capitulo.title, href=capitulo.file_name), sub_capitulos)
+        )
+
+    # (epub.Link('chap_01.xhtml', 'Introduction', 'intro'),
+    #              (epub.Section('Simple book'),
+    #              (c1, ))
+    #             )
     # create table of contents
-    book.toc = capitulos
+    book.toc = toc
+    # (
+    #     (epub.Section("seçao 1234"), capitulos[0:3]),
+    #     # capitulos[3:5],
+    #     (
+    #         epub.Section(title="Title seção", href=capitulo.file_name),
+    #         ["abc", "cde"],
+    #     ),
+    # )
 
     # add navigation files
     book.add_item(epub.EpubNcx())
@@ -252,8 +279,12 @@ nav[epub|type~='toc'] > ol > li > ol  {
 
 nav[epub|type~='toc'] > ol > li > ol > li {
         margin-top: 0.3em;
+        
 }
 
+nav[epub|type~='toc'] > a {
+     text-decoration: none;
+}
 """
 
     # add css file
@@ -263,7 +294,7 @@ nav[epub|type~='toc'] > ol > li > ol > li {
     book.add_item(nav_css)
 
     # create spine
-    book.spine = ["nav"] + capitulos
+    book.spine = ["nav"]  # + capitulos
 
     # create epub file
     epub.write_epub(f"kindle/{livro.h1.text}.epub", book)
@@ -271,6 +302,8 @@ nav[epub|type~='toc'] > ol > li > ol > li {
 
 def processa():
     livro = processa_livro("livros/Papéis avulsos_files/tx_Papeisavulsos.html")
+    with open("livro_alterado.html", "w") as file:
+        file.write(str(livro))
     gera_ebook(livro)
 
 
