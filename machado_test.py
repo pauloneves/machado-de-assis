@@ -229,20 +229,34 @@ def test_cria_toc():
         <div class="section">
             <h2>conto2</h2>
             <h3><b>capitulo1</b></h3>
+        </div>
+        <div class="subsection">
             <h3><b>capitulo2</b></h3>
+        </div>
+        <div class="subsection">
+            <h3><b>capitulo3</b></h3>
         </div>
     """
     )
     toc = parse.prepara_toc(b)
     assert toc == [
-        ("0", "conto1", []),
-        ("1", "conto2", [("1.0", "capitulo1"), ("1.1", "capitulo2")]),
+        ("1", "conto1", []),
+        (
+            "2",
+            "conto2",
+            [
+                ("2.1", "capitulo1"),
+                ("2.2", "capitulo2"),
+                ("2.3", "capitulo3"),
+            ],
+        ),
     ]
 
     for h2 in b.find_all("h2"):
         assert h2.attrs["id"]
     for h3 in b.find_all("h3"):
         assert h3.attrs["id"]
+        assert "." in h3.attrs["id"]
 
 
 def test_ajusta_titulos(livro):

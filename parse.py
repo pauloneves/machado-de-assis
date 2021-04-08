@@ -117,9 +117,9 @@ def ajusta_todas_referencias(livro: BeautifulSoup):
 
 def append_notas(livro: BeautifulSoup, notas: dict):
     section = livro.new_tag("div")
-    section.attrs["class"] = "section"
+    section.attrs["class"] = ["section"]
     h2 = livro.new_tag("h2")
-    h2.append("Notas")
+    h2.append("Notas de referência")
     section.append(h2)
     livro.body.append(pg_break(livro))
     for nota, texto in notas.items():
@@ -142,14 +142,20 @@ def reorganiza_notas(livro):
 
 def prepara_toc(livro):
     toc = []
-    for conto_num, h2 in enumerate(livro.find_all("h2")):
-        h2.attrs["id"] = str(conto_num)
-        capitulos = []
-        toc.append((str(conto_num), h2.string, capitulos))
-        # usando fato que está sempre dentro de um div class=section
-        for cap_num, h3 in enumerate(h2.parent.find_all("h3")):
-            h3.attrs["id"] = f"{conto_num}.{cap_num}"
-            capitulos.append((h3.attrs["id"], h3.string))
+
+    n_h2 = 1
+    n_h3 = 1
+    for header in livro.find_all(["h2", "h3"]):
+        if header.name == "h2":
+            the_id = f"{n_h2}"
+            n_h2 += 1
+            n_h3 = 1
+            toc.append((the_id, header.string, []))
+        else:
+            the_id = f"{n_h2-1}.{n_h3}"
+            n_h3 += 1
+            toc[-1][-1].append((the_id, header.string))
+        header.attrs["id"] = the_id
     return toc
 
 
@@ -207,35 +213,36 @@ def gera_ebook(livro):
     book.add_author("Machado de Assis")
 
     capitulos = []
-    toc = []
-    pos = 1
-    for section in livro.find_all("div", {"class": "section"}):
-        print(pos, section.h2.text)
-        print(section.h3.text if section.h3 else "nada")
-        pos += 1
-        capitulo = epub.EpubHtml(
-            title=section.h2.text.strip(" \n*"),
-            file_name=slugify.slugify(section.h2.text) + ".html",
-            media_type="text/html",
-        )
-        capitulo.set_content(str(section))
-        capitulos.append(capitulo)
+    content = ""
+    capitulo = None
+    for section in livro.find_all("div", {"class": ["section", "subsection"]}):
+        if section.attrs["class"] == ["section"]:
+            if content:
+                capitulo.set_content(content)
+                content = ""
 
-        sub_capitulos = [
-            f"{capitulo.filename}#{h3.attrs['id']}" for h3 in section.find_all("h3")
-        ]
-        print(sub_capitulos)
-        book.add_item(capitulo)
-        toc.append(
-            (epub.Section(title=capitulo.title, href=capitulo.file_name), sub_capitulos)
-        )
+            capitulo = epub.EpubHtml(
+                title=section.h2.text.strip(" \n*"),
+                file_name=slugify.slugify(section.h2.text) + ".html",
+                media_type="text/html",
+            )
+            book.add_item(capitulo)
+            capitulos.append(capitulo)
+            content = str(section)
+        else:  # subsection
+            content += "\n\n" + str(section)
+    capitulo.set_content(content)
+
+    # toc.append(
+    #     (epub.Section(title=capitulo.title, href=capitulo.file_name), sub_capitulos)
+    # )
 
     # (epub.Link('chap_01.xhtml', 'Introduction', 'intro'),
     #              (epub.Section('Simple book'),
     #              (c1, ))
     #             )
     # create table of contents
-    book.toc = toc
+    book.toc = capitulos
     # (
     #     (epub.Section("seçao 1234"), capitulos[0:3]),
     #     # capitulos[3:5],
