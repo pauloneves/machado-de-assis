@@ -1,6 +1,6 @@
 # /bin/env python
 
-from bs4 import BeautifulSoup, Comment
+from bs4 import BeautifulSoup, Comment, Tag
 import re
 from ebooklib import epub
 import slugify
@@ -80,8 +80,9 @@ def ajusta_titulos_capitulos(livro: BeautifulSoup):
             h3 = livro.new_tag("h3")
             h3.append(p[0].b)
             h3.append(livro.new_tag("br"))
-            for i in p[1].b.children:
-                h3.append(i)
+            # for i in p[1].b.contents:
+            #     h3.append(i)
+            h3.append(p[1].b)
             p[0].insert_before(h3)
             p[0].decompose()
             p[1].decompose()
@@ -119,13 +120,15 @@ def append_notas(livro: BeautifulSoup, notas: dict):
     section = livro.new_tag("div")
     section.attrs["class"] = ["section"]
     h2 = livro.new_tag("h2")
-    h2.append("Notas de referência")
+    h2.append("Notas")
     section.append(h2)
     livro.body.append(pg_break(livro))
     for nota, texto in notas.items():
         note = livro.new_tag("aside", id=nota, **{"epub:type": "footnote"})
-        refback = livro.new_tag("a", href=f"#orig_{nota}", style="font-size:2em")
-        refback.append("☚")
+        refback = livro.new_tag(
+            "a", href=f"#orig_{nota}", style="font-size:1em;text-decoration: none;"
+        )
+        refback.append(" ☚ ")
         note.append(BeautifulSoup(texto, "html.parser"))
         note.append(refback)
         section.append(note)
@@ -215,6 +218,7 @@ def gera_ebook(livro):
     capitulos = []
     content = ""
     capitulo = None
+    toc = []
     for section in livro.find_all("div", {"class": ["section", "subsection"]}):
         if section.attrs["class"] == ["section"]:
             if content:
@@ -228,9 +232,34 @@ def gera_ebook(livro):
             )
             book.add_item(capitulo)
             capitulos.append(capitulo)
+            toc.append(
+                [epub.Section(title=capitulo.title, href=capitulo.file_name), []]
+            )
             content = str(section)
         else:  # subsection
             content += "\n\n" + str(section)
+            h3_id = section.find("h3").attrs["id"]
+            if toc[-1][0].href:
+                first_id = h3_id.split(".")[0] + ".1"
+                primeiro_capitulo = extrai_subtitulo(
+                    BeautifulSoup(content, "html.parser").h3
+                )
+                toc[-1][1].append(
+                    epub.Link(
+                        href=f"{capitulo.file_name}#{first_id}",
+                        title=primeiro_capitulo,
+                        uid="",
+                    )
+                )
+                toc[-1][0].href = ""
+
+            toc[-1][1].append(
+                epub.Link(
+                    href=f"{capitulo.file_name}#{h3_id}",
+                    title=extrai_subtitulo(section.h3),
+                    uid="",
+                )
+            )
     capitulo.set_content(content)
 
     # toc.append(
@@ -242,7 +271,7 @@ def gera_ebook(livro):
     #              (c1, ))
     #             )
     # create table of contents
-    book.toc = capitulos
+    book.toc = toc
     # (
     #     (epub.Section("seçao 1234"), capitulos[0:3]),
     #     # capitulos[3:5],
@@ -260,15 +289,22 @@ def gera_ebook(livro):
     style = """
 @namespace epub "http://www.idpf.org/2007/ops";
 
-body {
+/*body {
     font-family: Cambria, Liberation Serif, Bitstream Vera Serif, Georgia, Times, Times New Roman, serif;
-}
+}*/
 
 h2 {
      text-align: left;
-     /*text-transform: uppercase;*/
+     text-transform: capitalize;
      font-weight: 200;     
 }
+
+h3 {
+     text-align: center;
+     text-transform: capitalize;
+     font-weight: 150;     
+}
+
 
 ol {
         list-style-type: none;
@@ -292,6 +328,10 @@ nav[epub|type~='toc'] > ol > li > ol > li {
 nav[epub|type~='toc'] > a {
      text-decoration: none;
 }
+
+aside {
+    padding-top: 1em;
+}
 """
 
     # add css file
@@ -312,6 +352,14 @@ def processa():
     with open("livro_alterado.html", "w") as file:
         file.write(str(livro))
     gera_ebook(livro)
+
+
+def extrai_subtitulo(h3):
+    st = " ".join(c.strip(" \n*") for c in h3.br.find_all_next(text=True))
+
+    if st == "":
+        st = " ".join(c.strip(" \n*") for c in h3.find_all(text=True))
+    return st.strip().replace("CAPÍTULO PRIMEIRO", "I")
 
 
 if __name__ == "__main__":

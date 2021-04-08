@@ -269,3 +269,43 @@ def test_ajusta_titulos(livro):
 def test_processa_livro():
     parse.processa_livro()
     assert True, "Nenhuma exceção foi disparada"
+
+
+def test_subtitulo():
+    doc = BeautifulSoup(
+        '<h3 id="2.1"><b>CAPÍTULO PRIMEIRO</b><br/>De como  ganhou uma casa de orates</h3> ',
+        "html.parser",
+    )
+    st = parse.extrai_subtitulo(doc.h3)
+    assert st == "De como  ganhou uma casa de orates"
+
+
+def test_subtitulo_so_uma_linha():
+    doc = BeautifulSoup(
+        '<h3 id="1.1"><b>Advertência</b><br/></h3> ',
+        "html.parser",
+    )
+    st = parse.extrai_subtitulo(doc.h3)
+    assert st == "Advertência"
+
+
+def test_subtitulo_com_tag():
+    doc = BeautifulSoup(
+        '<h3 id="2.13"><b>XIII</b><br/><b><i><a epub:type="noteref" href="notas.html#mynewanchorOA74" id="orig_mynewanchorOA74">Plus ultra</a></i>!</b></h3>',
+        "html.parser",
+    )
+    st = parse.extrai_subtitulo(doc.h3)
+    assert "Plus ultra !" in st
+
+
+def test_ajusta_titulo_capitulo_terror():
+    b = book(
+        """					<div class="section" lang="de">
+<!-- inicio capitulo V-->
+
+<p align="center"><b>V</b></p> <br>
+<p align="center"><b>O <a href="#" id="mynewanchorOA36" onclick="return false;">Terror</a></b>
+"""
+    )
+    parse.ajusta_titulos_capitulos(b)
+    assert "Terror" in b.h3.get_text()
