@@ -355,11 +355,11 @@ def processa():
 
 
 def extrai_subtitulo(h3):
-    st = " ".join(c.strip(" \n*") for c in h3.br.find_all_next(text=True))
+    for c in h3.find_all(text=True):
+        if c.strip():
+            return c.strip(" \n*").replace("CAPÍTULO PRIMEIRO", "I")
 
-    if st == "":
-        st = " ".join(c.strip(" \n*") for c in h3.find_all(text=True))
-    return st.strip().replace("CAPÍTULO PRIMEIRO", "I")
+    raise ValueError(f"Não achei String no subtitulo '{h3}'")
 
 
 if __name__ == "__main__":
