@@ -277,7 +277,7 @@ def test_subtitulo():
         "html.parser",
     )
     st = parse.extrai_subtitulo(doc.h3)
-    assert st == "De como  ganhou uma casa de orates"
+    assert "De como  ganhou uma casa de orates" in st
 
 
 def test_subtitulo_so_uma_linha():

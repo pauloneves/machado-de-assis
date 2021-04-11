@@ -116,6 +116,16 @@ def ajusta_todas_referencias(livro: BeautifulSoup):
         ajusta_referencia(a)
 
 
+def link_back_nota(nota, livro) -> str:
+    ref_orig = livro.find("a", id=f"orig_{nota}")
+    if not ref_orig:
+        print(f"Não achei volta {nota}")
+        return ""
+    capitulo = ref_orig.find_previous(["h2", "h1"])
+    cap_filename = get_capitulo_filename(capitulo)
+    return f"{cap_filename}#orig_{nota}"
+
+
 def append_notas(livro: BeautifulSoup, notas: dict):
     section = livro.new_tag("div")
     section.attrs["class"] = ["section"]
@@ -124,13 +134,18 @@ def append_notas(livro: BeautifulSoup, notas: dict):
     section.append(h2)
     livro.body.append(pg_break(livro))
     for nota, texto in notas.items():
-        note = livro.new_tag("aside", id=nota, **{"epub:type": "footnote"})
-        refback = livro.new_tag(
-            "a", href=f"#orig_{nota}", style="font-size:1em;text-decoration: none;"
-        )
+        note = livro.new_tag("p")
+        aside = livro.new_tag("aside", id=nota, **{"epub:type": "footnote"})
+        aside.append("● ")
+        aside.append(BeautifulSoup(texto, "html.parser"))
+
+        note.append(aside)
+        note.insert(0, "\n ")
+
+        refback = livro.new_tag("a", href=link_back_nota(nota, livro))
+
         refback.append(" ☚ ")
-        note.append(BeautifulSoup(texto, "html.parser"))
-        note.append(refback)
+        aside.append(refback)
         section.append(note)
     livro.body.append(section)
 
@@ -207,6 +222,10 @@ def ajusta_titulos(livro):
     ), "depois de ajustar todos os títulos não pode sobrar seções"
 
 
+def get_capitulo_filename(header) -> str:
+    return slugify.slugify(header.text) + ".html"
+
+
 def gera_ebook(livro):
     book = epub.EpubBook()
     book.set_identifier("22061970ni")
@@ -227,7 +246,7 @@ def gera_ebook(livro):
 
             capitulo = epub.EpubHtml(
                 title=section.h2.text.strip(" \n*"),
-                file_name=slugify.slugify(section.h2.text) + ".html",
+                file_name=get_capitulo_filename(section.h2),
                 media_type="text/html",
             )
             book.add_item(capitulo)
@@ -331,6 +350,11 @@ nav[epub|type~='toc'] > a {
 
 aside {
     padding-top: 1em;
+    display: block;
+}
+
+aside a {
+    text-decoration: none;
 }
 """
 
@@ -341,7 +365,7 @@ aside {
     book.add_item(nav_css)
 
     # create spine
-    book.spine = ["nav"]  # + capitulos
+    book.spine = ["nav"] + capitulos
 
     # create epub file
     epub.write_epub(f"kindle/{livro.h1.text}.epub", book)
@@ -355,10 +379,12 @@ def processa():
 
 
 def extrai_subtitulo(h3):
-    for c in h3.find_all(text=True):
-        if c.strip():
-            return c.strip(" \n*").replace("CAPÍTULO PRIMEIRO", "I")
-
+    # for c in h3.find_all(text=True):
+    #     if c.strip():
+    #         return c.strip(" \n*").replace("CAPÍTULO PRIMEIRO", "I")
+    return " ".join(
+        [c.strip().replace("CAPÍTULO PRIMEIRO", "I") for c in h3.find_all(text=True)]
+    )
     raise ValueError(f"Não achei String no subtitulo '{h3}'")
 
 
