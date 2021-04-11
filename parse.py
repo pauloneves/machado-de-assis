@@ -258,6 +258,8 @@ def gera_ebook(livro):
         else:  # subsection
             content += "\n\n" + str(section)
             h3_id = section.find("h3").attrs["id"]
+
+            # primeira subsection/capítulo do conto fica na seção inicial do conto
             if toc[-1][0].href:
                 first_id = h3_id.split(".")[0] + ".1"
                 primeiro_capitulo = extrai_subtitulo(
@@ -270,7 +272,7 @@ def gera_ebook(livro):
                         uid="",
                     )
                 )
-                toc[-1][0].href = ""
+                # toc[-1][0].href = ""
 
             toc[-1][1].append(
                 epub.Link(
@@ -365,7 +367,7 @@ aside a {
     book.add_item(nav_css)
 
     # create spine
-    book.spine = ["nav"] + capitulos
+    book.spine = ["nav"]  # + capitulos
 
     # create epub file
     epub.write_epub(f"kindle/{livro.h1.text}.epub", book)

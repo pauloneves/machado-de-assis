@@ -10,12 +10,14 @@
 
 ## TODO
 
-- [x] capítulo 0, advertência, está sumido
-- [ ] subseções na toc
-- [ ] tirar sublinhado toc
-- [x] o alienista e notas como capítulos
-- [ ] links de volta das notas não funcionam (será que incluo as notas no próprio capítulo?)
 - [ ] fru fru na formatação
+- [ ] tirar sublinhado toc
+- [ ] fazer capa
+- [ ] fazer código específico para cada livro separado
+- [x] capítulo 0, advertência, está sumido
+- [x] subseções na toc
+- [x] o alienista e notas como capítulos
+- [x] links de volta das notas não funcionam (será que incluo as notas no próprio capítulo?)
 - [x] referencias para toc
 - [x] ajustar TOC
 - [x] espacoToptHTX -> antes com **** são inícios do conto, antes div é capítulo. 5 divs seguintes é falso
