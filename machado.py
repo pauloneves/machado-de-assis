@@ -1,4 +1,4 @@
-# /bin/env python
+#!/bin/env python
 
 from bs4 import BeautifulSoup, Comment, Tag
 import re
@@ -180,12 +180,6 @@ def prepara_toc(livro):
 def cria_toc(livro, nome_arq):
     toc = prepara_toc(livro)
 
-    livro.style.append(
-        """
-        div.chapter { margin-left: 1em}
-        div.subchapter { margin-left: 2em} 
-    """
-    )
     toc_div = livro.new_tag("div", id="toc")
     for ref, titulo, sub_capitulos in toc:
         capitulo = toc_div.new_tag("a", href=f"#{ref}")
@@ -234,6 +228,19 @@ def gera_ebook(livro):
 
     book.add_author("Machado de Assis")
 
+    # define css style
+    with open("style.css", "r", encoding="utf-8") as f:
+        style = f.read()
+
+    # add css file
+    nav_css = epub.EpubItem(
+        uid="style_nav",
+        file_name="style/style.css",
+        media_type="text/css",
+        content=style,
+    )
+    book.add_item(nav_css)
+
     capitulos = []
     content = ""
     capitulo = None
@@ -249,6 +256,7 @@ def gera_ebook(livro):
                 file_name=get_capitulo_filename(section.h2),
                 media_type="text/html",
             )
+            capitulo.add_item(nav_css)
             book.add_item(capitulo)
             capitulos.append(capitulo)
             toc.append(
@@ -272,7 +280,6 @@ def gera_ebook(livro):
                         uid="",
                     )
                 )
-                # toc[-1][0].href = ""
 
             toc[-1][1].append(
                 epub.Link(
@@ -283,91 +290,16 @@ def gera_ebook(livro):
             )
     capitulo.set_content(content)
 
-    # toc.append(
-    #     (epub.Section(title=capitulo.title, href=capitulo.file_name), sub_capitulos)
-    # )
-
-    # (epub.Link('chap_01.xhtml', 'Introduction', 'intro'),
-    #              (epub.Section('Simple book'),
-    #              (c1, ))
-    #             )
-    # create table of contents
     book.toc = toc
-    # (
-    #     (epub.Section("seçao 1234"), capitulos[0:3]),
-    #     # capitulos[3:5],
-    #     (
-    #         epub.Section(title="Title seção", href=capitulo.file_name),
-    #         ["abc", "cde"],
-    #     ),
-    # )
 
     # add navigation files
+    epub_nav = epub.EpubNav()
+    epub_nav.add_item(nav_css)
     book.add_item(epub.EpubNcx())
-    book.add_item(epub.EpubNav())
-
-    # define css style
-    style = """
-@namespace epub "http://www.idpf.org/2007/ops";
-
-/*body {
-    font-family: Cambria, Liberation Serif, Bitstream Vera Serif, Georgia, Times, Times New Roman, serif;
-}*/
-
-h2 {
-     text-align: left;
-     text-transform: capitalize;
-     font-weight: 200;     
-}
-
-h3 {
-     text-align: center;
-     text-transform: capitalize;
-     font-weight: 150;     
-}
-
-
-ol {
-        list-style-type: none;
-}
-
-ol > li:first-child {
-        margin-top: 0.3em;
-}
-
-
-nav[epub|type~='toc'] > ol > li > ol  {
-    list-style-type:square;
-}
-
-
-nav[epub|type~='toc'] > ol > li > ol > li {
-        margin-top: 0.3em;
-        
-}
-
-nav[epub|type~='toc'] > a {
-     text-decoration: none;
-}
-
-aside {
-    padding-top: 1em;
-    display: block;
-}
-
-aside a {
-    text-decoration: none;
-}
-"""
-
-    # add css file
-    nav_css = epub.EpubItem(
-        uid="style_nav", file_name="style/nav.css", media_type="text/css", content=style
-    )
-    book.add_item(nav_css)
+    book.add_item(epub_nav)
 
     # create spine
-    book.spine = ["nav"]  # + capitulos
+    book.spine = ["nav"] + capitulos
 
     # create epub file
     epub.write_epub(f"kindle/{livro.h1.text}.epub", book)
@@ -381,13 +313,9 @@ def processa():
 
 
 def extrai_subtitulo(h3):
-    # for c in h3.find_all(text=True):
-    #     if c.strip():
-    #         return c.strip(" \n*").replace("CAPÍTULO PRIMEIRO", "I")
     return " ".join(
         [c.strip().replace("CAPÍTULO PRIMEIRO", "I") for c in h3.find_all(text=True)]
     )
-    raise ValueError(f"Não achei String no subtitulo '{h3}'")
 
 
 if __name__ == "__main__":
