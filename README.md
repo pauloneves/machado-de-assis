@@ -14,6 +14,8 @@
 - [ ] tirar sublinhado toc
 - [ ] fazer capa
 - [ ] fazer código específico para cada livro separado
+- [ ] Advertência duplicado
+- [ ] Nomes de capítulos em maiúsculas
 - [x] capítulo 0, advertência, está sumido
 - [x] subseções na toc
 - [x] o alienista e notas como capítulos

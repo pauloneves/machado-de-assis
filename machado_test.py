@@ -1,11 +1,11 @@
-import parse
+import machado
 import pytest
 from bs4 import BeautifulSoup
 
 
 @pytest.fixture
 def livro():
-    return parse.get_livro("livros/Papéis avulsos_files/tx_Papeisavulsos.html")
+    return machado.get_livro("livros/Papéis avulsos_files/tx_Papeisavulsos.html")
 
 
 def book(txt):
@@ -19,7 +19,7 @@ def book(txt):
 # <p align="center"><b>O ALIENISTA <a href="#" id="mynewanchorOA*" onclick="return false;"> * </a></b>
 # """
 #     )
-#     parse.ajusta_capitulos(livro)
+#     machado.ajusta_capitulos(livro)
 
 
 # def test_ajusta_capitulos_2(livro):
@@ -51,7 +51,7 @@ def test_ajusta_titulo_contos():
 """
     )
 
-    parse.ajusta_titulos_contos(b)
+    machado.ajusta_titulos_contos(b)
     assert len(b.find_all("div")) == 2, "tem que remover divs"
     assert b.h2, "títulos dos contos deveriam ser substituídos por H2"
     assert b.h2.text.lower().startswith("o empréstimo")
@@ -78,7 +78,7 @@ def test_ajusta_inicio_capitulos():
     """
     )
 
-    parse.ajusta_titulos_capitulos(b)
+    machado.ajusta_titulos_capitulos(b)
     print(b)
     assert b.h3
     assert "XIII" in b.h3.text
@@ -122,7 +122,7 @@ def test_ajusta_inicio_capitulos_com_conto():
     """
     )
 
-    parse.ajusta_titulos_capitulos(b)
+    machado.ajusta_titulos_capitulos(b)
     assert b.h3
     assert len(b.find_all("h3")) == 1
 
@@ -150,8 +150,8 @@ def test_ajusta_titulos_ordem_correta():
 
 """
     )
-    parse.ajusta_titulos_contos(b)
-    parse.ajusta_titulos_capitulos(b)
+    machado.ajusta_titulos_contos(b)
+    machado.ajusta_titulos_capitulos(b)
 
     assert b.h2.text.startswith("O ALIENISTA")
 
@@ -176,13 +176,13 @@ def test_parse_nota():
 </script>""",
         "html.parser",
     )
-    id_, texto = parse.parse_nota(nota)
+    id_, texto = machado.parse_nota(nota)
     assert "mynewanchorVT42" == id_
     assert 'A "capital"' == texto
 
 
 def test_get_notas_dict(livro):
-    notas_dict = parse.get_notas_dict(livro)
+    notas_dict = machado.get_notas_dict(livro)
     assert "mynewanchorVT42" in notas_dict
 
 
@@ -191,20 +191,20 @@ def test_ajusta_referencia():
         '<a href="#" id="mynewanchorNTA1" onclick="return false;">texto</a>',
         "html.parser",
     ).find("a")
-    parse.ajusta_referencia(ref)
+    machado.ajusta_referencia(ref)
     assert ref.attrs["href"].endswith("#mynewanchorNTA1"), ref
     assert ref.text == "texto"
     assert ref.attrs["id"] == "orig_mynewanchorNTA1"
 
 
 def ajusta_todas_referencias():
-    b = parse.get_book(
+    b = machado.get_book(
         """
         <a href="#" id="mynewanchor1" onclick="return false;">texto1</a>"
         <a href="#" id="mynewanchor2" onclick="return false;">texto2</a>"
         """
     )
-    parse.ajusta_todas_referencias(b)
+    machado.ajusta_todas_referencias(b)
     for a in b.find_all("a"):
         assert "onclick" not in a
 
@@ -212,12 +212,10 @@ def ajusta_todas_referencias():
 def test_append_notas(livro):
     notas = {"nota1": "texto1", "nota2": "texto2"}
     assert len(livro.find_all("h2")) == 0, "Opa, achei que não tinha nada aqui"
-    parse.append_notas(livro, notas)
+    machado.append_notas(livro, notas)
     h2 = livro.find("h2")
     assert h2
-    assert len(h2.find_next_siblings("aside")) == len(notas)
-    uma_nota = h2.find_next("aside")
-    assert uma_nota.find("a").attrs["href"].startswith("#orig_"), uma_nota.attrs["href"]
+    assert len(h2.find_all_next("aside")) == len(notas)
 
 
 def test_cria_toc():
@@ -238,7 +236,7 @@ def test_cria_toc():
         </div>
     """
     )
-    toc = parse.prepara_toc(b)
+    toc = machado.prepara_toc(b)
     assert toc == [
         ("1", "conto1", []),
         (
@@ -260,14 +258,14 @@ def test_cria_toc():
 
 
 def test_ajusta_titulos(livro):
-    parse.ajusta_titulos(livro)
+    machado.ajusta_titulos(livro)
     assert (
         len(livro.find_all("div", lang="de")) == 0
     ), "todas seções com lang foram retiradas"
 
 
 def test_processa_livro():
-    parse.processa_livro()
+    machado.processa_livro()
     assert True, "Nenhuma exceção foi disparada"
 
 
@@ -276,7 +274,7 @@ def test_subtitulo():
         '<h3 id="2.1"><b>CAPÍTULO PRIMEIRO</b><br/>De como  ganhou uma casa de orates</h3> ',
         "html.parser",
     )
-    st = parse.extrai_subtitulo(doc.h3)
+    st = machado.extrai_subtitulo(doc.h3)
     assert "De como  ganhou uma casa de orates" in st
 
 
@@ -285,7 +283,7 @@ def test_subtitulo_so_uma_linha():
         '<h3 id="1.1"><b>Advertência</b><br/></h3> ',
         "html.parser",
     )
-    st = parse.extrai_subtitulo(doc.h3)
+    st = machado.extrai_subtitulo(doc.h3)
     assert st == "Advertência"
 
 
@@ -294,7 +292,7 @@ def test_subtitulo_com_tag():
         '<h3 id="2.13"><b>XIII</b><br/><b><i><a epub:type="noteref" href="notas.html#mynewanchorOA74" id="orig_mynewanchorOA74">Plus ultra</a></i>!</b></h3>',
         "html.parser",
     )
-    st = parse.extrai_subtitulo(doc.h3)
+    st = machado.extrai_subtitulo(doc.h3)
     assert "Plus ultra !" in st
 
 
@@ -307,5 +305,5 @@ def test_ajusta_titulo_capitulo_terror():
 <p align="center"><b>O <a href="#" id="mynewanchorOA36" onclick="return false;">Terror</a></b>
 """
     )
-    parse.ajusta_titulos_capitulos(b)
+    machado.ajusta_titulos_capitulos(b)
     assert "Terror" in b.h3.get_text()
