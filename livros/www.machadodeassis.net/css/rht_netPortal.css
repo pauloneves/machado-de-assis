@@ -1,0 +1,1690 @@
+    q/* Machado de Assis. net - 2007 */
+/* http.machadodeassis.net/hiperTx_romances - 2009 */ 
+/* multiplas paginas usam esse estilo */
+/* nao modificar sem autorizacao */ 
+/* criado em: fev 09 - cverdade */ 
+/* modificado em: 01/abr/2009 - cverdade */ 
+/* cverdade: http://www.dverdade.com.br */
+/* historico: adaptacao do Mmenu revista para HiperTxRomences */ 
+
+/* Folha de estilo base: rev_netPortal.css */
+
+/* INICIO - style sheet */ 
+
+body {
+	font-family: Verdana, Arial, Helvetica, Sans-serif;
+	font-size: 80%;
+	color: #000000;
+	background:#EBEACA;
+	margin: 0 0 20px 0;
+}
+
+
+
+/* GERAL BASICO */
+
+/* definica h */
+/*
+h1,h2,h3,h4,h5,p { margin: 0; padding: 0; }
+*/
+
+h1	{
+	font-family: Verdana, Arial, Helvetica, Sans-serif;
+	font-size: 14px;	
+	font-style: normal;
+	font-weight: bold;
+	line-height: 18px;
+	color:	#CC6600;
+	padding: 0 0 0 18px; 
+}
+
+
+a:link	{
+	text-decoration: none;
+}
+
+
+/* DTB: form */
+input,textarea,select,option { font-family: Verdana, Arial, Helvetica, Sans-serif; }
+
+.hidden { display: none; } /* usado: textos e instrucoes para sofwares leitores */
+
+
+
+
+/* ---  TESTE INCLUDE HEAD ---- */
+#headBG	{
+	width:  756px;	
+	height: 131px;
+	background-color: #80879C;
+	z-index: 1;
+}
+
+
+/* Icon/marca site	*/
+#headFig	{
+	width: 110px;
+	height: 114px;
+	position: absolute;
+	left: 0;
+	top: 17px;
+		z-index: 1;
+
+	background-image: url("../figs/head_rht_fig.png");
+}
+
+
+/* ----- INCLUDE Menu -------	*/
+/* fazer include apos definicao das orelhas e elimnar estes estilos desta folha */
+
+/* Orelhas */
+#menu	{
+	width: 459px;
+	height: 43px;
+	position: absolute;
+	left: 102px;
+	top: 88px;
+	z-index: 3;
+}
+
+/* Orelhas: acabamento vazio Right */
+#menu table	{
+	width: 459px;
+}
+
+/* Orelhas: acabamento vazio Right, preenchimento */
+#menu table td	{
+	background-image: url("../figs/bg_tabMenu_rht.png");
+}
+
+/* ------------------------------  ROMANCES ------------------------------------------------------------- */
+
+/* Orelhas: ROMANCES */
+#menuRht_romances	{
+/*  display: block; */
+  width: 120px;
+  height: 43px;
+  background: url("../figs/m_rht_250x129.png") no-repeat 0 -86px;
+}
+
+/* Orelhas: ROMANCES lateral R */
+#menuRht_romancesR	{
+/*  display: block; */
+  width: 23px;
+  height: 43px;
+  background: url("../figs/m_rht_250x129.png") no-repeat 0 -86px;
+}
+
+/* Orelhas: ROMANCES ON */
+#menuRht_romancesON	{
+/*  display: block; */
+  width: 120px;
+  height: 43px;
+  background: url("../figs/m_rht_250x129.png") no-repeat 0 0;
+}
+
+/* Orelhas: ROMANCES ON lateral R */
+#menuRht_romancesONR	{
+/*  display: block; */
+  width: 23px;
+  height: 43px;
+  background: url("../figs/m_rht_250x129.png") no-repeat -120px 0;
+}
+
+
+/* Orelhas: COMO CONSULTAR INSTRUCOES*/
+#menuRht_instru	{
+/*  display: block; */
+  width: 107px;
+  height: 43px;
+  background: url("../figs/m_rht_250x129.png") no-repeat -143px -86px;
+}
+
+/* Orelhas: COMO CONSULTAR lateral L */
+#menuRht_instruL	{
+/*  display: block; */
+  width: 23px;
+  height: 43px;
+  background: url("../figs/m_rht_250x129.png") no-repeat -120px -86px;
+}
+
+/* Orelhas: COMO CONSULTAR ON */
+#menuRht_instruON	{
+/*  display: block; */
+  width: 169px;
+  height: 43px;
+  background: url("../figs/m_rht_250x129.png") no-repeat -149px -43px;
+}
+
+/* Orelhas: COMO CONSULTAR ON lateral R */
+#menuRht_instruONL	{
+/*  display: block; */
+  width: 23px;
+  height: 43px;
+  background: url("../figs/m_rht_250x129.png") no-repeat -120px -43px;
+}
+
+/* ------------------------------  FIM ROMANCES ------------------------------------------------------------- */
+
+
+/* ------------------------------  CONTOS ------------------------------------------------------------- */
+/* Orelhas: ROMANCES */
+#menuRht_contos	{
+/*  display: block; */
+  width: 120px;
+  height: 43px;
+  background: url("../figs/m_rht_250x129_contos.png") no-repeat 0 -86px;
+}
+
+/* Orelhas: ROMANCES lateral R */
+#menuRht_contosR	{
+/*  display: block; */
+  width: 23px;
+  height: 43px;
+  background: url("../figs/m_rht_250x129_contos.png") no-repeat 0 -86px;
+}
+
+/* Orelhas: ROMANCES ON */
+#menuRht_contosON	{
+/*  display: block; */
+  width: 120px;
+  height: 43px;
+  background: url("../figs/m_rht_250x129_contos.png") no-repeat 0 0;
+}
+
+/* Orelhas: ROMANCES ON lateral R */
+#menuRht_contosONR	{
+/*  display: block; */
+  width: 23px;
+  height: 43px;
+  background: url("../figs/m_rht_250x129_contos.png") no-repeat -120px 0;
+}
+
+
+/* Orelhas: COMO CONSULTAR INSTRUCOES*/
+#menuRht_instru_contos	{
+/*  display: block; */
+  width: 107px;
+  height: 43px;
+  background: url("../figs/m_rht_250x129_contos.png") no-repeat -143px -86px;
+}
+
+/* Orelhas: COMO CONSULTAR lateral L */
+#menuRht_instruL_contos	{
+/*  display: block; */
+  width: 23px;
+  height: 43px;
+  background: url("../figs/m_rht_250x129_contos.png") no-repeat -120px -86px;
+}
+
+/* Orelhas: COMO CONSULTAR ON */
+#menuRht_instruON_contos	{
+/*  display: block; */
+  width: 169px;
+  height: 43px;
+  background: url("../figs/m_rht_250x129_contos.png") no-repeat -149px -43px;
+}
+
+/* Orelhas: COMO CONSULTAR ON lateral R */
+#menuRht_instruONL_contos	{
+/*  display: block; */
+  width: 23px;
+  height: 43px;
+  background: url("../figs/m_rht_250x129_contos.png") no-repeat -120px -43px;
+}
+/* ------------------------------  FIM CONTOS ------------------------------------------------------------- */
+
+
+/* PROVISORIO: site em construcao => eliminar esse estilo */
+/* Orelhas: ARTIGOS POR AUTOR */
+
+
+/* Orelhas: ARTIGOS POR AUTOR ON */
+#menuRht_emConstruON	{
+/*  display: block; */
+  width: 120px;
+  height: 43px;
+  background: url("../figs/m_rht_312x172.png") no-repeat 0 -129px;
+}
+
+/* Orelhas: ARTIGOS POR AUTOR ON lateral L */
+#menuRht_emConstruONR	{
+/*  display: block; */
+  width: 23px;
+  height: 43px;
+  background: url("../figs/m_rht_312x172.png") no-repeat -120px -129px;
+}
+
+/* definir vazio necessario	? caso sim DEFINIR*/
+#menuRht_emConstruONR2	{
+/*  display: block; */
+  width: 169px;
+  height: 43px;
+  background: url("../figs/m_rht_312x172.png") no-repeat -143px -129px;
+}
+
+
+
+
+/* ----- INCLUDE MenuTop -------	*/
+
+
+/* SubMenu |INICIO|VOLTAR|CONTATO| */
+
+/* elimenado apos testes de include	*/
+/* .memu2
+	.memu2  table td.menuTop
+*/
+
+
+
+
+/* SubMenu |INICIO|VOLTAR|CONTATO| */
+#putMenuTop {
+	width: 245px;  /*  W=195  */
+	height: 18px;
+	position: absolute;
+	left: 511px;  /* 756-(18+84+518-12)=  */
+	top: 113px;
+	background-color: #FFFFFF;	
+	z-index: 3;
+}
+
+
+/* eliminar apos fev2009 testada	*/
+/* Revisao: usando imagens */
+table td.menuTop {
+	width: 245px;	
+	height: 18px;
+	text-align:	right;	
+	background-color: #FFFFFF;	
+}
+
+
+
+/* NOVO 2009 */
+/* comum a todops os site => inserirdo no include d(s)o head(s) de cada site	*/
+
+table td.menuTop0 {
+	width: 38px;	
+	height: 18px;
+	text-align:	right;	
+	background-color: #FFFFFF;	
+}
+table td.menuTop123 {
+	width: 69px;	
+	height: 18px;
+	text-align:	right;	
+	background-color: #FFFFFF;	
+}
+
+/* bot“o CONTATO */
+#btContato
+{
+  display: block;
+  width: 69px;
+  height: 18px;
+  background: url("../figs/menuTop_contato.png") no-repeat 0 0;
+}
+#btContato:hover
+{ 
+  background-position: 0 -18px;
+}
+#btContato span
+{
+  display: none;
+}
+
+/* bot“o VOLTAR */
+#btVoltar
+{
+  display: block;
+  width: 69px;
+  height: 18px;
+  background: url("../figs/menuTop_voltar.png") no-repeat 0 0;
+}
+#btVoltar:hover
+{ 
+  background-position: 0 -18px;
+}
+#btVoltar span
+{
+  display: none;
+}
+
+/* bot“o INICIO */
+#btInicio
+{
+  display: block;
+  width: 69px;
+  height: 18px;
+  background: url("../figs/menuTop_inicio.png") no-repeat 0 0;
+}
+#btInicio:hover
+{ 
+  background-position: 0 -18px;
+}
+#btInicio span
+{
+  display: none;
+}
+
+
+
+
+
+
+/*	-----	*/
+
+
+
+/* Navegacao entre paginas longas: ANTERIOR | INICIO | PROXIMA */
+/* ROMANCES EM HIPERTEXTO: paginas dos romances  */
+
+/* bot“o ANTERIOR */
+#btAnterior	{
+  display: block;
+  width: 74px;
+  height: 18px;
+  background: url("../figs/mNavPags_anterior.png") no-repeat 0 0;
+}
+
+#btAnterior:hover	{ 
+  background-position: 0 -18px;
+}
+
+#btAnterior span	{
+  display: none;
+}
+
+
+/* bot“o PROXIMA */
+#btProxima	{
+  display: block;
+  width: 69px;
+  height: 18px;
+  background: url("../figs/mNavPags_proxima.png") no-repeat 0 0;
+}
+#btProxima:hover	{ 
+  background-position: 0 -18px;
+}
+#btProxima span	{
+  display: none;
+}
+
+
+/* bot“o INICIO */
+#btInicioTx	{
+  display: block;
+  width: 64px;
+  height: 18px;
+  background: url("../figs/mNavPags_inicio.png") no-repeat 0 0;
+}
+#btInicioTx:hover	{ 
+  background-position: 0 -18px;
+}
+#btInicioTx span	{
+  display: none;
+}
+
+
+
+/* titulo do site */
+/* 	width: 247px; */
+#headTitu	{
+	width: 350px;
+	height: 24px;
+	position: absolute;
+	left: 125px;
+	top: 40px;
+	background-image: url("../figs/head_rht_titu1.png");
+}
+
+/* titulo da secao/pagina */
+/* PESQUISA: posicao area do form  */
+/* REVISTA: titulo pag inicial	*/
+/* HIPERTEXTO: tÌtulo da secao */
+#tituSecao	{
+	font-size: 14px;
+	width: 654px;  /* 756-102=654  */
+	position: absolute;
+	color: #4B4841;
+	background-color:: #FFFFFF;
+	top: 158px;
+	padding-left: 102px;	
+}
+
+#tituSecaoTab0	{
+	font-size: 14px;
+	width: 654px;  /* 756-102=654  */
+	position: absolute;
+	color: #4B4841;
+	background-color:: #FFFFFF;
+	top: 158px;
+	padding-left: 18px;	
+}
+
+
+#tituSecaoTab1	{
+	font-size: 14px;
+	width: 654px;  /* 756-102=654  */
+	position: absolute;
+	color: #4B4841;
+	background-color:: #FFFFFF;
+	top: 158px;
+	padding-left: 123px;	
+}
+
+
+/* hiperTx: posicao do form sleciona cap*/
+#tituSecaoLeft	{
+	font-size: 14px;
+	width: 654px;  /* 756-102=654  */
+	position: absolute;
+	color: #4B4841;
+	background-color:: #FFFFFF;
+	top: 158px;
+	padding-left: 18px;	
+}
+
+label.tx	{
+	font-size: 16px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 20px;
+	color: #333333;
+}
+
+/*
+#putMenuTop {
+	width: 245px;  W=195 
+	height: 18px;
+	position: absolute;
+	left: 511px;  756-(18+84+518-12)
+	top: 113px;
+	background-color: #FFFFFF;	
+	z-index: 3;
+}
+
+*/
+
+/* Revista: titulo pag pequeno	*/
+#tituSecaoLinks	{
+	font-size: 11px;
+	font-style: normal;
+	font-weight: normal;
+	color: #4B4841;
+	width: 654px;  /* 756-102=654  */
+	position: absolute;
+	background-color:: #FFFFFF;
+	top: 158px;
+	padding-left: 102px;	
+}
+
+/* Revista: NUMEROS ANTERIORES = links p/numeros	*/
+#tituSecaoLinks a.txVerde {
+	font-size: 11px;
+	text-decoration: none;
+	color: #4B4841;
+	padding-right: 12px;
+}
+
+/* Revista: NUMEROS ANTERIORES = links p/numeros	*/
+#tituSecaoLinks a:hover.txVerde {
+	text-decoration: underline;
+	color: #CC6600;
+}
+
+
+/* Revista: ARTIGO POR AUTOR = links alfabeto	*/
+#tituSecaoLinks a.txVerdeSmall {
+	font-size: 11px;
+	text-decoration: none;
+	color: #4B4841;
+	padding-right: 6px;
+}
+
+/* Revista: ARTIGO POR AUTOR = links alfabeto	*/
+#tituSecaoLinks a:hover.txVerdeSmall {
+	text-decoration: underline;
+	color: #CC6600;
+}
+
+
+
+
+/* GERAL  */
+/* Textos, Titulos, SubTitus, Separdores */
+.tituBKtx	{
+	font-size: 14px;
+	font-style: normal;
+	font-weight: normal;
+}
+
+
+
+.tx	{
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 20px;
+	color: #333333;
+}
+
+.txBig	{
+	font-size: 14px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 22px;
+	color: #333333;
+}
+
+.txVerde	{
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 20px;
+	color: #616948;
+}
+
+.txVerdeSmall	{
+	font-size: 10px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 20px;
+	color: #616948;
+}
+
+
+
+
+
+
+/*   */
+/* CONTEUDO  */
+
+#conteudo	{
+	width: 756px;
+	position: absolute;
+	background-color:: #FFFFFF;
+/*	top: 188px;  */
+	top: 200px;
+
+}
+
+
+/* REVISTA	*/
+/*	REVISAO estilos	*/
+/* ---  fundo com width=100% ---- */
+table.conteudoGeral {
+	width: 100%;	/* width: 756px;*/
+	vertical-align: top;
+	background-color: #FFFFFF;
+}
+
+table.conteudoMain {
+	width: 720px;
+	vertical-align: top;
+	background-color: #FFFFFF;
+	border-: 20px solid #EBEACA;
+}
+
+
+
+
+
+
+
+/*-------*/
+
+/* area conteudo: FAQ  */
+
+/* MNET: area top pontilhado  */
+table.conteudoGeral td.geralDotTop {
+	border-top: 1px dashed #666666;
+	vertical-align: top;
+	padding-top: 10px;
+}
+
+/* MNET index: area top pontilhado  */
+table.conteudoGeralMain td.geralDotTopMain {
+	border-top: 1px dashed #666666;
+	vertical-align: top;
+	padding-top: 10px;
+
+}
+
+
+/* MNET: titu FAQ */
+td.geralDotTop p.tituOcre	{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 20px;
+	color: #cc4900;
+	padding-top: 20px;
+	padding-left: 18px;
+	padding-right: 180px;
+}
+
+/* MNET: Biografia, datas */
+/* HIPERTEXTO: Titulos dos capitulos nas paginas das obras */
+.tituOcre2Bold	{
+	font-style: normal;
+	font-weight: Bold;
+	font-size: 16px;
+	line-height: 20px;
+	color: #cc4900;
+	padding-top: 20px;
+	padding-left: 18px;	/* padding-left: 0px; */
+	padding-right: 180px;
+}
+
+td.geralDotTop p.tituOcre2Bold span.txBKtab01	{
+	font-size: 12px;
+	font-weight: normal;
+	font-style: italic;
+	color:	#80879c; 
+/*	color:	#666666;*/
+	line-height: 20px;
+	padding-left: 0px;
+	margin-right: 30px;
+}
+
+
+td.geralDotTop p.tituOcreL0 {
+	text-decoration:underline
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 16px;
+	color: #cc4900;
+	padding-top: 20px;
+	padding-left: 18px;
+	padding-right: 180px;
+}
+
+td.geralDotTop p.tituOcreL0	a {
+	text-decoration:underline;
+}
+
+td.geralDotTop p.tituOcreL0	img a {
+	text-decoration: none;
+}
+
+div.ListaFaq	{
+	padding-left: 18px;
+}
+
+
+
+/* MNET: titu Equipe/dtb */
+td.geralDotTop p.tituVerde	{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 13px;
+	line-height: 20px;
+	color: #616948;
+	padding-top: 20px;
+	padding-left: 18px;
+	padding-bottom: 10px;
+	padding-right: 180px;
+}
+
+
+/* MNET: titu Equipe/Revista */
+td.geralDotTop p.tituLilaz	{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 13px;
+	line-height: 20px;
+	color: #663366;
+	padding-top: 20px;
+	padding-left: 18px;
+	padding-bottom: 10px;
+	padding-right: 180px;
+}
+
+/* MNET: titu Revista */
+td.geralDotTop p.meiaL	{
+	line-height: 4px;
+}
+
+
+/* DB e MNET: 180 l*/
+/* Revista: 73	*/
+td.geralDotTop .txVerde	{
+	margin-left: 18px;
+/*	margin-right: 180px;	*/
+	margin-right: 73px;
+
+}
+
+
+/* DTB: Ajuda  */
+/* MNET: Contato  */
+/* HIPERTEXTO: texto das obras */
+td.geralDotTop p.txBKtab0	{
+	font-size: 13px;
+	line-height: 20px;	
+	padding-left: 18px;
+	padding-right: 30px;
+	padding-bottom: -20px;
+}
+
+td.geralDotTop p.txBKtab0 a	{
+	text-decoration: none;
+	color: #CC4900;
+}
+
+/* --TESTE--- */
+
+
+td.geralDotTop- p.txBKtab0 span.txBKtab35	{
+	font-size: 12px;
+	font-weight: normal;
+	font-style: italic;
+	color:	#80879c; 
+/*	color:	#666666;*/
+	line-height: 20px;
+	padding-left: 0px;
+	margin-right: 30px;
+}
+
+
+
+
+/* ---- */
+
+
+
+
+
+
+
+
+/* MNETTx: FAQ  */
+td.geralDotTop p.txBKtab1	{
+	font-size: 13px;
+	line-height: 20px;	
+	padding-left: 38px;
+	padding-right: 180px;
+}
+
+
+
+/* Tx: EQUIPE  */
+td.geralDotTop p.txBKtab2	{
+	font-size: 13px;
+	line-height: 20px;
+	color: #616948;
+	padding-left: 42px;
+	padding-right: 180px;
+}
+
+
+/*MNET: Equipe = nome  */
+/*MNET: Faq = titulos  */
+p.txBKtab2 .ocreCreditos	{
+	font-size: 13px;
+	font-style: normal;
+	font-weight: normal;
+	color: #cc4900;
+
+}
+
+
+td.geralDotTop a	{
+	text-decoration: underline;
+	color: #80879c;
+}
+
+td.geralDotTop a:hover	{
+	color: #7A7E6D;
+}
+
+
+
+
+/* Faq: perguntas	*/
+ul.ItensListOcre {
+	list-style: decimal;
+ 	font-size: 14px;
+	line-height: 20px;
+	font-weight: bold;
+	color: #cc4900;
+	margin: 0 180px 0 0px !important;
+}
+
+ul.ItensListOcre li {
+	font-weight: bold;
+	padding-bottom: 10px;
+	margin-left: 0px;
+}
+
+ul.ItensListOcre li a {
+	text-decoration: underline;
+	font-weight: normal;
+}
+
+
+
+
+/* REVISTA	*/
+/* Revista: NUMEROS ANTERIORES = lista DOT*/
+ul.ItensListArtDOT {
+	margin: 0 73px 0 80px !important;	/* margin: 0 73px 0 62px*/
+}
+
+/* Revista: NUMEROS ANTERIORES = Numero da revista + estilo geral itens lista	*/
+ul.ItensListArtDOT li {
+	list-style: square outside url("../figs/i_dotMed_rev_list.gif");
+ 	font-size: 13px;	
+	line-height: 50px;	
+	font-weight: normal;
+	color: #666666;
+	padding-bottom: 0px;
+	margin-left: 0px;
+}
+
+/* Revista: NESTE NUMERO = numero da revista	*/
+ul.ItensListArtDOT li .TrocaColor	{
+	color:	#CC6600;
+
+}
+
+
+/* Revista: NUMEROS ANTERIORES = titulo trabalho	*/
+ul.ItensListArtDOT li a {
+	color:	#333333;
+	text-decoration: none;
+}
+
+/* Revista: NUMEROS ANTERIORES = titulo trabalho	*/
+ul.ItensListArtDOT li a:hover {
+	color: #333333;
+	text-decoration: underline;
+}
+
+/* Revista: NUMEROS ANTERIORES = lista de artigos: titulo, autor, numero da revista	*/
+ul.ItensListArtDOT li p.txBKtab3	{
+	font-size: 13px;
+	font-weight: bold;
+	color:	#333333;
+	line-height: 20px;
+	padding-left: 0px;
+	padding-bottom: 10px;
+	margin-right: 0px;
+}
+
+/* Revista: NUMEROS ANTERIORES = Nome do autor	*/
+ul.ItensListArtDOT li p.txBKtab3 span.txBKtab34	{
+	font-size: 13px;
+	font-weight: normal;
+	font-style: italic;
+	color:	#80879c;
+	line-height: 20px;	
+	padding-left: 0px;
+	margin-left: 0px;
+}
+
+
+/* Revista: NESTE NUMERO, ARTIGOS POR AUTOR = lista de artigos: titulo, autor, numero da revista	*/
+/* HIPERTEXTOS: TITULO DA OBRA na Lista de romances no index do site*/
+td.geralDotTop p.txBKtab3	{
+	font-size: 12px;
+	font-weight: bold;
+	color:	#333333;
+	line-height: 20px;
+	margin-right: 73px;
+	padding-left: 102px;
+	padding-bottom: 10px;
+}
+
+/* Revista: NESTE NUMERO = nome do autor	*/
+/* HIPERTEXTOS: INFOS da OBRA na Lista de romances no index do site*/
+td.geralDotTop p.txBKtab3 span.txBKtab35	{
+	font-size: 12px;
+	font-weight: normal;
+	font-style: italic;
+	color:	#80879c; 
+/*	color:	#666666;*/
+	line-height: 20px;
+	padding-left: 0px;
+	margin-right: 30px;
+}
+
+
+/* Revista: ARTIGOS POR AUTOR = titulo trabalho	*/
+/* HIPERTEXTOS: TITULO DA OBRA na Lista de romances no index do site*/
+div.linhaLinkTopR  span.txBKtab3 a	{
+	font-weight: bold;
+	color:	#CC6600;
+	text-decoration: none;
+}
+
+div.linhaLinkTopR  span.txBKtab3 a:hover	{
+	color:	#333333;
+	text-decoration: underline;
+}
+
+
+div.linhaLinkTopR  span.txBKtab3 a IMG.noDecoration	{
+	border: 0;
+	text-decoration: none;
+}
+
+
+
+
+/* ----sumario da obra --- */
+
+/* HIPERTEXTOS: TITULO DA OBRA na Lista de romances no index do site*/
+td.geralDotTop p.txBKtab36	{
+	font-size: 12px;
+	font-weight: bold;
+	color:	#333333;
+	line-height: 20px;
+	margin-right: 73px;
+	padding-left: 102px;
+	padding-bottom: 0px;	/* txBKtab3 => padding-bottom: 10px;*/
+}
+
+/* HIPERTEXTOS: INFOS da OBRA na Lista de romances no index do site*/
+td.geralDotTop p.txBKtab36 span.txBKtab35	{
+	font-size: 12px;
+	font-weight: normal;
+	font-style: italic;
+	color:	#80879c; 
+/*	color:	#666666;*/
+	line-height: 20px;
+	padding-left: 0px;
+	margin-right: 30px;
+}
+
+
+/* HIPERTEXTOS: TITULO DA OBRA na Lista de romances no index do site*/
+td.geralDotTop p.txBKtab36 a	{
+	color:	#333333;
+	text-decoration: none;
+}
+
+
+/* HIPERTEXTOS: TITULO DA OBRA na Lista de romances no index do site*/
+td.geralDotTop p.txBKtab36 a:hover	{
+	color: #333333;
+	text-decoration: underline;
+}
+
+/* --- */
+
+
+/* ----titulo de capitulos --- */
+
+/* HIPERTEXTOS: TITULO DA CAPITULO na pagina com tx obra */
+td.geralDotTop p.txBKtab01	{
+	font-size: 12px;
+	font-weight: bold;
+	color:	#333333;
+	line-height: 20px;
+	margin-right: 73px;
+	padding-left: 18px;
+	padding-bottom: 0px;	/* txBKtab3 => padding-bottom: 10px;*/
+}
+
+/* HIPERTEXTOS: NUMERO DO CAPITULO na pagina com tx obra */
+td.geralDotTop p.txBKtab01 span.txBKtab35	{
+	font-size: 12px;
+	font-weight: normal;
+	font-style: italic;
+	color:	#80879c; 
+/*	color:	#666666;*/
+	line-height: 20px;
+	padding-left: 0px;
+	margin-right: 30px;
+}
+
+
+
+
+/* Revista: ARTIGOS POR AUTOR = numero da revista	*/
+td.geralDotTop p.txBKtab3 #TrocaColor	{
+	font-size: 11px;
+	font-weight: normal;
+	font-style: normal;
+	color:	#CC6600;
+	text-decoration: none;
+}
+
+
+/* Revista: ARTIGOS POR AUTOR = numero da revista	*/
+td.geralDotTop p.txBKtab3 #TrocaColor a	{
+	color:	#CC6600;
+	text-decoration: none;
+}
+
+
+/* Revista: ARTIGOS POR AUTOR = numero da revista	*/
+td.geralDotTop p.txBKtab3 #TrocaColor a:hover	{
+	color: #80879c;
+	text-decoration: underline;
+}
+
+
+/* Revista: ARTIGO = titulo e autor	*/
+td.geralDotTop p.txBKtab31	{
+	font-size: 14px;
+	font-weight: bold;
+	color:	#333333;
+	line-height: 20px;
+	margin-right: 73px;
+	padding-left: 102px;
+	padding-bottom: 10px;
+}
+
+
+/* Revista: ARTIGO = autor	*/
+td.geralDotTop p.txBKtab31 span.txBKtab34	{
+	font-size: 12px;	
+	font-weight: normal;
+	font-style: italic;
+	color:	#80879c;
+	line-height: 20px;	
+	padding-left: 0px;
+}
+
+
+/* Revista: ARTIGO = abstract	*/
+/* /* HIPERTEXTOS: tx abertuta	*/
+td.geralDotTop p.txBKtab32	{
+	font-size: 14px;
+	font-weight: normal;
+	color:	#333333;
+	line-height: 24px;
+	margin-right: 73px;
+	padding-left: 102px;
+	padding-bottom: 5px;
+}
+
+
+/* /* HIPERTEXTOS: tx abertuta	*/
+td.geralDotTop p.txBKtab32 a {
+	font-weight: bold;
+	color:	#CC6600;
+	text-decoration: underline;
+}
+
+
+/* /* HIPERTEXTOS: tx abertuta	*/
+td.geralDotTop p.txBKtab32 a:hover {
+	color:	#333333;
+}
+
+
+
+/* Revista: ARTIGO = tx link p/PDF	*/
+td.geralDotTop p.txBKtab34 {
+	font-size: 11px;
+	font-weight: normal;
+	font-style: italic;
+	color:	#333333;
+	line-height: 20px;	
+	padding-left: 102px;
+	margin-right: 30px;
+}
+
+
+/* Revista: ARTIGO = tx link p/PDF	*/
+td.geralDotTop p.txBKtab34 #TrocaColor a	{
+	color:	#CC6600;
+	text-decoration: none;
+}
+
+
+/* Revista: ARTIGO = tx link p/PDF	*/
+td.geralDotTop p.txBKtab34 #TrocaColor a:hover	{
+	text-decoration: underline;
+}
+
+
+
+/* Revista: ARTIGOS, ARTIGOS POR AUTOR. NUMEROS ANTERIORES = numero da revista	*/
+#TrocaColor 	{
+	color:	#CC6600;
+}
+
+
+
+
+
+
+/* FAQ: lista dot  */
+.dotListTitu	{
+	margin-left: 0px;
+}
+
+
+ul.dotList {
+ 	font-size: 13px;
+	line-height: 20px;	
+	margin: 0 180px 10 0px !important;
+}
+
+ul.dotList li {
+	padding-bottom: 10px;
+	margin-left: 18px;
+}
+
+
+
+
+/* DTB, MNET, REVISTA: separador c/ seta sobe	*/
+table.conteudoGeral td.geralDotTop div.linhaDot {
+	text-align: right;
+	border-bottom: 1px dashed #666666;
+	height: 12px;
+	padding-left: 18px;
+	padding-right: 18px;
+	padding-bottom: 10px;
+}
+*/
+
+
+
+/* DTB, MNET, REVISTA: ultimo separador	*/
+/* c/rodape include => adotar este estilo em todo o site	*/
+table.conteudoGeral td.geralDotTop div.linhaDotBot {
+	text-align: right;
+	height: 12px;
+	padding-left: 18px;
+	padding-right: 18px;
+	padding-bottom: 10px;
+}
+
+/* separdor seta sobe	*/
+table.conteudoGeral td.geralDotTop div.linhaDotBot {
+	text-align: right;
+	height: 12px;
+	padding-left: 18px;
+	padding-right: 18px;
+	padding-bottom: 10px;
+}
+
+
+
+/* Revista: separador com texto link	*/
+table.conteudoGeral td.geralDotTop div.linhaLinkBot {
+	text-align: right;
+	height: 12px;
+	padding-left: 18px;
+	padding-right: 18px;
+	padding-bottom: 20px;
+}
+
+/* Revista: ARTIGOS POR AUTOR = entreL separa autor	*/
+td.geralDotTop div.linhaSem {
+	text-align: right;
+	margin-top: 35px;
+	padding-left: 102px;
+	padding-bottom: 20px;	
+	padding-right: 18px;
+}
+
+/*		*/
+/* Revista: entreL topo	*/
+td.geralDotTop div.linhaSemS {
+	text-align: right;
+	margin-top: 10px;
+	padding-left: 87px;
+	padding-bottom: 10px;	
+	padding-right: 18px;
+}
+
+
+/* Revista: ARTIGOS POR AUTOR = Autor	*/
+td.geralDotTop div.linhaSem #linhaDotCenter {
+	position: absolute;
+	width: 581px;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: bold;
+	text-align: left;
+	color:	#80879c;
+	left: 102px;
+	border-bottom: 1px dashed #666666;
+	padding-bottom: 5px;
+}
+
+/* Revista: ARTIGOS POR AUTOR = Seta sobe	*/
+td.geralDotTop div.linhaSem #linhaSeta	{
+	position: absolute;
+	left: 728px;
+	width: 10px;
+	text-align: right;
+	padding-top: 10px;
+}
+
+
+/* Revista: ARTIGOS = outros artigos deste numero	*/
+table.conteudoGeral td.geralDotTop div.linhaLinkTopR {
+	text-align: right;
+	height: 12px;
+	padding-left: 102px;
+	padding-right: 21px;
+	padding-bottom: 10px;
+}
+
+/* Revista: ARTIGOS = outros artigos deste numero	*/
+table.conteudoGeral td.geralDotTop div.linhaLinkTopR .tx a {
+	font-size: 10px;
+	font-style: normal;
+	font-weight: normal;
+	text-align: right;
+	color:	#CC6600;
+	text-decoration: none;
+	padding-right: 24px;
+	padding-left: 102px;
+}
+
+/* Revista: ARTIGOS = outros artigos deste numero	*/
+table.conteudoGeral td.geralDotTop div.linhaLinkTopR .tx a:hover {
+	text-decoration: underline;
+}
+
+/* Revista: ARTIGOS = outros artigos deste numero	*/
+table.conteudoGeral td.geralDotTop div.linhaLinkTopR a img {
+	padding-left: 10px;
+}
+
+
+
+/* Revista: ARTIGOS = tx link artigo na integra	*/
+table.conteudoGeral td.geralDotTop div.linhaLinkR2 {
+	text-align: right;
+	padding-left: 102px;
+	padding-right: 21px;
+	padding-bottom: 0px;
+}
+
+/* Revista: ARTIGOS = tx link artigo na integra	*/
+table.conteudoGeral td.geralDotTop div.linhaLinkR2 .tx a {
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	text-align: right;
+	color:	#CC6600;
+	text-decoration: none;
+	padding-right: 24px;
+	padding-left: 102px;
+}
+
+/* Revista: ARTIGOS = tx link artigo na integra	*/
+table.conteudoGeral td.geralDotTop div.linhaLinkR2 .tx a:hover {
+	text-decoration: underline;
+}
+
+/* Revista: ARTIGOS = tx link artigo na integra	*/
+table.conteudoGeral td.geralDotTop div.linhaLinkR2 a img {
+	padding-left: 10px;
+}
+
+
+
+/* Revista: ARTIGOS = separador pontilhado	*/
+td.geralDotTop #linhaDotCenterR {
+	position: relative;
+	width: 585px;
+	left: 102px;
+	border-bottom: 1px dashed #666666;
+	margin-top: 20px;
+	padding-bottom: 5px;
+}
+
+/* Revusta: ARTIGOS: img AdobeAcrobtReader	*/
+#LinkAcrobat {
+	position: relative;
+	width:158px;
+	height:39px;
+	z-index:3;
+	left: 102px;
+	margin-bottom: -5px;
+}
+	
+
+
+
+/* MNET: Faq, Contato	*/
+.txOcre	{
+	color: #cc4900;
+}
+
+
+/* MNET: biblio  */
+.txOcreBold	{
+	color: #cc4900;
+	font-weight: bold; 
+}
+
+
+/* HIPERTX: index, assinatura	*/
+.txAzulBold {
+	color: #80879c;
+	font-weight: bold;
+}
+
+
+
+/* MNET: biblio destaque  *//* alterado para Revista = Normas de envio de artigos	*/
+/* Revista: ARTIGO = autor	*/
+td.geralDotTop p.txDestBold	{
+	font-size: 14px;	
+	font-weight: bold; 
+	line-height: 20px;
+	color: #705258;
+	margin-right: 73px;
+	padding-left: 102px;
+	padding-bottom: 10px;
+}
+
+/* Revista: ARTIGO = autor	*/
+td.geralDotTop p.txDestBold span.txBKtab34	{
+	font-size: 12px;	
+	font-weight: normal;
+	font-style: normal;
+	color:	#80879c;
+	line-height: 20px;	
+	padding-left: 0px;
+}
+
+
+
+
+
+
+
+
+
+
+
+/*	MNET: Contato	*/
+table.formContato	{
+	width: 650px;
+}
+
+/*	MNET: Contato	*/
+td.contatoTx	{
+	width: 130px;
+	text-align: right;
+	vertical-align: top;
+}
+
+/*	MNET: Contato	*/
+td.inputContato	{
+	width: 390px;
+	vertical-align: top;
+}
+
+td.inputEnviar	{
+	width: 130px;
+	vertical-align: bottom;
+}	
+
+/* Form: Pesquisa => define With SELECT  */
+div.imputTxAreaC select { 
+	font-size: 100%; 
+	width: 288px;
+	vertical-align: top;
+}
+
+
+
+
+
+
+/* --- Ajustar na edicao do MNET, depois excluir do CSS REVISTA----- */
+/* HOME: DTB  */
+table.conteudoGeral td.homeDTB {
+	border-top: 9px solid #737A57;
+	vertical-align: top;
+	background: #FFFFFF url("../figs/dtb_home_ilustra.gif") no-repeat top left;
+}
+
+/* HOME: DTB  */
+table.conteudoGeral td.resultadoDTB {
+	border-top: 9px solid #737A57;
+	vertical-align: top;
+	padding-left: 18px;
+}
+
+
+
+/* dtb_index: Titulo */
+td.homeDTB p.tituBKtx	{
+	font-size: 15px;
+ 	padding-left: 210px;
+	padding-top: 20px;
+}
+
+/* PAG RESULTADO: Titulo  */
+table.conteudoGeral td.resultadoDTB p.tituBKtx	{
+	font-size: 15px;
+	padding-top: 10px;
+}
+
+
+/* dtb_index: tx apresentacao  */
+td.homeDTB p.txBig	{
+	font-size: 13px;
+	color: #000000;
+ 	padding-left: 210px;
+	padding-right: 37px;
+	color: #333333;
+}
+
+
+
+/*	? usado	?	*/
+/* dtb_index: Assina: Marta */
+td.homeDTB p.txVerde	{
+	font-style: italic;
+	font-weight: normal;
+	text-align:right;
+	line-height: 20px;
+	color: #616948;
+	padding-top: 5px;
+	padding-right: 37px;
+	padding-bottom: 25px;
+}
+
+
+
+/*	? usado	?	*/
+/* dtb_index: Assina: Borges */
+td.homeDTB p.txVerdeSmall	{
+	font-size: 11px;
+	font-style: italic;
+	font-weight: normal;
+	text-align:right;
+	line-height: 20px;
+	color: #616948;
+	padding-right: 37px;
+	padding-bottom: 20px;
+}
+
+
+/* PAG RESULTADO: voce pesquisou... */
+table.conteudoGeral td.resultadoDTB p.txVerdeSmall	{
+	font-size: 11px;
+	color: #616948;
+	line-height: 15px;
+	padding-right: 18px;
+}
+
+/* PAG RESULTADO: livro, conto */
+table.resultado	td.vazio {
+	width: 18px;
+	vertical-align: top;
+}
+
+table.resultado	td.colLeft {
+	width: 432px;
+	vertical-align: top;
+}
+
+
+table.colLeftResultado td.bgVerde  {
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	color: #4A4643;
+	vertical-align: middle;
+	background-color: #D0D488;
+	padding-top: 2px;
+	padding-right: 4px;
+	padding-botton: 2px;
+	padding-left: 10px;
+	border-bottom: 2px solid #FFFFFF;
+}
+
+
+table.colLeftResultado td.bgVerde .tx	{
+	font-size: 12px;
+	font-style: normal;
+	font-weight: bold;
+	color: #000000;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+
+table.colLeftResultado td.bgWLinhaV  {
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	color: #4A4643;
+	vertical-align: middle;
+	padding-top: 2px;
+	padding-right: 4px;
+	padding-botton: 2px;
+	padding-left: 10px;
+	border-bottom: 2px solid #D0D488;
+}
+
+
+table.colLeftResultado td.bgWLinhaV .tx	{
+	font-size: 12px;
+	font-style: normal;
+	font-weight: bold;
+	color: #000000;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+table.colLeftResultado td.bgW  {
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	color: #4A4643;
+	vertical-align: middle;
+	padding-right: 10px;
+	padding-botton: 4px;
+}
+
+
+div.trechoTX textarea { 
+	font-size: 12px;
+	line-height: 16x; 
+	width: 424px;
+	vertical-align: top;
+}
+
+
+table.resultado	td.colRight {
+	width: 270px;
+	vertical-align: top;
+}
+
+
+
+
+
+
+
+/* ------ INCLUDES -----	*/
+
+
+/* ------ INCLUDES -----	*/
+
+/* RODAPE: revisao -> versao com INCLUDE	*/
+
+/* RODAPE: menu texto */
+#linhaSemRod2 {
+	position: relative;
+	width: 756px;
+	text-align: center;
+	vertical-align: baseline;
+	background: #EBEACA url("../figs/fioRodape.gif") no-repeat top center;
+	padding-top: 3px;
+
+}
+
+#linhaSemRod2 p.txVerdeSmall 	{
+	letter-spacing: 0.1em;  /* usado tx menus  */
+	color: #616948;
+}
+
+#linhaSemRod2 p.txVerdeSmall a {
+	letter-spacing: 0.1em;  /* usado tx menus  */
+	color: #616948;
+}
+
+#linhaSemRod2 p.txVerdeSmall a:visited {
+	text-decoration: none;
+	letter-spacing: 0.1em;  /* usado tx menus  */
+	color: #616948;
+}
+
+#linhaSemRod2 p.txVerdeSmall a:hover {
+	text-decoration: underline;
+	color: #CC6600;
+}
+
+/* RODAPE: Nome do site */
+#linhaSemRod2 p.txVerde 	{
+	font-size: 10px;
+	color: #616948;
+	padding-bottom: 20px;
+}
+
+
+/* RODAPE: include posicionamento  */
+.clearing {
+	height: 0;
+	clear: both;
+}
+
+/* RODAPE: include posicionamento */
+#rodape {
+	margin-bottom: 20px;
+}
+
+
+
+
+/* MenuTop: include posicionamento */
+#menuTopHere {
+	position: absolute;
+	background: #CC0000;	
+}
+
+
+
+
+
+/* ------ ILUSTRACORES MNET e DTB-----	*/
+
+
+
+
+
+/* FIM - style sheet */

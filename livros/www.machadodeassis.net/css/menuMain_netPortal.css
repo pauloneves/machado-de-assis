@@ -1,0 +1,245 @@
+/* DIV chama MainMenu */
+#CallFileMenu {
+	left: 622px; 	/*left: 371px; */ 
+	width: 134px;	/* width: 385px */
+}
+
+/* class do DIV */
+.mMainCall	{
+	position: absolute;
+	z-index: 555;
+}
+
+/* MainMenu */
+/* DIV contendo MainMenu*/
+/*
+#fileMainMenu {
+	left: 371px; 
+	width: 385px
+}
+*/
+
+/* class do DIV */
+.mMenu {
+	position: absolute;
+	z-index: 999;
+}
+
+
+
+
+
+
+/* -- botoes do MainMenu, usando figs-- */
+/* bt: QUERO IR PARA, pags portal */
+#btmM_00portal	{
+  display: block;
+  width: 385px;
+  height: 26px;
+  background: url("../figs/mM_00134_portal.png") no-repeat 0 0;
+}
+#btmM_00portal:hover	{ 
+  background-position: 0 -26px;
+}
+#btmM_00portal span{
+  display: none;
+}
+
+/* bt: QUERO IR PARA, site pesquisa */
+#btmM_00dtb	{
+  display: block;
+  width: 385px;
+  height: 26px;
+  background: url("../figs/mM_00134_dtb.png") no-repeat 0 0;
+}
+#btmM_00dtb:hover	{ 
+  background-position: 0 -26px;
+}
+#btmM_00dtb span	{
+  display: none;
+}
+
+/* bt: QUERO IR PARA, site revista */
+#btmM_00rev	{
+  display: block;
+  width: 134px; /* width: 385px; */
+  height: 26px;
+  background: url("../figs/mM_00134_rev.png") no-repeat 0 0; /* background: url("../figs/mM_00_rev.png") no-repeat 0 0; */
+}
+#btmM_00rev:hover	{ 
+  background-position: 0 -26px;
+}
+#btmM_00rev span{
+  display: none;
+}
+
+/* bt: QUERO IR PARA, site hipertexto */
+#btmM_00rht	{
+  display: block;
+  width: 385px;
+  height: 26px;
+  background: url("../figs/mM_00134_rht.png") no-repeat 0 0;
+}
+#btmM_00rht:hover	{ 
+  background-position: 0 -26px;
+}
+#btmM_00rht span{
+  display: none;
+}
+
+
+/* bt: link p/site pesquisa */
+
+#btmM_dtb	{
+  display: block;
+  width: 385px;
+  height: 26px;/* 42px */
+  background: url("../figs/mM_dtb_v02.png") no-repeat 0 0; /* mM_dtb.png */
+}
+
+
+#btmM_dtb:hover	{ 
+  background-position: 0 -26px; /* -42px */
+}
+#btmM_dtb span{
+  display: none;
+}
+
+
+/* bt: link p/site revista */
+#btmM_rev	{
+  display: block;
+  width: 385px;
+  height: 26px;/* 42px */
+  background: url("../figs/mM_rev_v02.png") no-repeat 0 0; /* mM_rev.png */ 
+}
+#btmM_rev:hover	{ 
+  background-position: 0 -26px; /* -42px */
+}
+#btmM_rev span{
+  display: none;
+}
+
+/* ANTIGO DA CRISTINA */
+/* bt: site romances hipertexto */
+/* #btmM_rht	{               */
+/*  display: block; */
+/*  width: 385px;  */
+/*  height: 26px;*/ /* 42px */
+/*  background: url("../figs/mM_rht_v02.png") no-repeat 0 0;*/ /* mM_rht.png */
+/*}  */
+/*#btmM_rht:hover	{ */
+/*  background-position: 0 -26px; */ /* -42px */
+/*}  */
+/*#btmM_rht span{ */
+/*  display: none; */
+/*}  */
+
+
+/******************************************  NOVO EDUARDO ********************************************************************************************/
+/* bt: site romances hipertexto */
+#btmM_rht	{
+  display: block;
+  width: 385px;
+  height: 26px;/* 42px */
+  background: url("../figs/mM_rht_v022.png") no-repeat 0 0; /* mM_rht.png */
+}
+#btmM_rht:hover	{
+  background-position: 0 -26px; /* -42px */
+}
+#btmM_rht span{
+  display: none;
+}
+
+/*****************************************  NOVO EDUARDO *******************************************************************************************/
+
+
+
+/* bt: biografia */
+#btmM_bio	{
+  display: block;
+  width: 193px; /* 385px */
+  height: 26px;
+  background: url("../figs/mM_bio_v02.png") no-repeat 0 0; /* mM_bio.png */
+}
+#btmM_bio:hover	{ 
+  background-position: 0 -26px;
+}
+#btmM_bio span{
+  display: none;
+}
+
+
+/* bt: bibliografia */
+#btmM_biblio	{
+  display: block;
+  width: 193px; /* 385px */
+  height: 26px;
+  background: url("../figs/mM_biblio_v02.png") no-repeat 0 0; /* mM_biblio.png */
+}
+#btmM_biblio:hover	{ 
+  background-position: 0 -26px;
+}
+#btmM_biblio span{
+  display: none;
+}
+
+
+/* bt: faq */
+#btmM_faq	{
+  display: block;
+  width: 193px; /* 385px */
+  height: 28px; /* 26px */
+  background: url("../figs/mM_faq_v02.png") no-repeat 0 0; /* mM_faq.png */
+}
+#btmM_faq:hover	{ 
+  background-position: 0 -28px; /* -26px */
+}
+#btmM_faq span{
+  display: none;
+}
+
+
+/* bt: pag de links */
+#btmM_links	{
+  display: block;
+  width: 192px; /* 385px */
+  height: 26px;
+  background: url("../figs/mM_links_v02.png") no-repeat 0 0; /* mM_links.png */
+}
+#btmM_links:hover	{ 
+  background-position: 0 -26px;
+}
+#btmM_links span{
+  display: none;
+}
+
+
+/* bt: equipe */
+#btmM_equipe	{
+  display: block;
+  width: 192px; /* 385px */
+  height: 26px;
+  background: url("../figs/mM_equipe_v02.png") no-repeat 0 0; /* mM_equipe.png */
+}
+#btmM_equipe:hover	{ 
+  background-position: 0 -26px;
+}
+#btmM_equipe span{
+  display: none;
+}
+
+
+/* bt: contato */
+#btmM_contato	{
+  display: block;
+  width: 192px; /* 385px */
+  height: 28px;
+  background: url("../figs/mM_contato_v02.png") no-repeat 0 0; /* mM_equipe.png */
+}
+#btmM_contato:hover	{ 
+  background-position: 0 -28px;
+}
+#btmM_contato span{
+  display: none;
+}

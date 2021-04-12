@@ -1,0 +1,1076 @@
+/* Machado de Assis. net - 2007 */ 
+/* http.machadodeassis.net - 2007 */ 
+/* multiplas paginas usam esse estilo */
+/* nao modificar sem autorizacao */ 
+/* criado em: jul07 - cverdade */ 
+/* modificado em: jun 2009 - cverdade */ 
+/* cverdade: http://www.dverdade.com.br */
+/* historico: ajustes em funcao de novo menu e layout de portal */ 
+
+/* Folha de estilo base: estilo_geral.css */
+
+/* INICIO - style sheet */ 
+
+body {
+	font-family: Verdana, Arial, Helvetica, Sans-serif;
+	font-size: 80%;
+	color: #000000;
+	background:#EBEACA;
+	margin: 0 0 20px 0;
+}
+
+
+
+/* GERAL BASICO */
+
+/* definica h */
+/*
+h1,h2,h3,h4,h5,p { margin: 0; padding: 0; }
+*/
+
+h1	{
+	font-family: Verdana, Arial, Helvetica, Sans-serif;
+	font-size: 14px;	
+	font-style: normal;
+	font-weight: bold;
+	line-height: 18px;
+	color:	#CC6600;
+	padding: 0 0 0 18px; 
+}
+
+
+a:link	{
+	text-decoration: none;
+}
+
+
+/* form */
+input,textarea,select,option { font-family: Verdana, Arial, Helvetica, Sans-serif; }
+
+.hidden { display: none; } /* usado: textos e instrucoes para sofwares leitores */
+
+
+/* ------ ILUSTRACORES MNET e DTB-----	*/
+/* ilustraco: index geral => mudar ou deletar PORTAL n“o tem ilustacao de aberura  */
+#fig00 {
+	position:absolute;
+	width:200px;
+	height:180px;
+	z-index:10;
+	left: 530px;
+	top: 229px;
+	background: url(../figs/fig_mnet_index.gif) no-repeat top center;
+}
+
+
+/* ilustracao: biografia  */
+#fig01 {
+	position:absolute;
+	width: 151px;
+	height: 131px;
+	z-index:3;
+	left: 592px;
+	top: 239px;
+	background:  url(../figs/fig001.gif) no-repeat top left;	
+}
+
+
+/* ilustracao: bibliografia  */
+#fig02 {
+	position:absolute;
+	width: 168px;
+	height: 150px;
+	z-index:3;
+	left: 579px;
+	top: 211px;
+	background: url(../figs/fig0002.gif) no-repeat top left;	
+}
+
+/* ilustracao: faq  */
+#fig03 {
+	position:absolute;
+	width: 180px;
+	height: 127px;
+	z-index:3;
+	left: 564px;
+	top: 221px;
+	background: url(../figs/fig003.gif) no-repeat top left;	
+}
+
+/* ilustracao: links  */
+#fig04 {
+	position:absolute;
+	width: 168px;
+	height: 150px;
+	z-index:3;
+	left: 530px;
+	top: 211px;
+	background: url(../figs/fig0002.gif) no-repeat top left;	
+}
+
+
+
+#headBG	{
+	width: 756px;
+	height: 131px;
+	background-color: #9CA08E;
+}
+
+#headBGRevista	{
+	width: 756px;
+	height: 131px;
+	background: #9CA08E url("../figs/revista_emconstrucao.gif");
+}
+
+
+
+#headFig	{
+	width: 110px;
+	height: 114px;
+	position: absolute;
+	left: 0;
+	top: 17px;
+	background-image: url("../figs/head_mnet_fig.png");
+}
+
+#headFigHome	{
+	width: 110px;
+	height: 147px;
+	position: absolute;
+	left: 0;
+	top: 17px;
+	background-image: url("../figs/head_mnet_figHome.png");
+}
+
+
+/* posiciona MENU ORELHAS, MNET: so faixa branca */
+#menu	{
+	width: 421px; /* width: 416px; */
+	height: 18px;
+	position: absolute;
+	left: 110px;
+	top: 113px;	/* top: 88px;	 */
+	background-color: #FFFFFF;	
+	z-index: 2;
+}
+
+
+
+
+
+/* SubMenu |INICIO|VOLTAR|CONTATO| */
+#putMenuTop {
+	width: 245px;  /* W=195  */
+	height: 18px;
+	position: absolute;
+	left: 511px;  /* 756-(38+69+69+69)=  */
+	top: 113px;
+	z-index: 3;
+}
+
+table td.menuTop0 {
+	width: 38px;		
+	height: 18px;
+	text-align:	left;
+/*	text-align:	right; */	
+	background-color: #FFFFFF;	
+}
+table td.menuTop123 {
+	width: 69px;	
+	height: 18px;
+	text-align:	right;	
+	background-color: #FFFFFF;	
+}
+
+/* bot“o CONTATO */
+#btContato
+{
+  display: block;
+  width: 69px;
+  height: 18px;
+  background: url("../figs/menuTop_contato.png") no-repeat 0 0;
+}
+#btContato:hover
+{ 
+  background-position: 0 -18px;
+}
+#btContato span
+{
+  display: none;
+}
+
+/* bot“o VOLTAR */
+#btVoltar
+{
+  display: block;
+  width: 69px;
+  height: 18px;
+  background: url("../figs/menuTop_voltar.png") no-repeat 0 0;
+}
+#btVoltar:hover
+{ 
+  background-position: 0 -18px;
+}
+#btVoltar span
+{
+  display: none;
+}
+
+/* bot“o INICIO */
+#btInicio
+{
+  display: block;
+  width: 69px;
+  height: 18px;
+  background: url("../figs/menuTop_inicio.png") no-repeat 0 0;
+}
+#btInicio:hover
+{ 
+  background-position: 0 -18px;
+}
+#btInicio span
+{
+  display: none;
+}
+
+
+
+/*	-----	*/
+
+
+
+
+
+
+#headTitu	{
+	width: 418px;
+	height: 38px;
+	position: absolute;
+	left: 154px;
+	top: 27px;
+}
+
+/* PESQUISA */
+/* PESQUISA: posicao area do form  */
+#tituSecao	{
+	font-size: 16px;
+	width: 738px;  /* 756-18=738  */
+	position: absolute;
+	color: #4B4841;
+	background-color:: #FFFFFF;
+	top: 158px;
+	padding-left: 18px;	
+}
+
+
+
+
+
+td.dots	{
+	width: 18px;
+	height: 23px;
+}
+
+
+
+
+/* GERAL  */
+/* Textos, Titulos, SubTitus, Separdores */
+.tituBKtx	{
+	font-size: 14px;
+	font-style: normal;
+	font-weight: normal;
+}
+
+
+
+.tx	{
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 20px;
+	color: #333333;
+}
+
+.txBig	{
+	font-size: 14px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 22px;
+	color: #333333;
+}
+
+.txVerde	{
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 20px;
+	color: #616948;
+}
+
+.txVerdeSmall	{
+	font-size: 10px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 20px;
+	color: #616948;
+}
+
+td.dotsSepara	{
+	border-top: 1px dashed #000000;
+}
+
+td.rodapeSepara	{
+	text-align: center;
+	background: #EBEACA url("../figs/fioRodape.gif") no-repeat top center;
+}
+
+
+
+
+/*   */
+/* CONTEUDO  */
+#conteudo	{
+	width: 756px;
+	position: absolute;
+	background-color:: #FFFFFF;
+	top: 188px;
+}
+
+table.conteudoGeral {
+	width: 756px;
+	vertical-align: top;
+	background-color: #FFFFFF;
+/*	border-bottom: 20px solid #EBEACA;	*/
+}
+
+table.conteudoMain {
+	width: 720px;
+	vertical-align: top;
+	background-color: #FFFFFF;
+	border-: 20px solid #EBEACA;
+}
+
+
+
+
+/*-------*/
+
+/*
+table.conteudoGeral td.semBG {
+	background-color: #EBEACA;
+}
+*/
+
+/* area conteudo: FAQ  */
+
+
+/* MNET: area top pontilhado  */
+table.conteudoGeral td.geralDotTop {
+	border-top: 1px dashed #666666;
+	vertical-align: top;
+	padding-top: 10px;
+}
+
+
+/*-----*/
+table.conteudoGeral td.semBG {
+	background-color: #EBEACA;
+}
+
+
+/*------*/
+
+
+/* MNET index: area top pontilhado  */
+table.conteudoGeralMain td.geralDotTopMain {
+	border-top: 1px dashed #666666;
+	vertical-align: top;
+	padding-top: 10px;
+
+}
+
+/* MNET: titu FAQ */
+td.geralDotTop p.tituOcre	{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 20px;
+	color: #cc4900;
+	padding-top: 20px;
+	padding-left: 18px;
+	padding-right: 180px;
+}
+
+
+ul.tituOcre li	{
+	line-height: 22px;
+	padding-bottom: 10px;
+}
+
+.tituOcre2Bold	{
+	font-style: normal;
+	font-weight: Bold;
+	font-size: 16px;
+	line-height: 20px;
+	color: #cc4900;
+	padding-top: 20px;
+	padding-left: 0px;
+	padding-right: 180px;
+}
+
+
+/* Destaques TITU */
+.tituOcre1Bold	{
+	font-style: normal;
+	font-weight: Bold;
+	font-size: 14px;
+	line-height: 20px;
+	color: #cc4900;
+/*	padding-top: 20px;
+	padding-left: 0px;
+	padding-right: 180px;
+*/}
+
+td.geralDotTop p.tituOcreL0 {
+	text-decoration:underline
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 16px;
+	color: #cc4900;
+	padding-top: 20px;
+	padding-left: 18px;
+	padding-right: 180px;
+}
+
+td.geralDotTop p.tituOcreL0	a {
+	text-decoration:underline;
+}
+
+td.geralDotTop p.tituOcreL0	img a {
+	text-decoration: none;
+}
+
+div.ListaFaq	{
+	padding-left: 18px;
+}
+
+/* MNET: titu Equipe/dtb */
+td.geralDotTop p.tituVerdeE	{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 13px;
+	line-height: 20px;
+	color: #747b6c;
+	padding-top: 20px;
+	padding-left: 18px;
+	padding-bottom: 10px;
+	padding-right: 180px;
+}
+
+/* MNET: titu Equipe/dtb */
+td.geralDotTop p.tituVerde	{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 13px;
+	line-height: 20px;
+	color: #616948;
+	padding-top: 20px;
+	padding-left: 18px;
+	padding-bottom: 10px;
+	padding-right: 180px;
+}
+
+/* MNET: titu Equipe/Revista */
+td.geralDotTop p.tituLilaz	{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 13px;
+	line-height: 20px;
+	color: #663366;
+	padding-top: 20px;
+	padding-left: 18px;
+	padding-bottom: 10px;
+	padding-right: 180px;
+}
+
+/* MNET: titu Equipe/Hipertexto */
+td.geralDotTop p.tituAzulC	{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 13px;
+	line-height: 20px;
+	color: #525a75;
+	padding-top: 20px;
+	padding-left: 18px;
+	padding-bottom: 10px;
+	padding-right: 180px;
+}
+
+/* MNET: titu Revista */
+td.geralDotTop p.meiaL	{
+	line-height: 4px;
+}
+
+
+
+
+td.geralDotTop .txVerde	{
+	margin-left: 18px;
+	margin-right: 180px;
+
+}
+
+
+/* DTB: AJUDA  */
+/* MNET: Contato  */
+td.geralDotTop p.txBKtab0	{
+	font-size: 13px;
+	line-height: 20px;	
+	padding-left: 18px;
+	padding-right: 180px;
+}
+
+/* MNETTx: FAQ  */
+td.geralDotTop p.txBKtab1	{
+	font-size: 13px;
+	line-height: 20px;	
+	padding-left: 38px;
+	padding-right: 180px;
+}
+
+
+/* Tx: Equipe ??  */
+td.geralDotTop p.txBKtab2	{
+	font-size: 13px;
+	line-height: 20px;	
+	padding-left: 42px;
+	padding-right: 180px;
+}
+
+/* Tx: EQUIPE  */
+td.geralDotTop p.txBKtab2	{
+	font-size: 13px;
+	line-height: 20px;
+	color: #616948;
+	padding-left: 42px;
+	padding-right: 100px;  /* 180px */
+}
+
+
+/*MNET: Equipe nome ??  */
+p.txBKtab2 .ocreCreditos	{
+	font-size: 13px;
+	font-style: normal;
+	font-weight: normal;
+	color: #cc4900;
+
+}
+
+td.geralDotTop a	{
+	text-decoration: underline;
+	color: #cc4900;
+}
+
+td.geralDotTop a:hover	{
+	color: #7A7E6D;
+}
+
+
+
+
+/* FAQ: lista perguntas  */
+.ItensListTitu	{
+	margin-left: 0px;
+}
+
+
+ul.ItensListOcre {
+	list-style: decimal;
+ 	font-size: 14px;
+	line-height: 20px;
+	font-weight: bold;
+	color: #cc4900;
+	margin: 0 180px 0 0px !important;
+}
+
+ul.ItensListOcre li {
+	font-weight: bold;
+	padding-bottom: 10px;
+	margin-left: 0px;
+}
+
+ul.ItensListOcre li a {
+	text-decoration: underline;
+	font-weight: normal;
+}
+
+
+
+
+/* FAQ: lista dot  */
+.dotListTitu	{
+	margin-left: 0px;
+}
+
+
+ul.dotList {
+ 	font-size: 13px;
+	line-height: 20px;	
+	margin: 0 180px 10 0px !important;
+}
+
+ul.dotList li {
+	padding-bottom: 10px;
+	margin-left: 18px;
+}
+
+
+
+
+p.setaSobe	{
+	text-align: right;
+
+}
+
+
+table.conteudoGeral td.geralDotTop div.linhaDot {
+	text-align: right;
+	border-bottom: 1px dashed #666666;
+	height: 12px;
+	padding-left: 18px;
+	padding-right: 18px;
+	padding-bottom: 10px;
+}
+
+/* DTB, MNET, REVISTA: ultimo separador	*/
+/* c/rodape include => adotar este estilo em todo o site	*/
+table.conteudoGeral td.geralDotTop div.linhaDotBot {
+	text-align: right;
+	height: 12px;
+	padding-left: 18px;
+	padding-right: 18px;
+	padding-bottom: 10px;
+}
+
+
+
+
+/* MNET: Faq, Contato	*/
+.txOcre	{
+	color: #cc4900;
+}
+
+
+/* MNET: biblio  */
+.txOcreBold	{
+	color: #cc4900;
+	font-weight: bold; 
+}
+
+
+/* MNET: biblio destaque  */
+.txDestBold	{
+	color: #616554;
+	font-weight: bold; 
+}
+
+
+
+
+
+
+table.formContato	{
+	width: 650px;
+}
+
+td.contatoTx	{
+	width: 130px;
+	text-align: right;
+	vertical-align: top;
+}
+
+td.inputContato	{
+	width: 390px;
+	vertical-align: top;
+}
+
+td.inputEnviar	{
+	width: 130px;
+	vertical-align: bottom;
+}	
+
+/* Form: Pesquisa => define With SELECT  */
+div.imputTxAreaC select { 
+	font-size: 100%; 
+	width: 288px;
+	vertical-align: top;
+}
+
+
+
+
+
+
+/* --- Ajustar na edicao do MNET ----- */
+/* HOME: DTB  */
+table.conteudoGeral td.homeDTB {
+	border-top: 9px solid #737A57;
+	vertical-align: top;
+	background: #FFFFFF url("../figs/dtb_home_ilustra.gif") no-repeat top left;
+}
+
+/* HOME: DTB  */
+table.conteudoGeral td.resultadoDTB {
+	border-top: 9px solid #737A57;
+	vertical-align: top;
+	padding-left: 18px;
+}
+
+/*
+.tituBKtx	{
+	font-size: 14px;
+	font-style: normal;
+	font-weight: normal;
+}
+*/
+
+/* dtb_index: Titulo */
+td.homeDTB p.tituBKtx	{
+	font-size: 15px;
+ 	padding-left: 210px;
+	padding-top: 20px;
+}
+
+/* PAG RESULTADO: Titulo  */
+table.conteudoGeral td.resultadoDTB p.tituBKtx	{
+	font-size: 15px;
+	padding-top: 10px;
+}
+
+/*
+.txBig	{
+	font-size: 14px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 22px;
+	color: #333333;
+}
+*/
+
+/* dtb_index: tx apresentacao  */
+td.homeDTB p.txBig	{
+	font-size: 13px;
+	color: #000000;
+ 	padding-left: 210px;
+	padding-right: 37px;
+	color: #333333;
+}
+
+/* dtb_index: Frase  */
+td.homeDTB p.dtbHomeFrase	{
+	text-align:right;
+	padding-top: 15px;
+	padding-right: 35px;
+}
+
+
+/* dtb_index: Assina: Marta */
+td.homeDTB p.txVerde	{
+	font-style: italic;
+	font-weight: normal;
+	text-align:right;
+	line-height: 20px;
+	color: #616948;
+	padding-top: 5px;
+	padding-right: 37px;
+	padding-bottom: 25px;
+}
+
+/* dtb_index: Assina: Borges */
+td.homeDTB p.txVerdeSmall	{
+	font-size: 11px;
+	font-style: italic;
+	font-weight: normal;
+	text-align:right;
+	line-height: 20px;
+	color: #616948;
+	padding-right: 37px;
+	padding-bottom: 20px;
+}
+
+/* PAG RESULTADO: voce pesquisou... */
+table.conteudoGeral td.resultadoDTB p.txVerdeSmall	{
+	font-size: 11px;
+	color: #616948;
+	line-height: 15px;
+	padding-right: 18px;
+}
+
+/* 
+td.vazio {
+	width: 18px;
+	height: 23px;
+}
+*/
+
+/* PAG RESULTADO: livro, conto */
+table.resultado	td.vazio {
+	width: 18px;
+	vertical-align: top;
+}
+
+table.resultado	td.colLeft {
+	width: 432px;
+	vertical-align: top;
+}
+
+
+table.colLeftResultado td.bgVerde  {
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	color: #4A4643;
+	vertical-align: middle;
+	background-color: #D0D488;
+	padding-top: 2px;
+	padding-right: 4px;
+	padding-botton: 2px;
+	padding-left: 10px;
+	border-bottom: 2px solid #FFFFFF;
+}
+
+
+table.colLeftResultado td.bgVerde .tx	{
+	font-size: 12px;
+	font-style: normal;
+	font-weight: bold;
+	color: #000000;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+
+table.colLeftResultado td.bgWLinhaV  {
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	color: #4A4643;
+	vertical-align: middle;
+	padding-top: 2px;
+	padding-right: 4px;
+	padding-botton: 2px;
+	padding-left: 10px;
+	border-bottom: 2px solid #D0D488;
+}
+
+
+table.colLeftResultado td.bgWLinhaV .tx	{
+	font-size: 12px;
+	font-style: normal;
+	font-weight: bold;
+	color: #000000;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+/* incompleto => ver limpar*/
+/*
+table.colLeftResultado td.bgW  {
+	font-
+}	
+*/
+
+
+/* RODAPE: revisao -> versao com INCLUDE	*/
+
+/*------*/
+table.entraRodape {
+	width: 756px;
+	vertical-align: top;
+	
+/*	border-bottom: 20px solid #EBEACA;	*/
+}
+/*------*/
+
+/* RODAPE: menu texto */
+#linhaSemRod2 {
+	position: relative;
+	width: 756px;
+	text-align: center;
+	vertical-align: baseline;
+	background: #EBEACA url("../figs/fioRodape.gif") no-repeat top center;
+	padding-top: 3px;
+
+}
+
+#linhaSemRod2 p.txVerdeSmall 	{
+	letter-spacing: 0.1em;  /* usado tx menus  */
+	color: #616948;
+}
+
+#linhaSemRod2 p.txVerdeSmall a {
+	text-decoration: none;
+	letter-spacing: 0.1em;  /* usado tx menus  */
+	color: #616948;
+}
+
+#linhaSemRod2 p.txVerdeSmall a:visited {
+	/*text-decoration: none;*/
+	letter-spacing: 0.1em;  /* usado tx menus  */
+	color: #616948;
+}
+
+#linhaSemRod2 p.txVerdeSmall a:hover {
+	text-decoration: underline;
+	color: #CC6600;
+}
+
+/* RODAPE: Nome do site */
+#linhaSemRod2 p.txVerde 	{
+	font-size: 10px;
+	color: #616948;
+	padding-bottom: 20px;
+}
+
+
+/* RODAPE: include posicionamento  */
+.clearing {
+	height: 0;
+	clear: both;
+}
+
+/* RODAPE: include posicionamento */
+#rodape {
+	margin-bottom: 20px;
+}
+
+
+
+/* SO INDEX */
+
+/* Area do conteudo: contem 2colunas	*/
+#contemCols	{
+	width: 756px;
+}
+
+
+/* Coluna a direita	*/
+#colDestaque	{
+	float: right;
+	width: 345px;
+/*	min-height: 100%;*/
+}
+
+#boxDestaqueTitu	{
+/*	display: block;*/
+	width: 148px;
+	height: 30px;
+	margin-top: 18px;
+/*	z-index: 3;*/
+	background: #FFFFFF url(../figs/mnet_destaque.png) no-repeat top center;
+}
+
+#boxDestaque	{
+/*	display: block;*/
+	width: 280px; /* 320-(20+20)*/
+/*	height: 30px;*/
+	/*left: 411px;*/
+	margin-bottom: 28px;
+	padding: 25px 20px 28px 20px;
+	border:  1px solid #8d9881;
+/*	background: #CCCCFF;*/
+}
+
+/* home: texto DESTAQUES */
+.txBKtab22	{
+	font-size: 13px;
+	line-height: 16px;
+	color: #616948;
+}
+
+span.txBKtab22	a {
+	text-decoration: none;
+	color: #616948;
+}
+
+span.txBKtab22	a:hover {
+	text-decoration: underline;
+	color: #616948;
+}
+
+/* home: separador DESTAQUES */
+.separa	{
+	height: 18px;
+
+}
+
+table.linksSites	{
+	width: 380px;
+	vertical-align: top;
+	margin-top: 18px;
+	margin-bottom: 28px;	
+}
+
+table.linksSites td.linkAcessoSite	{
+	width: 283px;
+	height: 57px;
+	vertical-align: top;
+}
+
+table.linksSites td.figSite	{
+	width: 97px;
+	height: 57px;
+	vertical-align: top;
+}
+
+table.linksSites td.entreL	{
+	height: 28px;
+	vertical-align: top;
+}
+
+/* -- */
+.txGreyBoldBig	{
+	font-size: 14px;	
+	font-style: normal;
+	font-weight: bold; 
+}
+
+
+p.txGreyBoldBig	{
+	line-height: 18px;
+	color:	#5a5a5a;	/* color:	#333333; */
+	margin: 0;
+	padding: 0;
+}
+
+span.txGreyIta	{
+	font-size: 12px;
+	font-weight: normal;
+	font-style: italic;
+}
+
+p.txGreyBoldBig span.txGreyIta	{
+	color:	#5a5a5a; 
+}
+
+p.txGreyBoldBig	a {
+	text-decoration: none;
+	color: #5a5a5a;
+}
+
+p.txGreyBoldBig	a:hover {
+	text-decoration: none;
+	color: #CC4900;
+}
+
+p.txGreyBoldBig	a  span.txGreyIta {
+	text-decoration: none;
+	color: #5a5a5a;
+}
+
+p.txGreyBoldBig	a:hover span.txGreyIta {
+	text-decoration: none;
+	color: #CC4900;
+}
