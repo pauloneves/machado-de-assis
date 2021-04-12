@@ -305,8 +305,8 @@ def gera_ebook(livro):
     epub.write_epub(f"kindle/{livro.h1.text}.epub", book)
 
 
-def processa():
-    livro = processa_livro("livros/Papéis avulsos_files/tx_Papeisavulsos.html")
+def processa(arq):
+    livro = processa_livro(arq)
     with open("livro_alterado.html", "w") as file:
         file.write(str(livro))
     gera_ebook(livro)
@@ -319,4 +319,9 @@ def extrai_subtitulo(h3):
 
 
 if __name__ == "__main__":
-    processa()
+    arquivos = [
+        # "livros/Papéis avulsos_files/tx_Papeisavulsos.html",
+        "livros/tx_variashistorias.htm",
+    ]
+    for arq in arquivos:
+        processa(arq)
