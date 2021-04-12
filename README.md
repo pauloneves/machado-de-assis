@@ -11,7 +11,7 @@
 ## TODO
 
 - [ ] fru fru na formatação
-- [ ] tirar sublinhado toc
+- [c] tirar sublinhado toc
 - [ ] fazer capa
 - [ ] fazer código específico para cada livro separado
 - [ ] Advertência duplicado

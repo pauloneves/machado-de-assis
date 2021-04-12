@@ -268,7 +268,7 @@ def gera_ebook(livro):
             h3_id = section.find("h3").attrs["id"]
 
             # primeira subsection/capítulo do conto fica na seção inicial do conto
-            if toc[-1][0].href:
+            if toc[-1][1] == []:
                 first_id = h3_id.split(".")[0] + ".1"
                 primeiro_capitulo = extrai_subtitulo(
                     BeautifulSoup(content, "html.parser").h3
