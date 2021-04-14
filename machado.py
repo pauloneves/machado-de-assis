@@ -1,9 +1,11 @@
 #!/bin/env python
 
-from bs4 import BeautifulSoup, Comment, Tag
 import re
-from ebooklib import epub
+from pathlib import Path
+
 import slugify
+from bs4 import BeautifulSoup, Comment, Tag
+from ebooklib import epub
 
 
 def get_livro(filename="livros/Papéis avulsos_files/tx_Papeisavulsos.html"):
@@ -80,9 +82,9 @@ def ajusta_titulos_capitulos(livro: BeautifulSoup):
             h3 = livro.new_tag("h3")
             h3.append(p[0].b)
             h3.append(livro.new_tag("br"))
-            # for i in p[1].b.contents:
-            #     h3.append(i)
-            h3.append(p[1].b)
+            if p[1].b is not None:
+                h3.append(p[1].b)
+
             p[0].insert_before(h3)
             p[0].decompose()
             p[1].decompose()
@@ -134,19 +136,20 @@ def append_notas(livro: BeautifulSoup, notas: dict):
     section.append(h2)
     livro.body.append(pg_break(livro))
     for nota, texto in notas.items():
-        note = livro.new_tag("p")
+        # note = livro.new_tag("p")
         aside = livro.new_tag("aside", id=nota, **{"epub:type": "footnote"})
         aside.append("● ")
         aside.append(BeautifulSoup(texto, "html.parser"))
 
-        note.append(aside)
-        note.insert(0, "\n ")
+        # note.append(aside)
+        # note.insert(0, "\n ")
 
         refback = livro.new_tag("a", href=link_back_nota(nota, livro))
 
         refback.append(" ☚ ")
         aside.append(refback)
-        section.append(note)
+        # section.append(note)
+        section.append(aside)
     livro.body.append(section)
 
 
@@ -252,7 +255,7 @@ def gera_ebook(livro):
                 content = ""
 
             capitulo = epub.EpubHtml(
-                title=section.h2.text.strip(" \n*"),
+                title=section.h2.text.strip(" \n*'$"),
                 file_name=get_capitulo_filename(section.h2),
                 media_type="text/html",
             )
@@ -319,9 +322,11 @@ def extrai_subtitulo(h3):
 
 
 if __name__ == "__main__":
-    arquivos = [
-        # "livros/Papéis avulsos_files/tx_Papeisavulsos.html",
-        "livros/tx_variashistorias.htm",
-    ]
+    arquivos = Path("livros/www.machadodeassis.net/hiperTx_romances/obras/").glob(
+        "tx_*htm"
+    )
     for arq in arquivos:
-        processa(arq)
+        try:
+            processa(arq)
+        except AssertionError:
+            print(f"falhou {arq}")
