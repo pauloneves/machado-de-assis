@@ -307,3 +307,22 @@ def test_ajusta_titulo_capitulo_terror():
     )
     machado.ajusta_titulos_capitulos(b)
     assert "Terror" in b.h3.get_text()
+
+
+def test_substitui_travessao():
+    assert "dir-te" == machado.substitui_travessao("dir-te")
+    assert "dir-te-ei" == machado.substitui_travessao("dir-te-ei")
+    assert "<!-- FIM: capitulo-->" == machado.substitui_travessao(
+        "<!-- FIM: capitulo-->"
+    )
+
+    assert "<p>— fala" == machado.substitui_travessao("<p>- fala")
+    assert "<p>ROMEU. — E que vos disseram eles? </p>" == machado.substitui_travessao(
+        "<p>ROMEU. - E que vos disseram eles? </p>"
+    )
+    assert "<p>— Morrer por ela? — disse eu. </p>" == machado.substitui_travessao(
+        "<p>- Morrer por ela? - disse eu. </p>"
+    )
+    assert "uma frase — disgressão — continua o tema" == machado.substitui_travessao(
+        "uma frase - disgressão - continua o tema"
+    )

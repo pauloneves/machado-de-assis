@@ -10,7 +10,9 @@ from ebooklib import epub
 
 def get_livro(filename="livros/Papéis avulsos_files/tx_Papeisavulsos.html"):
     with open(filename, encoding="cp1252") as f:
-        livro = BeautifulSoup(f, "html.parser")
+        tudo = f.read()
+        tudo = faz_correcoes_gerais(tudo, filename)
+        livro = BeautifulSoup(tudo, "html.parser")
     return livro
 
 
@@ -255,7 +257,7 @@ def gera_ebook(livro):
                 content = ""
 
             capitulo = epub.EpubHtml(
-                title=section.h2.text.strip(" \n*'$"),
+                title=limpa_titulo(section.h2),
                 file_name=get_capitulo_filename(section.h2),
                 media_type="text/html",
             )
@@ -305,7 +307,11 @@ def gera_ebook(livro):
     book.spine = ["nav"] + capitulos
 
     # create epub file
-    epub.write_epub(f"kindle/{livro.h1.text}.epub", book)
+    epub.write_epub(f"kindle/{limpa_titulo(livro.h1)}.epub", book)
+
+
+def limpa_titulo(titulo_tag: Tag) -> str:
+    return titulo_tag.text.strip(" \n*'$")
 
 
 def processa(arq):
@@ -316,17 +322,32 @@ def processa(arq):
 
 
 def extrai_subtitulo(h3):
-    return " ".join(
-        [c.strip().replace("CAPÍTULO PRIMEIRO", "I") for c in h3.find_all(text=True)]
-    )
+    return " ".join([c.strip() for c in h3.find_all(text=True)])
+
+
+def substitui_travessao(text: str) -> str:
+    return re.sub(r"([^-])-\s+", r"\1— ", text)
+
+
+def faz_correcoes_gerais(text, filename) -> str:
+    text = substitui_travessao(text)
+    if "variashistorias" in str(filename):
+        text = text.replace("CAPÍTULO PRIMEIRO", "I")
+    return text
 
 
 if __name__ == "__main__":
     arquivos = Path("livros/www.machadodeassis.net/hiperTx_romances/obras/").glob(
         "tx_*htm"
     )
+    arquivos_off = [
+        Path(
+            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_paginasrecolhidas.htm"
+        )
+    ]
     for arq in arquivos:
         try:
+            print(f"§ Convertendo {arq}")
             processa(arq)
         except AssertionError:
             print(f"falhou {arq}")

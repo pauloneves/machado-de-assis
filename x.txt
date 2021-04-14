@@ -1,0 +1,10 @@
+kindle/Dom Casmurro.epub
+kindle/Iaiá Garcia.epub
+kindle/MEMÓRIAS PÓSTUMAS DE BRÁS CUBAS.epub
+kindle/PAPÉIS AVULSOS.epub
+kindle/PÁGINAS RECOLHIDAS  * 
+
+.epub
+kindle/Quincas Borba.epub
+kindle/VÁRIAS HISTÓRIAS.epub
+kindle/test.epub
