@@ -57,12 +57,14 @@ p + p {
 }
 */
 
-p:first-of-type {
+p:first-of-type,
+p.noindent {
   text-indent: 0;
 }
 
 p {
-  text-indent: 2em;
+  text-indent: 0.7em;
+  margin: 0;
 }
 
 h3 + br,

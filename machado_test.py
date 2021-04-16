@@ -316,13 +316,33 @@ def test_substitui_travessao():
         "<!-- FIM: capitulo-->"
     )
 
-    assert "<p>— fala" == machado.substitui_travessao("<p>- fala")
+    assert '<p class="noindent">— fala' == machado.substitui_travessao("<p>- fala")
     assert "<p>ROMEU. — E que vos disseram eles? </p>" == machado.substitui_travessao(
         "<p>ROMEU. - E que vos disseram eles? </p>"
     )
-    assert "<p>— Morrer por ela? — disse eu. </p>" == machado.substitui_travessao(
-        "<p>- Morrer por ela? - disse eu. </p>"
+    assert " — Morrer por ela? — disse eu. </p>" == machado.substitui_travessao(
+        " - Morrer por ela? - disse eu. </p>"
     )
     assert "uma frase — disgressão — continua o tema" == machado.substitui_travessao(
         "uma frase - disgressão - continua o tema"
     )
+
+    # linha nunca começa com apóstrofe, sempre tem um <p> antes
+    assert (
+        " — Tinha muito bom dado! — suspirou lentamente o vigário —."
+        == machado.substitui_travessao(
+            " - Tinha muito bom dado! - suspirou lentamente o vigário -."
+        )
+    )
+    assert " — Mas, perdão — atalhei —," == machado.substitui_travessao(
+        " - Mas, perdão — atalhei -,"
+    )
+    assert " — disse-me Capitu ao voltar da igreja —;" == machado.substitui_travessao(
+        " - disse-me Capitu ao voltar da igreja -;"
+    )
+
+
+def test_conserta_aspas():
+    assert "“a”" == machado.conserta_aspas('"a"')
+    assert '<a href="x">' == machado.conserta_aspas('<a href="x">')
+    assert '“a<a href="b">b</a>”' == machado.conserta_aspas('"a<a href="b">b</a>"')

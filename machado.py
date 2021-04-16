@@ -326,16 +326,28 @@ def extrai_subtitulo(h3):
 
 
 def substitui_travessao(text: str) -> str:
-    return re.sub(r"([^-])-\s+", r"\1— ", text)
+    text = re.sub(r"([^-])-(?=[ .;, ])", r"\1—", text)
+    return text.replace("<p>—", '<p class="noindent">—')
 
 
 def conserta_aspas(text: str) -> str:
-    return re.sub(r'"([^"]*)"', "“\1”", text)
+    # substitui aspas de html:
+    text = re.sub('"(?=[^<]*>)', "§¢¬", text)
+    # conserta aspas genéricas
+    text = re.sub(r'"([^"]*?)"', r"“\1”", text)
+    # volta aspas dentro das tags
+    text = re.sub("§¢¬", '"', text)
+    return text
+
+
+def conserta_reticencias(text: str) -> str:
+    return text.replace("...", "…")
 
 
 def faz_correcoes_gerais(text, filename) -> str:
     text = substitui_travessao(text)
     text = conserta_aspas(text)
+    text = conserta_reticencias(text)
     if "variashistorias" in str(filename):
         text = text.replace("CAPÍTULO PRIMEIRO", "I")
     return text
