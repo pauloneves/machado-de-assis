@@ -329,8 +329,13 @@ def substitui_travessao(text: str) -> str:
     return re.sub(r"([^-])-\s+", r"\1— ", text)
 
 
+def conserta_aspas(text: str) -> str:
+    return re.sub(r'"([^"]*)"', "“\1”", text)
+
+
 def faz_correcoes_gerais(text, filename) -> str:
     text = substitui_travessao(text)
+    text = conserta_aspas(text)
     if "variashistorias" in str(filename):
         text = text.replace("CAPÍTULO PRIMEIRO", "I")
     return text
