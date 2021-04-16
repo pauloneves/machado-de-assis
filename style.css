@@ -64,3 +64,8 @@ p:first-of-type {
 p {
   text-indent: 2em;
 }
+
+h3 + br,
+h3 + br + br {
+  display: none;
+}
