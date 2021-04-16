@@ -316,7 +316,7 @@ def test_substitui_travessao():
         "<!-- FIM: capitulo-->"
     )
 
-    assert '<p class="noindent">— fala' == machado.substitui_travessao("<p>- fala")
+    assert "<p>— fala" == machado.substitui_travessao("<p>- fala")
     assert "<p>ROMEU. — E que vos disseram eles? </p>" == machado.substitui_travessao(
         "<p>ROMEU. - E que vos disseram eles? </p>"
     )
