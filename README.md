@@ -10,12 +10,15 @@
 
 ## TODO
 
+- [ ] Advertência duplicado
+- [ ] Nomes de capítulos em maiúsculas
+- [ ] nota linkada de *, o * tem que ter <sup>*</sup>
+- [ ] commitar livros formatados
+- [ ] formatar para kindle usando o previewer
 - [ ] fru fru na formatação
 - [c] tirar sublinhado toc
 - [ ] fazer capa
 - [ ] fazer código específico para cada livro separado
-- [ ] Advertência duplicado
-- [ ] Nomes de capítulos em maiúsculas
 - [x] capítulo 0, advertência, está sumido
 - [x] subseções na toc
 - [x] o alienista e notas como capítulos

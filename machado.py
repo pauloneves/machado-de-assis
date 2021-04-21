@@ -83,8 +83,8 @@ def ajusta_titulos_capitulos(livro: BeautifulSoup):
 
             h3 = livro.new_tag("h3")
             h3.append(p[0].b)
-            h3.append(livro.new_tag("br"))
             if p[1].b is not None:
+                h3.append(livro.new_tag("br"))
                 h3.append(p[1].b)
 
             p[0].insert_before(h3)
@@ -216,6 +216,7 @@ def ajusta_titulos(livro):
     ajusta_titulos_contos(livro)
     ajusta_titulos_capitulos(livro)
 
+    __import__("ipdb").set_trace()
     assert not len(
         livro.find_all("div", {"class": "section", "lang": "de"})
     ), "depois de ajustar todos os títulos não pode sobrar seções"
@@ -349,8 +350,13 @@ def faz_correcoes_gerais(text, filename) -> str:
     text = substitui_travessao(text)
     text = conserta_aspas(text)
     text = conserta_reticencias(text)
-    if "variashistorias" in str(filename):
-        text = text.replace("CAPÍTULO PRIMEIRO", "I")
+    arq = str(filename)
+    if "variashistorias" in arq:
+        text = text.replace("CAPÍTULO PRIMEIRO", "I").replace(
+            "toda a casta de pombos", "toda a casta de pomos"
+        )  # errada na edição
+    elif "Papeisavulsos" in arq:
+        pass
     return text
 
 
@@ -358,14 +364,14 @@ if __name__ == "__main__":
     arquivos = Path("livros/www.machadodeassis.net/hiperTx_romances/obras/").glob(
         "tx_*htm"
     )
-    arquivos_off = [
+    arquivos = [
         Path(
-            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_paginasrecolhidas.htm"
+            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Historiassemdata.htm"
         )
     ]
     for arq in arquivos:
         try:
             print(f"§ Convertendo {arq}")
             processa(arq)
-        except AssertionError:
-            print(f"falhou {arq}")
+        except AssertionError as e:
+            print(f"falhou {arq}, {e}")
