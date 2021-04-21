@@ -55,9 +55,12 @@ def ajusta_titulos_contos(livro: BeautifulSoup):
 
         header = titulo.find_next("p")
         header.name = "h2"
-        # header.text = header.text.strip()
-        # header.string = header.string.strip()
         del header.attrs["align"]
+        if header:
+            sup = list(secao.parents)[-1].new_tag("sup")
+            a = header.find(lambda tag: tag.name == "a" and "*" in tag.string)
+            a.wrap(sup)
+            a.string = "*"  # tira espaços
         secao.insert_before(pg_break(livro))
 
 
@@ -216,7 +219,7 @@ def ajusta_titulos(livro):
     ajusta_titulos_contos(livro)
     ajusta_titulos_capitulos(livro)
 
-    __import__("ipdb").set_trace()
+    # __import__("ipdb").set_trace()
     assert not len(
         livro.find_all("div", {"class": "section", "lang": "de"})
     ), "depois de ajustar todos os títulos não pode sobrar seções"

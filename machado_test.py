@@ -58,6 +58,7 @@ def test_ajusta_titulo_contos():
     secao = b.find("div", {"class": "section"})
     assert secao.previous_sibling.name.startswith("mpb")
     assert not b.find_all(lambda tag: "lang" in tag.attrs)
+    assert b.h2.sup.string == "*", "tem que transformar o * em <sup>*</sup>"
 
 
 def test_ajusta_inicio_capitulos():
