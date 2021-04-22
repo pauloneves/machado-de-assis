@@ -71,3 +71,14 @@ h3 + br,
 h3 + br + br {
   display: none;
 }
+
+a {
+  text-decoration: none !important;
+  color: MidnightBlue !important; /*DarkBlue*/
+}
+
+sup {
+  text-decoration-thickness: 0;
+  text-decoration: none !important;
+  font-size: x-small;
+}
