@@ -13,7 +13,7 @@ import capa
 def get_livro(filename="livros/Papéis avulsos_files/tx_Papeisavulsos.html"):
     with open(filename, encoding="cp1252") as f:
         tudo = f.read()
-        tudo = faz_correcoes_gerais(tudo, filename)
+        # tudo = faz_correcoes_gerais(tudo, filename)
         livro = BeautifulSoup(tudo, "html.parser")
     return livro
 
@@ -209,10 +209,16 @@ def cria_toc(livro, nome_arq):
     livro.body.insert(0, h2)
 
 
+def limpa_scripts(livro):
+    for script in livro.find_all("script"):
+        script.decompose()
+
+
 def processa_livro(filename="livros/Papéis avulsos_files/tx_Papeisavulsos.html"):
     livro = get_livro(filename)
     ajusta_titulos(livro)
     reorganiza_notas(livro)
+    limpa_scripts(livro)
     prepara_toc(livro)
     return livro
 
@@ -264,7 +270,7 @@ def gera_ebook(livro):
     for section in livro.find_all("div", {"class": ["section", "subsection"]}):
         if section.attrs["class"] == ["section"]:
             if content:
-                capitulo.set_content(content)
+                capitulo.set_content(faz_correcoes_gerais(content))
                 content = ""
 
             capitulo = epub.EpubHtml(
@@ -278,9 +284,9 @@ def gera_ebook(livro):
             toc.append(
                 [epub.Section(title=capitulo.title, href=capitulo.file_name), []]
             )
-            content = str(section)
+            content = section.prettify()
         else:  # subsection
-            content += "\n\n" + str(section)
+            content += "\n\n" + section.prettify()
             h3_id = section.find("h3").attrs["id"]
 
             # primeira subsection/capítulo do conto fica na seção inicial do conto
@@ -304,7 +310,7 @@ def gera_ebook(livro):
                     uid="",
                 )
             )
-    capitulo.set_content(content)
+    capitulo.set_content(faz_correcoes_gerais(content))
 
     book.toc = toc
 
@@ -356,17 +362,17 @@ def conserta_reticencias(text: str) -> str:
     return text.replace("...", "…")
 
 
-def faz_correcoes_gerais(text, filename) -> str:
+def faz_correcoes_gerais(text) -> str:
     text = substitui_travessao(text)
     text = conserta_aspas(text)
     text = conserta_reticencias(text)
-    arq = str(filename)
-    if "variashistorias" in arq:
-        text = text.replace("CAPÍTULO PRIMEIRO", "I").replace(
-            "toda a casta de pombos", "toda a casta de pomos"
-        )  # errada na edição
-    elif "Papeisavulsos" in arq:
-        pass
+    # arq = str(filename)
+    # if "variashistorias" in arq:
+    #     text = text.replace("CAPÍTULO PRIMEIRO", "I").replace(
+    #         "toda a casta de pombos", "toda a casta de pomos"
+    #     )  # errada na edição
+    # elif "Papeisavulsos" in arq:
+    #     pass
     return text
 
 
