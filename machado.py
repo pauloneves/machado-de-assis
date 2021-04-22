@@ -7,6 +7,8 @@ import slugify
 from bs4 import BeautifulSoup, Comment, Tag
 from ebooklib import epub
 
+import capa
+
 
 def get_livro(filename="livros/Papéis avulsos_files/tx_Papeisavulsos.html"):
     with open(filename, encoding="cp1252") as f:
@@ -59,8 +61,9 @@ def ajusta_titulos_contos(livro: BeautifulSoup):
         if header:
             sup = list(secao.parents)[-1].new_tag("sup")
             a = header.find(lambda tag: tag.name == "a" and "*" in tag.string)
-            a.wrap(sup)
-            a.string = "*"  # tira espaços
+            if a:
+                a.wrap(sup)
+                a.string = "*"  # tira espaços
         secao.insert_before(pg_break(livro))
 
 
@@ -230,12 +233,16 @@ def get_capitulo_filename(header) -> str:
 
 
 def gera_ebook(livro):
+    titulo = limpa_titulo(livro.h1)
     book = epub.EpubBook()
     book.set_identifier("22061970ni")
-    book.set_title(livro.h1.text)
-    book.set_language("pt-br")
-
+    book.set_title(titulo)
+    book.set_language("pt")
     book.add_author("Machado de Assis")
+
+    capa_filename = capa.gera_capa(titulo[:100])
+    with open(capa_filename, "rb") as f:
+        book.set_cover(capa_filename, f.read())
 
     # define css style
     with open("style.css", "r", encoding="utf-8") as f:
@@ -311,7 +318,7 @@ def gera_ebook(livro):
     book.spine = ["nav"] + capitulos
 
     # create epub file
-    epub.write_epub(f"kindle/{limpa_titulo(livro.h1)}.epub", book)
+    epub.write_epub(f"kindle/{titulo}.epub", book)
 
 
 def limpa_titulo(titulo_tag: Tag) -> str:
@@ -367,12 +374,16 @@ if __name__ == "__main__":
     arquivos = Path("livros/www.machadodeassis.net/hiperTx_romances/obras/").glob(
         "tx_*htm"
     )
-    arquivos = [
+    arquivosx = [
         Path(
-            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Historiassemdata.htm"
+            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm"
+            # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Historiassemdata.htm"
         )
     ]
+
     for arq in arquivos:
+        if "ContosFluminense" in str(arq):
+            continue
         try:
             print(f"§ Convertendo {arq}")
             processa(arq)
