@@ -15,9 +15,14 @@ https://commons.wikimedia.org/wiki/File:MarcFerrez_MachadodeAssis.jpg
 https://commons.wikimedia.org/wiki/File:Assinatura_de_Machado_de_Assis.png
 https://commons.wikimedia.org/wiki/File:Machado_de_Assis,_sem_data.tif
 
+
+Inspiração: 
+https://www.nypl.org/blog/2014/09/03/generative-ebook-covers
+http://www.lightindustry.org/simon_marker.jpg
+
 """
 
-from PIL import Image, ImageDraw, ImageFont, ImageEnhance
+from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageOps
 
 
 def gera_capa(titulo="Várias Histórias"):
@@ -26,11 +31,12 @@ def gera_capa(titulo="Várias Histórias"):
     # 140
 
     with Image.open("capa/capa-template.jpg") as img:
-        enhancer = ImageEnhance.Brightness(img)
-        img = enhancer.enhance(0.6)
+        color_img = ImageOps.colorize(img.convert("L"), black="black", white="#575b81")
+        brightness_enhancer = ImageEnhance.Brightness(color_img)
+        img = brightness_enhancer.enhance(0.9)
         fnt = ImageFont.truetype("capa/YesevaOne-Regular.ttf", 220)
         d = ImageDraw.Draw(img)
-        d.text((516, 1750), "\n".join(titulo.split()), fill="#d8223a", font=fnt)
+        d.text((50, 1750), "\n".join(titulo.upper().split()), fill="#d9c347", font=fnt)
         nome = f"kindle/{titulo}.jpg"
         img.save(nome, subsampling=0, quality=100)
     return nome
