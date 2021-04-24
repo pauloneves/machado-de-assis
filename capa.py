@@ -22,9 +22,9 @@ http://www.lightindustry.org/simon_marker.jpg
 
 """
 
-from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageOps
+import textwrap
 
-import re
+from PIL import Image, ImageDraw, ImageEnhance, ImageFont, ImageOps
 
 
 def gera_capa(titulo="Várias Histórias"):
@@ -36,9 +36,10 @@ def gera_capa(titulo="Várias Histórias"):
         color_img = ImageOps.colorize(img.convert("L"), black="black", white="#575b81")
         brightness_enhancer = ImageEnhance.Brightness(color_img)
         img = brightness_enhancer.enhance(0.9)
-        fnt = ImageFont.truetype("capa/YesevaOne-Regular.ttf", 220)
+        fnt = ImageFont.truetype("capa/YesevaOne-Regular.ttf", 210)
         d = ImageDraw.Draw(img)
-        d.text((50, 1750), "\n".join(titulo.upper().split()), fill="#d9c347", font=fnt)
+        titulo_wrap = "\n".join(textwrap.wrap(titulo.upper(), 12))
+        d.text((50, 1750), titulo_wrap, fill="#d9c347", font=fnt)
         nome = f"kindle/{titulo}.jpg"
         img.save(nome, subsampling=0, quality=100)
     return nome
