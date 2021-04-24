@@ -349,8 +349,9 @@ def extrai_subtitulo(h3):
 
 
 def substitui_travessao(text: str) -> str:
-    text = re.sub(r"([^-])-\s*(?=[ .;, ])", r"\1—", text)
-    # return text.replace("<p>—", '<p class="noindent">—')
+    # não casa qdo o travessão no início da linha
+    # na prática sempre tem pelo menos um <p> antes do traverssão
+    text = re.sub(r'([^-])-\s*(?=[ .;, "])', r"\1—", text)
     return text
 
 

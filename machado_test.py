@@ -353,6 +353,8 @@ def test_substitui_travessao():
     # tira 2 espaços após travessão
     assert "<p>— fala" == machado.substitui_travessao("<p>-    fala")
 
+    assert '<p>—"Pronto!"' == machado.substitui_travessao('<p>-"Pronto!"')
+
 
 def test_conserta_aspas():
     assert "“a”" == machado.conserta_aspas('"a"')
