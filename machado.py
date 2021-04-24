@@ -329,7 +329,10 @@ def gera_ebook(livro):
 
 
 def limpa_titulo(titulo_tag: Tag) -> str:
-    return titulo_tag.text.strip(" \n*'$")
+    titulo = titulo_tag.text.strip(" \n*'$")
+    if "FASE" in titulo:
+        titulo = re.search(r"(.*FASE[- ()0-9]+)", titulo).group(1)
+    return titulo
 
 
 def processa(arq):
@@ -390,7 +393,7 @@ if __name__ == "__main__":
         ],
     )
     for arq in arquivos:
-        if "ContosFluminense" in str(arq):
+        if "ContosFluminense" in str(arq) or "quincasborbaaestacao" in str(arq):
             continue
         try:
             print(f"§ Convertendo {arq}")

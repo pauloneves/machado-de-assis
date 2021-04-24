@@ -24,6 +24,8 @@ http://www.lightindustry.org/simon_marker.jpg
 
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageOps
 
+import re
+
 
 def gera_capa(titulo="Várias Histórias"):
     # d8223a
