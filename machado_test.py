@@ -12,25 +12,6 @@ def book(txt):
     return BeautifulSoup(f"<html><body>{txt}</body></html>", "html.parser")
 
 
-# def test_ajusta_capitulos(livro):
-#     b = book(
-#         """<!-- Inicio CAPITULO I -->
-
-# <p align="center"><b>O ALIENISTA <a href="#" id="mynewanchorOA*" onclick="return false;"> * </a></b>
-# """
-#     )
-#     machado.ajusta_capitulos(livro)
-
-
-# def test_ajusta_capitulos_2(livro):
-#     b = book(
-#         """<!-- Inicio CAPITULO II-->
-
-# <p align="center"><b></b></p> <br>
-# <p align="center"><b>CAPÍTULO B</b> </p> <br>"""
-#     )
-
-
 def test_ajusta_titulo_contos():
     b = book(
         """<!-- *********************************** O EMPRESTIMO  ****************************************************** -->
@@ -80,10 +61,37 @@ def test_ajusta_inicio_capitulos():
     )
 
     machado.ajusta_titulos_capitulos(b)
-    print(b)
     assert b.h3
     assert "XIII" in b.h3.text
     assert "Plus ultra" in b.h3.text
+    subsection = b.find("div", {"class": "subsection"})
+    assert subsection
+    assert "lang" not in subsection.attrs
+
+
+def test_ajusta_inicio_capitulos_somente_um_p_centralizado():
+    b = book(
+        """
+        <div class="espacoToptHTX"><a name="MSII">&nbsp;</a></div>
+
+        <div id="shadow-container">
+                <div class="shadow1">
+                    <div class="shadow2">
+                        <div class="shadow3">
+                            <div class="section"  lang=de>
+        <!-- inicio capitulo II-->
+
+        <p align="center"><b>CAPÍTULO II</b></p> <br>
+
+        <p>Antes de ir adiante, direi que eram primos. 
+        </p>
+    """
+    )
+
+    machado.ajusta_titulos_capitulos(b)
+    print(b)
+    assert b.h3
+    assert "CAPÍTULO II" in b.h3.text
     subsection = b.find("div", {"class": "subsection"})
     assert subsection
     assert "lang" not in subsection.attrs

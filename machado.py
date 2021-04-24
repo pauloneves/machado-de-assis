@@ -27,7 +27,6 @@ def get_nome_livro(livro) -> str:
 
 
 def ajusta_titulo_livro(livro):
-    titulo = get_nome_livro(livro)
     p = livro.find("p")
     p.name = "h1"
     del p.attrs["align"]
@@ -83,13 +82,13 @@ def ajusta_titulos_capitulos(livro: BeautifulSoup):
         if (
             len(p) > 1
             and p[0].attrs.get("align") == "center"
-            and p[1].attrs.get("align") == "center"
+            # and p[1].attrs.get("align") == "center"
         ):
             ajusta_secao(secao, subsection=True)
 
             h3 = livro.new_tag("h3")
             h3.append(p[0].b)
-            if p[1].b is not None:
+            if p[1].attrs.get("align") == "center" and p[1].b is not None:
                 h3.append(livro.new_tag("br"))
                 h3.append(p[1].b)
 
@@ -228,10 +227,12 @@ def ajusta_titulos(livro):
     ajusta_titulos_contos(livro)
     ajusta_titulos_capitulos(livro)
 
+
+def valida_estrutura(livro):
     # __import__("ipdb").set_trace()
     assert not len(
         livro.find_all("div", {"class": "section", "lang": "de"})
-    ), "depois de ajustar todos os títulos não pode sobrar seções"
+    ), "depois de ajustar todos os títulos não pode sobrar seções com lang"
 
 
 def get_capitulo_filename(header) -> str:
@@ -333,8 +334,9 @@ def limpa_titulo(titulo_tag: Tag) -> str:
 
 def processa(arq):
     livro = processa_livro(arq)
-    with open("livro_alterado.html", "w") as file:
-        file.write(str(livro))
+    with open(f"livro_alterado_{get_nome_livro(livro)}.html", "w") as file:
+        file.write(livro.prettify())
+    valida_estrutura(livro)
     gera_ebook(livro)
 
 
@@ -380,13 +382,13 @@ if __name__ == "__main__":
     arquivos = Path("livros/www.machadodeassis.net/hiperTx_romances/obras/").glob(
         "tx_*htm"
     )
-    arquivosx = [
-        Path(
-            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm"
-            # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Historiassemdata.htm"
-        )
-    ]
-
+    arquivosx = map(
+        Path,
+        [
+            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm",
+            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Historiassemdata.htm",
+        ],
+    )
     for arq in arquivos:
         if "ContosFluminense" in str(arq):
             continue
