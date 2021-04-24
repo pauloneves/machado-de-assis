@@ -285,9 +285,10 @@ def gera_ebook(livro):
             toc.append(
                 [epub.Section(title=capitulo.title, href=capitulo.file_name), []]
             )
-            content = section.prettify()
+            # não pode ter pretiffy que coloca espaços espúrios nos links
+            content = str(section)
         else:  # subsection
-            content += "\n\n" + section.prettify()
+            content += "\n\n" + str(section)
             h3_id = section.find("h3").attrs["id"]
 
             # primeira subsection/capítulo do conto fica na seção inicial do conto
@@ -385,7 +386,7 @@ if __name__ == "__main__":
     arquivos = Path("livros/www.machadodeassis.net/hiperTx_romances/obras/").glob(
         "tx_*htm"
     )
-    arquivosx = map(
+    arquivos = map(
         Path,
         [
             "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm",
