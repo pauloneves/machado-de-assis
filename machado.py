@@ -23,7 +23,7 @@ def find_titulo_contos(text):
 
 
 def get_nome_livro(livro) -> str:
-    return livro.title.string
+    return capitaliza(livro.title.string)
 
 
 def ajusta_titulo_livro(livro):
@@ -247,7 +247,7 @@ def gera_ebook(livro):
     book.set_language("pt")
     book.add_author("Machado de Assis")
 
-    capa_filename = capa.gera_capa(titulo[:100])
+    capa_filename = capa.gera_capa(titulo)
     with open(capa_filename, "rb") as f:
         book.set_cover(capa_filename, f.read())
 
@@ -333,7 +333,7 @@ def limpa_titulo(titulo_tag: Tag) -> str:
     titulo = titulo_tag.text.strip(" \n*'$")
     if "FASE" in titulo:
         titulo = re.search(r"(.*FASE[- ()0-9]+)", titulo).group(1)
-    return titulo
+    return capitaliza(titulo)
 
 
 def processa(arq):
@@ -383,11 +383,24 @@ def faz_correcoes_gerais(text) -> str:
     return text
 
 
+def capitaliza(text: str) -> str:
+    text = text.title()
+    s = []
+    for i in text.split():
+        if len(i) <= 2:
+            s.append(i.lower())
+        else:
+            s.append(i)
+    s[0] = s[0].capitalize()
+    text = " ".join(s)
+    return text
+
+
 if __name__ == "__main__":
     arquivos = Path("livros/www.machadodeassis.net/hiperTx_romances/obras/").glob(
         "tx_*htm"
     )
-    arquivos = map(
+    arquivosx = map(
         Path,
         [
             "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm",

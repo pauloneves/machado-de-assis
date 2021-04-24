@@ -360,3 +360,9 @@ def test_conserta_aspas():
     assert "“a”" == machado.conserta_aspas('"a"')
     assert '<a href="x">' == machado.conserta_aspas('<a href="x">')
     assert '“a<a href="b">b</a>”' == machado.conserta_aspas('"a<a href="b">b</a>"')
+
+
+def test_capitaliza():
+    assert "Um Título" == machado.capitaliza("UM TÍTULO")
+    assert "Um" == machado.capitaliza("UM")
+    assert "Um Título e Outro" == machado.capitaliza("UM TÍTULO E OUTRO")
