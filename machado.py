@@ -240,7 +240,7 @@ def get_capitulo_filename(header) -> str:
 
 
 def gera_ebook(livro):
-    titulo = limpa_titulo(livro.h1)
+    titulo = get_nome_livro(livro)
     book = epub.EpubBook()
     book.set_identifier("22061970ni")
     book.set_title(titulo)
@@ -338,7 +338,7 @@ def limpa_titulo(titulo_tag: Tag) -> str:
 
 def processa(arq):
     livro = processa_livro(arq)
-    with open(f"livro_alterado_{get_nome_livro(livro)}.html", "w") as file:
+    with open(f"kindle/livro_alterado_{get_nome_livro(livro)}.html", "w") as file:
         file.write(livro.prettify())
     valida_estrutura(livro)
     gera_ebook(livro)
@@ -387,7 +387,31 @@ def capitaliza(text: str) -> str:
     text = text.title()
     s = []
     for i in text.split():
-        if len(i) <= 2:
+        if i.upper() in (
+            "I",
+            "II",
+            "III",
+            "IV",
+            "V",
+            "VI",
+            "VII",
+            "VIII",
+            "IX",
+            "X",
+            "XI",
+            "XII",
+            "XIII",
+            "XIV",
+            "XV",
+            "XVI",
+            "XVII",
+            "XVIII",
+            "XIX",
+            "XX",
+            "XX",
+        ):
+            s.append(i.upper())
+        elif len(i) <= 2 and i not in ["Eu"] or i in ["Sem"]:
             s.append(i.lower())
         else:
             s.append(i)
