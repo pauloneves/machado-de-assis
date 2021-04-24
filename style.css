@@ -91,7 +91,7 @@ a {
 sup {
   text-decoration-thickness: 0;
   text-decoration: none !important;
-  font-size: x-small;
+  font-size: small;
 }
 
 @media amzn-kf8 {
