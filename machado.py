@@ -12,6 +12,8 @@ from ebooklib import epub
 
 import capa
 
+nonBreakingSpace = "\u00A0"
+
 
 def get_livro(filename="livros/Papéis avulsos_files/tx_Papeisavulsos.html"):
     with open(filename, encoding="cp1252") as f:
@@ -354,6 +356,7 @@ def extrai_subtitulo(h3):
 def substitui_travessao(text: str) -> str:
     # não casa qdo o travessão no início da linha
     # na prática sempre tem pelo menos um <p> antes do traverssão
+    text = re.sub(r"<p>\s*-\s+", r"<p>—" + nonBreakingSpace, text)
     text = re.sub(r'([^-])-\s*(?=[ .;, "])', r"\1—", text)
     return text
 
@@ -369,7 +372,12 @@ def conserta_aspas(text: str) -> str:
 
 
 def conserta_apostrofo(text: str) -> str:
-    return re.sub("(\w+)´(\w+)", r"\1’\2", text)
+    return re.sub(r"(\w+)´(\w+)", r"\1’\2", text)
+
+
+def conserta_aspas_simples(text: str) -> str:
+    # ʽ ʼ
+    return text
 
 
 def conserta_reticencias(text: str) -> str:
@@ -380,6 +388,7 @@ def faz_correcoes_gerais(text) -> str:
     text = substitui_travessao(text)
     text = conserta_aspas(text)
     text = conserta_reticencias(text)
+    text = conserta_apostrofo(text)
     # arq = str(filename)
     # if "variashistorias" in arq:
     #     text = text.replace("CAPÍTULO PRIMEIRO", "I").replace(

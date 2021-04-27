@@ -325,7 +325,14 @@ def test_substitui_travessao():
         "<!-- FIM: capitulo-->"
     )
 
-    assert "<p>— fala" == machado.substitui_travessao("<p>- fala")
+    assert f"<p>—{machado.nonBreakingSpace}fala" == machado.substitui_travessao(
+        "<p>- fala"
+    )
+    # tira 2 espaços após travessão
+    assert f"<p>—{machado.nonBreakingSpace}fala" == machado.substitui_travessao(
+        "<p>-    fala"
+    )
+
     assert "<p>ROMEU. — E que vos disseram eles? </p>" == machado.substitui_travessao(
         "<p>ROMEU. - E que vos disseram eles? </p>"
     )
@@ -349,9 +356,6 @@ def test_substitui_travessao():
     assert " — disse-me Capitu ao voltar da igreja —;" == machado.substitui_travessao(
         " - disse-me Capitu ao voltar da igreja -;"
     )
-
-    # tira 2 espaços após travessão
-    assert "<p>— fala" == machado.substitui_travessao("<p>-    fala")
 
     assert ' —"Pronto!"' == machado.substitui_travessao(' -"Pronto!"')
 
