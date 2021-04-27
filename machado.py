@@ -357,7 +357,7 @@ def substitui_travessao(text: str) -> str:
     # não casa qdo o travessão no início da linha
     # na prática sempre tem pelo menos um <p> antes do traverssão
     text = re.sub(r"<p>\s*-\s+", r"<p>—" + nonBreakingSpace, text)
-    text = re.sub(r'([^-])-\s*(?=[ .;, "])', r"\1—", text)
+    text = re.sub(r'([^-])-\s*(?=[ .;, ":])', r"\1—", text)
     return text
 
 
