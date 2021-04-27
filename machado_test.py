@@ -63,7 +63,7 @@ def test_ajusta_inicio_capitulos():
     machado.ajusta_titulos_capitulos(b)
     assert b.h3
     assert "XIII" in b.h3.text
-    assert "Plus ultra" in b.h3.text
+    assert "plus ultra" in b.h3.text.lower()
     subsection = b.find("div", {"class": "subsection"})
     assert subsection
     assert "lang" not in subsection.attrs
@@ -91,7 +91,7 @@ def test_ajusta_inicio_capitulos_somente_um_p_centralizado():
     machado.ajusta_titulos_capitulos(b)
     print(b)
     assert b.h3
-    assert "CAPÍTULO II" in b.h3.text
+    assert "CAPÍTULO II" in b.h3.text.upper()
     subsection = b.find("div", {"class": "subsection"})
     assert subsection
     assert "lang" not in subsection.attrs
@@ -162,10 +162,10 @@ def test_ajusta_titulos_ordem_correta():
     machado.ajusta_titulos_contos(b)
     machado.ajusta_titulos_capitulos(b)
 
-    assert b.h2.text.startswith("O ALIENISTA")
+    assert b.h2.text.startswith("O Alienista")
 
     assert b.h2.find_next("h3"), "h3 deve vir depois do h2"
-    assert b.h2.find_next("h3").text.startswith("CAPÍTULO")
+    assert b.h2.find_next("h3").text.startswith("Capítulo")
 
 
 def test_parse_nota():
@@ -371,6 +371,23 @@ def test_conserta_apostrofo():
 
 
 def test_capitaliza():
-    assert "Um Título" == machado.capitaliza("UM TÍTULO")
-    assert "Um" == machado.capitaliza("UM")
-    assert "Um Título e Outro" == machado.capitaliza("UM TÍTULO E OUTRO")
+    assert "um Título" == machado.capitaliza("UM TÍTULO")
+    assert "um" == machado.capitaliza("UM")
+    assert "um Título e Outro" == machado.capitaliza("UM TÍTULO E OUTRO")
+    assert "" == machado.capitaliza("")
+
+
+def test_capitaliza_soup():
+    assert book("<p>Outra Palavra") == machado.capitaliza_soup(book("<p>outra palavra"))
+    assert book("<p>Outra <b>Palavra <i>Esquisita</i></b>") == machado.capitaliza_soup(
+        book("<p>outra <b>palavra <i>esquisita</i></b>")
+    )
+    assert book("<p>A Bela <br>Capítulo IV") == machado.capitaliza_soup(
+        book("<p>a bela <br>capítulo iv")
+    )
+    assert book("<p>A Bela <br>a Feia") == machado.capitaliza_soup(
+        book("<p>a bela <br>a feia")
+    )
+    assert book("<p>A Bela <script>a feia</script>") == machado.capitaliza_soup(
+        book("<p>a bela <script>a feia</script>")
+    )

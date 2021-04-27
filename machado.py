@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 
 import slugify
-from bs4 import BeautifulSoup, Comment, Tag
+from bs4 import BeautifulSoup, Comment, Tag, NavigableString
 from ebooklib import epub
 
 import capa
@@ -32,7 +32,7 @@ def get_nome_livro(livro) -> str:
 
 
 def ajusta_titulo_livro(livro):
-    p = livro.find("p")
+    p = capitaliza_soup(livro.find("p"))
     p.name = "h1"
     del p.attrs["align"]
     autor = p.find_next("p")
@@ -59,7 +59,7 @@ def ajusta_titulos_contos(livro: BeautifulSoup):
         secao = titulo.find_next("div", {"class": "section"})
         ajusta_secao(secao)
 
-        header = titulo.find_next("p")
+        header = capitaliza_soup(titulo.find_next("p"))
         header.name = "h2"
         del header.attrs["align"]
         if header:
@@ -97,7 +97,7 @@ def ajusta_titulos_capitulos(livro: BeautifulSoup):
                 h3.append(livro.new_tag("br"))
                 h3.append(p[1].b)
 
-            p[0].insert_before(h3)
+            p[0].insert_before(capitaliza_soup(h3))
             p[0].decompose()
             p[1].decompose()
 
@@ -152,9 +152,6 @@ def append_notas(livro: BeautifulSoup, notas: dict):
         aside = livro.new_tag("aside", id=nota, **{"epub:type": "footnote"})
         aside.append("● ")
         aside.append(BeautifulSoup(texto, "html.parser"))
-
-        # note.append(aside)
-        # note.insert(0, "\n ")
 
         refback = livro.new_tag("a", href=link_back_nota(nota, livro))
 
@@ -335,10 +332,10 @@ def gera_ebook(livro):
 
 
 def limpa_titulo(titulo_tag: Tag) -> str:
-    titulo = titulo_tag.text.strip(" \n*'$")
+    titulo = capitaliza_soup(titulo_tag).text.strip(" \n*'$")
     if "FASE" in titulo:
         titulo = re.search(r"(.*FASE[- ()0-9]+)", titulo).group(1)
-    return capitaliza(titulo)
+    return titulo
 
 
 def processa(arq):
@@ -399,52 +396,75 @@ def faz_correcoes_gerais(text) -> str:
     return text
 
 
+def palavra_titulo(palavra: str) -> str:
+
+    if palavra.upper() in (
+        "I",
+        "II",
+        "III",
+        "IV",
+        "V",
+        "VI",
+        "VII",
+        "VIII",
+        "IX",
+        "X",
+        "XI",
+        "XII",
+        "XIII",
+        "XIV",
+        "XV",
+        "XVI",
+        "XVII",
+        "XVIII",
+        "XIX",
+        "XX",
+        "XX",
+    ):
+        return palavra.upper()
+    elif len(palavra) <= 2 and palavra not in ["Eu"] or palavra in ["Sem"]:
+        return palavra.lower()
+
+    return palavra
+
+
 def capitaliza(text: str) -> str:
     text = text.title()
     s = []
     for i in text.split():
-        if i.upper() in (
-            "I",
-            "II",
-            "III",
-            "IV",
-            "V",
-            "VI",
-            "VII",
-            "VIII",
-            "IX",
-            "X",
-            "XI",
-            "XII",
-            "XIII",
-            "XIV",
-            "XV",
-            "XVI",
-            "XVII",
-            "XVIII",
-            "XIX",
-            "XX",
-            "XX",
-        ):
-            s.append(i.upper())
-        elif len(i) <= 2 and i not in ["Eu"] or i in ["Sem"]:
-            s.append(i.lower())
+        s.append(palavra_titulo(i))
+    final_text = " ".join(s)
+    if text.endswith(" "):
+        final_text += " "
+    return final_text
+
+
+def capitaliza_soup(soup: Tag, primeiro=True) -> Tag:
+    for el in soup.contents:
+        if el.name == "script":
+            continue
+        if type(el) is NavigableString:
+            txt = capitaliza(str(el))
+            if primeiro and txt:
+                txt = txt[0].upper() + txt[1:]
+                primeiro = False
+
+            el.replace_with(txt)
         else:
-            s.append(i)
-    s[0] = s[0].capitalize()
-    text = " ".join(s)
-    return text
+            capitaliza_soup(el, primeiro)
+    return soup
 
 
 if __name__ == "__main__":
     arquivos = Path("livros/www.machadodeassis.net/hiperTx_romances/obras/").glob(
         "tx_*htm"
     )
-    arquivosx = map(
+    arquivos = map(
         Path,
         [
             "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm",
             "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Historiassemdata.htm",
+            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_variashistorias.htm",
         ],
     )
     for arq in arquivos:
