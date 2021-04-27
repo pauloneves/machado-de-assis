@@ -1,5 +1,8 @@
 #!/bin/env python
 
+import locale
+
+locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
 import re
 from pathlib import Path
 
@@ -363,6 +366,10 @@ def conserta_aspas(text: str) -> str:
     # volta aspas dentro das tags
     text = re.sub("§¢¬", '"', text)
     return text
+
+
+def conserta_apostrofo(text: str) -> str:
+    return re.sub("(\w+)´(\w+)", r"\1’\2", text)
 
 
 def conserta_reticencias(text: str) -> str:
