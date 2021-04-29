@@ -12,7 +12,7 @@ from ebooklib import epub
 
 import capa
 
-nonBreakingSpace = "\u00A0"
+nonAdjustableSpace = "\u2005"
 
 
 def get_livro(filename="livros/Papéis avulsos_files/tx_Papeisavulsos.html"):
@@ -353,7 +353,7 @@ def extrai_subtitulo(h3):
 def substitui_travessao(text: str) -> str:
     # não casa qdo o travessão no início da linha
     # na prática sempre tem pelo menos um <p> antes do traverssão
-    text = re.sub(r"<p>\s*-\s+", r"<p>—" + nonBreakingSpace, text)
+    text = re.sub(r"<p>\s*-\s+", r"<p>—" + nonAdjustableSpace, text)
     text = re.sub(r'([^-])-\s*(?=[ .;, ":])', r"\1—", text)
     return text
 
@@ -462,8 +462,8 @@ if __name__ == "__main__":
     arquivos = map(
         Path,
         [
-            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm",
-            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Historiassemdata.htm",
+            #            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm",
+            #            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Historiassemdata.htm",
             "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_variashistorias.htm",
         ],
     )

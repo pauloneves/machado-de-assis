@@ -325,11 +325,11 @@ def test_substitui_travessao():
         "<!-- FIM: capitulo-->"
     )
 
-    assert f"<p>—{machado.nonBreakingSpace}fala" == machado.substitui_travessao(
+    assert f"<p>—{machado.nonAdjustableSpace}fala" == machado.substitui_travessao(
         "<p>- fala"
     )
     # tira 2 espaços após travessão
-    assert f"<p>—{machado.nonBreakingSpace}fala" == machado.substitui_travessao(
+    assert f"<p>—{machado.nonAdjustableSpace}fala" == machado.substitui_travessao(
         "<p>-    fala"
     )
 
