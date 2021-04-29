@@ -422,7 +422,11 @@ def palavra_titulo(palavra: str) -> str:
         "XX",
     ):
         return palavra.upper()
-    elif len(palavra) <= 2 and palavra not in ["Eu"] or palavra in ["Sem"]:
+    elif (
+        len(palavra) <= 2
+        and palavra not in ["Eu"]
+        or palavra in ["Sem", "das", "dos", "que", "quem"]
+    ):
         return palavra.lower()
 
     return palavra
@@ -462,8 +466,8 @@ if __name__ == "__main__":
     arquivos = map(
         Path,
         [
-            #            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm",
-            #            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Historiassemdata.htm",
+            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm",
+            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Historiassemdata.htm",
             "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_variashistorias.htm",
         ],
     )

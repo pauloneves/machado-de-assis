@@ -26,20 +26,62 @@ import textwrap
 
 from PIL import Image, ImageDraw, ImageEnhance, ImageFont, ImageOps
 
+colors = [
+    "#96ceb4",
+    "#ffeead",
+    "#ff6f69",
+    "#ffcc5c",
+    "#88d8b0",
+]
 
-def gera_capa(titulo="Várias Histórias"):
+
+def gera_capa(titulo="Várias histórias"):
     # d8223a
     # Yeseva One
     # 140
+    wrap = 10
+    title_size = 260  # 210
+
+    if len(titulo) > 25:
+        wrap = round(1.25 * wrap)
+        title_size = round(title_size // 1.25)
 
     with Image.open("capa/capa-template.jpg") as img:
-        color_img = ImageOps.colorize(img.convert("L"), black="black", white="#575b81")
-        brightness_enhancer = ImageEnhance.Brightness(color_img)
-        img = brightness_enhancer.enhance(0.9)
-        fnt = ImageFont.truetype("capa/YesevaOne-Regular.ttf", 210)
+        # img = img.convert("L")
+        # color_img = ImageOps.colorize(img, black="black", white="white")
+        # brightness_enhancer = ImageEnhance.Brightness(color_img)
+        # img = brightness_enhancer.enhance(1.2)
+        font_name = "capa/YesevaOne-Regular.ttf"
+        fnt_title = ImageFont.truetype(font_name, title_size)
         d = ImageDraw.Draw(img)
-        titulo_wrap = "\n".join(textwrap.wrap(titulo.upper(), 12))
-        d.text((50, 1750), titulo_wrap, fill="#d9c347", font=fnt)
+        titulo_wrap = "\n".join(textwrap.wrap(titulo.upper(), wrap))
+        title_pos = (50, 1700)
+
+        _, text_height = d.textsize(titulo_wrap, font=fnt_title)
+        fnt_edicao = ImageFont.truetype(font_name, title_size // 3)
+        d.text(
+            (title_pos[0], title_pos[1] + text_height + 10),
+            "edição comentada",
+            fill="darkgray",
+            font=fnt_edicao,
+        )
+
+        assinatura = "Machado de Assis"
+        fnt_assinatura = ImageFont.truetype(font_name, title_size // 2)
+        _, text_height = d.textsize(assinatura, font=fnt_assinatura)
+        d.text(
+            (title_pos[0], title_pos[1] - text_height + 20),
+            assinatura,
+            fill="lightgray",
+            font=fnt_assinatura,
+        )
+        this_color = colors[sum(ord(i) for i in titulo) % len(colors)]
+        d.text(title_pos, titulo_wrap, fill=this_color, font=fnt_title)
+
         nome = f"kindle/{titulo}.jpg"
         img.save(nome, subsampling=0, quality=100)
     return nome
+
+
+if __name__ == "__main__":
+    gera_capa()
