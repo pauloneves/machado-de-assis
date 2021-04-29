@@ -41,8 +41,12 @@ def ajusta_titulo_livro(livro):
     notas.name = "h2"
     del notas.attrs["align"]
 
-    section = livro.find("div", {"class": "section"})
-    del section.attrs["lang"]
+    secao = livro.find("div", {"class": "section"})
+    ajusta_secao(secao)
+
+    preambulo = secao.find_next("div", {"class": "section"})
+    ajusta_secao(preambulo)
+    preambulo.p.name = "h2"
 
 
 def pg_break(b):
@@ -72,7 +76,8 @@ def ajusta_titulos_contos(livro: BeautifulSoup):
 
 
 def ajusta_secao(secao: BeautifulSoup, subsection=False):
-    del secao["lang"]
+    if "lang" in secao.attrs:
+        del secao.attrs["lang"]
     div_inicial = secao.parent.parent.parent.parent
     if div_inicial:
         div_inicial.replace_with(secao)
@@ -425,7 +430,8 @@ def palavra_titulo(palavra: str) -> str:
     elif (
         len(palavra) <= 2
         and palavra not in ["Eu"]
-        or palavra in ["Sem", "das", "dos", "que", "quem"]
+        or palavra.lower()
+        in ["sem", "das", "dos", "que", "quem", "desta", "deste", "esta", "este"]
     ):
         return palavra.lower()
 
@@ -466,8 +472,8 @@ if __name__ == "__main__":
     arquivos = map(
         Path,
         [
-            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm",
-            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Historiassemdata.htm",
+            #            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm",
+            #           "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Historiassemdata.htm",
             "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_variashistorias.htm",
         ],
     )
