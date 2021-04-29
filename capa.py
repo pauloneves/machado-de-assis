@@ -27,6 +27,7 @@ import textwrap
 from PIL import Image, ImageDraw, ImageEnhance, ImageFont, ImageOps
 
 colors = [
+    "#c0fefc",
     "#96ceb4",
     "#ffeead",
     "#ff6f69",
@@ -39,7 +40,7 @@ def gera_capa(titulo="Várias histórias"):
     # d8223a
     # Yeseva One
     # 140
-    wrap = 10
+    wrap = 9
     title_size = 260  # 210
 
     if len(titulo) > 25:
