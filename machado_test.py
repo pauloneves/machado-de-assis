@@ -391,3 +391,6 @@ def test_capitaliza_soup():
     assert book("<p>A Bela <script>a feia</script>") == machado.capitaliza_soup(
         book("<p>a bela <script>a feia</script>")
     )
+    assert book("<h3><b>IV</b> <b>Allegro</i></h3>") == machado.capitaliza_soup(
+        book("<h3><b>iv</b> <b>allegro</i></h3>")
+    )
