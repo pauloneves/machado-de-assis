@@ -15,6 +15,10 @@ import capa
 nonAdjustableSpace = "\u2005"
 
 
+class ErroFormatacao(RuntimeError):
+    pass
+
+
 def get_livro(filename="livros/Papéis avulsos_files/tx_Papeisavulsos.html"):
     with open(filename, encoding="cp1252") as f:
         tudo = f.read()
@@ -29,6 +33,17 @@ def find_titulo_contos(text):
 
 def get_nome_livro(livro) -> str:
     return capitaliza(livro.title.string)
+
+
+def limpa_h2(livro):
+    return
+    for h2 in livro.find_all("h2"):
+        while True:
+            n = h2.next_sibling
+            if n.string:
+                n.extract()
+            else:
+                break
 
 
 def ajusta_titulo_livro(livro):
@@ -86,6 +101,9 @@ def ajusta_secao(secao: BeautifulSoup, subsection=False):
 
 
 def ajusta_titulos_capitulos(livro: BeautifulSoup):
+    def nao_fecha_p_capitulo(p):
+        return len(p) > 2 and p[1].p
+
     for secao in livro.find_all("div", {"class": "section"}):
         p = secao.find_all("p")
         # capítulo começa com 2 parágrafos centralizados
@@ -95,6 +113,11 @@ def ajusta_titulos_capitulos(livro: BeautifulSoup):
             # and p[1].attrs.get("align") == "center"
         ):
             ajusta_secao(secao, subsection=True)
+
+            if nao_fecha_p_capitulo(p):
+                raise ErroFormatacao(
+                    f"Erro! Não fecha tag <p> no capítulo '{p[0].text}'"
+                )
 
             h3 = livro.new_tag("h3")
             h3.append(p[0].b)
@@ -233,6 +256,7 @@ def ajusta_titulos(livro):
     ajusta_titulo_livro(livro)
     ajusta_titulos_contos(livro)
     ajusta_titulos_capitulos(livro)
+    limpa_h2(livro)
 
 
 def valida_estrutura(livro):
@@ -460,7 +484,7 @@ def capitaliza_soup(soup: Tag, primeiro=True) -> Tag:
                 primeiro = False
 
             el.replace_with(txt)
-        else:
+        elif not isinstance(el, Comment):
             capitaliza_soup(el, primeiro)
     return soup
 
@@ -472,13 +496,17 @@ if __name__ == "__main__":
     arquivos = map(
         Path,
         [
-            #            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm",
-            #           "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Historiassemdata.htm",
-            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_variashistorias.htm",
+            # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm",
+            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Historiassemdata.htm",
+            # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_variashistorias.htm",
         ],
     )
     for arq in arquivos:
-        if "ContosFluminense" in str(arq) or "quincasborbaaestacao" in str(arq):
+        if (
+            "ContosFluminense" in str(arq)
+            or "quincasborbaaestacao" in str(arq)
+            or "tx_contosavulsos" in str(arq)
+        ):
             continue
         try:
             print(f"§ Convertendo {arq}")

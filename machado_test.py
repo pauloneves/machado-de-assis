@@ -56,6 +56,7 @@ def test_ajusta_inicio_capitulos():
 
     <p align="center"><b>XIII</b></p> <br>
     <p align="center"><b><i><a href="#" id="mynewanchorOA74" onclick="return false;">Plus ultra</a></i>!</b>
+    </p>
 
     """
     )
@@ -134,6 +135,29 @@ def test_ajusta_inicio_capitulos_com_conto():
     machado.ajusta_titulos_capitulos(b)
     assert b.h3
     assert len(b.find_all("h3")) == 1
+
+
+def test_ajusta_inicio_capitulos_nao_fecha_paragrafo():
+    b = book(
+        """
+        <div class="espacoToptHTX"><a name="OAXIII">&nbsp;</a></div>
+
+    <div id="shadow-container">
+            <div class="shadow1">
+                <div class="shadow2">
+                    <div class="shadow3">
+                        <div class="section" lang="de">
+    <!-- Inicio CAPITULO XIII -->
+
+    <p align="center"><b>XIII</b></p> <br>
+    <p align="center"><b><i><a href="#" id="mynewanchorOA74" onclick="return false;">Plus ultra</a></i>!</b>
+    
+    <p>não fecha parágrafo anterior</p>
+
+    """
+    )
+    with pytest.raises(machado.ErroFormatacao):
+        machado.ajusta_titulos_capitulos(b)
 
 
 def test_ajusta_titulos_ordem_correta():
