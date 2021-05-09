@@ -36,16 +36,14 @@ colors = [
 ]
 
 
-def gera_capa(titulo="Várias histórias"):
+def gera_capa(titulo="Várias histórias", wrap=9, title_size=260):
     # d8223a
     # Yeseva One
     # 140
-    wrap = 9
-    title_size = 260  # 210
-
-    if len(titulo) > 25:
+    def decrease_text(wrap, title_size):
         wrap = round(1.25 * wrap)
         title_size = round(title_size // 1.25)
+        return wrap, title_size
 
     with Image.open("capa/capa-template.jpg") as img:
         # img = img.convert("L")
@@ -60,10 +58,14 @@ def gera_capa(titulo="Várias histórias"):
         )
         title_pos = (50, 1700)
 
-        _, text_height = d.textsize(titulo_wrap, font=fnt_title)
+        text_width, text_height = d.textsize(titulo_wrap, font=fnt_title)
+        if text_width + title_pos[0] > 1600 or text_height + title_pos[1] > 2500:
+            wrap, title_size = decrease_text(wrap, title_size)
+            return gera_capa(titulo, wrap, title_size)
+
         fnt_edicao = ImageFont.truetype(font_name, title_size // 3)
         d.text(
-            (title_pos[0] + 2, title_pos[1] + text_height + 10),
+            (title_pos[0] + 15, title_pos[1] + text_height + 20),
             "edição comentada",
             fill="darkgray",
             font=fnt_edicao,
@@ -73,7 +75,7 @@ def gera_capa(titulo="Várias histórias"):
         fnt_assinatura = ImageFont.truetype(font_name, title_size // 2)
         _, text_height = d.textsize(assinatura, font=fnt_assinatura)
         d.text(
-            (title_pos[0] + 2, title_pos[1] - text_height + 20),
+            (title_pos[0] + 15, title_pos[1] - text_height),
             assinatura,
             fill="lightgray",
             font=fnt_assinatura,
