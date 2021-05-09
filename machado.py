@@ -121,13 +121,14 @@ def ajusta_titulos_capitulos(livro: BeautifulSoup):
 
             h3 = livro.new_tag("h3")
             h3.append(p[0].b)
-            if p[1].attrs.get("align") == "center" and p[1].b is not None:
-                h3.append(livro.new_tag("br"))
-                h3.append(p[1].b)
 
             p[0].insert_before(capitaliza_soup(h3))
             p[0].decompose()
-            p[1].decompose()
+
+            if p[1].attrs.get("align") == "center" and p[1].b is not None:
+                h3.append(livro.new_tag("br"))
+                h3.append(p[1].b)
+                p[1].decompose()
 
 
 def parse_nota(nota: BeautifulSoup):
@@ -477,11 +478,11 @@ if __name__ == "__main__":
     arquivos0 = map(
         Path,
         [
+            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Historiassemdata.htm",
             "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_brascubas.htm",
             "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_paginasrecolhidas.htm",
             "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_historiasdameianoite.htm",
             "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm",
-            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Historiassemdata.htm",
             "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_variashistorias.htm",
         ],
     )
