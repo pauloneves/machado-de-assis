@@ -399,6 +399,7 @@ def test_capitaliza():
     assert "um" == machado.capitaliza("UM")
     assert "um Título e Outro" == machado.capitaliza("UM TÍTULO E OUTRO")
     assert "" == machado.capitaliza("")
+    assert "XLII" == machado.capitaliza("Xlii")
 
 
 def test_capitaliza_soup():

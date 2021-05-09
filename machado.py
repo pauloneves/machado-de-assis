@@ -425,31 +425,12 @@ def faz_correcoes_gerais(text) -> str:
     return text
 
 
+roman_RE = re.compile(r"[IVXLC]+\b")
+
+
 def palavra_titulo(palavra: str) -> str:
 
-    if palavra.upper() in (
-        "I",
-        "II",
-        "III",
-        "IV",
-        "V",
-        "VI",
-        "VII",
-        "VIII",
-        "IX",
-        "X",
-        "XI",
-        "XII",
-        "XIII",
-        "XIV",
-        "XV",
-        "XVI",
-        "XVII",
-        "XVIII",
-        "XIX",
-        "XX",
-        "XX",
-    ):
+    if roman_RE.match(palavra.upper()):
         return palavra.upper()
     elif (
         len(palavra) <= 2
@@ -493,7 +474,7 @@ if __name__ == "__main__":
     arquivos = Path("livros/www.machadodeassis.net/hiperTx_romances/obras/").glob(
         "tx_*htm"
     )
-    arquivos = map(
+    arquivos0 = map(
         Path,
         [
             # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm",
