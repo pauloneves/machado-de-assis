@@ -477,9 +477,10 @@ if __name__ == "__main__":
     arquivos0 = map(
         Path,
         [
-            # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm",
+            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_historiasdameianoite.htm",
+            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm",
             "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Historiassemdata.htm",
-            # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_variashistorias.htm",
+            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_variashistorias.htm",
         ],
     )
     for arq in arquivos:

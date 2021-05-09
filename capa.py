@@ -55,13 +55,15 @@ def gera_capa(titulo="Várias histórias"):
         font_name = "capa/YesevaOne-Regular.ttf"
         fnt_title = ImageFont.truetype(font_name, title_size)
         d = ImageDraw.Draw(img)
-        titulo_wrap = "\n".join(textwrap.wrap(titulo.upper(), wrap))
+        titulo_wrap = "\n".join(
+            textwrap.wrap(titulo.upper(), wrap, break_long_words=False)
+        )
         title_pos = (50, 1700)
 
         _, text_height = d.textsize(titulo_wrap, font=fnt_title)
         fnt_edicao = ImageFont.truetype(font_name, title_size // 3)
         d.text(
-            (title_pos[0], title_pos[1] + text_height + 10),
+            (title_pos[0] + 2, title_pos[1] + text_height + 10),
             "edição comentada",
             fill="darkgray",
             font=fnt_edicao,
@@ -71,7 +73,7 @@ def gera_capa(titulo="Várias histórias"):
         fnt_assinatura = ImageFont.truetype(font_name, title_size // 2)
         _, text_height = d.textsize(assinatura, font=fnt_assinatura)
         d.text(
-            (title_pos[0], title_pos[1] - text_height + 20),
+            (title_pos[0] + 2, title_pos[1] - text_height + 20),
             assinatura,
             fill="lightgray",
             font=fnt_assinatura,
