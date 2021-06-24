@@ -129,7 +129,12 @@ def ajusta_titulos_capitulos(livro: BeautifulSoup):
                 )
 
             h3 = livro.new_tag("h3")
-            h3.append(p[0].b)
+            if p[0].b.text == "CAPÍTULO PRIMEIRO":
+                cap_i = livro.new_tag("b")
+                cap_i.append("Capítulo I")
+                h3.append(cap_i)
+            else:
+                h3.append(p[0].b)
 
             p[0].insert_before(capitaliza_soup(h3))
             p[0].decompose()

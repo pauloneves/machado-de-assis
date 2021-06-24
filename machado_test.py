@@ -266,6 +266,35 @@ def test_ajusta_titulos_ordem_correta():
     assert b.h2.find_next("h3").text.startswith("Capítulo")
 
 
+def test_ajusta_titulos_capitulo_primeiro_em_romanos():
+    b = book(
+        """
+    <!-- ****************************************    O ALIENISTA  ***************************************************-->
+
+<div class="espacoToptHTX"><a name="OAI">&nbsp;</a></div>
+
+
+<div id="shadow-container">
+		<div class="shadow1">
+			<div class="shadow2">
+				<div class="shadow3">
+				  <div class="section" lang="de">
+<!-- Inicio CAPITULO I -->
+
+<p align="center"><b>O ALIENISTA <a href="#" id="mynewanchorOA*" onclick="return false;"> * </a></b>
+
+</p> <br>
+<p align="center"><b>CAPÍTULO PRIMEIRO</b> </p> <br>
+<p align="center"><b>De como <a href="#" id="mynewanchorOA1" onclick="return false;">Itaguaí</a> ganhou uma casa de orates</b>
+
+"""
+    )
+    machado.ajusta_titulos_contos(b)
+    machado.ajusta_titulos_capitulos(b)
+
+    assert b.h2.find_next("h3").text.startswith("Capítulo I")
+
+
 def test_parse_nota():
     nota = BeautifulSoup(
         """<script type="text/javascript">
