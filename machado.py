@@ -32,7 +32,7 @@ def find_titulo_contos(text):
 
 
 def get_nome_livro(livro) -> str:
-    return capitaliza(livro.title.string)
+    return capitaliza(livro.title.text)
 
 
 def limpa_h2(livro):
@@ -80,7 +80,8 @@ def ajusta_titulos_contos(livro: BeautifulSoup):
 
         header = capitaliza_soup(titulo.find_next("p"))
         header.name = "h2"
-        del header.attrs["align"]
+        if "align" in header.attrs:
+            del header.attrs["align"]
         if header:
             sup = list(secao.parents)[-1].new_tag("sup")
             a = header.find(lambda tag: tag.name == "a" and "*" in tag.string)
@@ -452,7 +453,30 @@ def palavra_titulo(palavra: str) -> str:
         len(palavra) <= 2
         and palavra not in ["Eu"]
         or palavra.lower()
-        in ["sem", "das", "dos", "que", "quem", "desta", "deste", "esta", "este"]
+        in [
+            "ante",
+            "após",
+            "até",
+            "com",
+            "contra",
+            "das",
+            "desde",
+            "desta",
+            "deste",
+            "dos",
+            "entre",
+            "esta",
+            "este",
+            "para",
+            "por",
+            "que",
+            "quem",
+            "sem",
+            "sem",
+            "sob",
+            "sobre",
+            "trás",
+        ]
     ):
         return palavra.lower()
 
@@ -499,25 +523,19 @@ if __name__ == "__main__":
             # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_historiasdameianoite.htm",
             # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm",
             # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_variashistorias.htm",
-            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_reliquiasdecasavelha.htm",
+            # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_reliquiasdecasavelha.htm",
+            # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_quincasborbaaestacao.htm",
+            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_ContosFluminense.htm",
         ],
     )
     falhas = []
     for arq in arquivos:
-        if (
-            "ContosFluminense" in str(arq)
-            or "quincasborbaaestacao" in str(arq)
-            or "tx_contosavulsos.htm" in str(arq)
-        ):
-            pass  # continue
         try:
             print(f"§ Convertendo {arq}")
             processa(arq)
-        except AssertionError as e:
-            print(f"asserção {arq}, {e}")
+        except (AssertionError, Exception) as e:
+            print(f"falha {arq}, {e}")
             falhas.append(arq)
-        except Exception as e:
-            print(f"falhou {arq}, {e}")
-            falhas.append(arq)
+            raise
     print("*" * 50)
     print(falhas)
