@@ -92,6 +92,7 @@ def ajusta_titulos_contos(livro: BeautifulSoup):
             while prox is not None and (
                 prox.name == "br"
                 or (prox.string is not None and prox.string.strip() == "")
+                or (prox.string is None and prox.text.strip() == "")
             ):
                 prox.extract()
                 prox = header.next_sibling
@@ -134,8 +135,9 @@ def ajusta_titulos_capitulos(livro: BeautifulSoup):
             p[0].decompose()
 
             if p[1].attrs.get("align") == "center" and p[1].b is not None:
-                h3.append(livro.new_tag("br"))
-                h3.append(p[1].b)
+                if p[1].b.text.strip():
+                    h3.append(livro.new_tag("br"))
+                    h3.append(p[1].b)
                 p[1].decompose()
 
 
@@ -483,7 +485,7 @@ if __name__ == "__main__":
     arquivos = Path("livros/www.machadodeassis.net/hiperTx_romances/obras/").glob(
         "tx_*htm"
     )
-    arquivos = map(
+    arquivos0 = map(
         Path,
         [
             # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Historiassemdata.htm",

@@ -73,13 +73,13 @@ p.noindent {
   text-indent: 0;
 }
 
-/* quebra com as tabelas
-p:not([align]):first-of-type::first-letter {
+/* quebra com as tabelas*/
+h2 + p:not([align]):first-of-type::first-letter {
   font-size: 2em;
   font-weight: bold;
   float: left;
 }
-*/
+
 p {
   text-indent: 0.7em;
   margin: 0;

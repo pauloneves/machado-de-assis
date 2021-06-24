@@ -1,3 +1,5 @@
+#!/bin/env py.test
+
 import machado
 import pytest
 from bs4 import BeautifulSoup
@@ -80,11 +82,38 @@ def test_ajusta_titulo_contos_retira_br():
     )
 
     machado.ajusta_titulos_contos(b)
-    print(b)
     assert b.h2
     br = b.find("br")
     assert br is None
     assert "início texto" == b.h2.next_sibling.string
+
+
+def test_ajusta_inicio_contos_nao_cria_capitulo_vazio():
+    b = book(
+        """
+<!-- *********************************** xxxx  ****************************************************** -->
+<div class="espacoToptHTX"><a name="EVO">&nbsp;</a></div>
+
+
+<div id="shadow-container">
+		<div class="shadow1">
+			<div class="shadow2">
+				<div class="shadow3">
+				  <div class="section"  lang=de>
+<!-- Inicio CAPITULO I -->
+
+<p align="center"><b>Evolução <a href="#" id="mynewanchorEVO*" onclick="return false;"> * </a></b>
+ </p> <br>
+
+<p align="center"><b></b></p> <br>  <BR>
+
+<p>Chamo...
+    """
+    )
+
+    machado.ajusta_titulos_contos(b)
+    assert b.h2
+    assert 1 == len(b.find_all("b")), "Deve eliminar segundo <b>"
 
 
 def test_ajusta_inicio_capitulos():
