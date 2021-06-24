@@ -27,12 +27,13 @@ import textwrap
 from PIL import Image, ImageDraw, ImageEnhance, ImageFont, ImageOps
 
 colors = [
-    "#c0fefc",
-    "#96ceb4",
-    "#ffeead",
-    "#ff6f69",
-    "#ffcc5c",
-    "#88d8b0",
+    "#46bcde",
+    "#52d273",
+    "#e94f64",
+    "#e57254",
+    "#e5c454",
+    "#ffb901",
+    "#e75064",
 ]
 
 

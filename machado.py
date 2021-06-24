@@ -502,15 +502,22 @@ if __name__ == "__main__":
             "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_reliquiasdecasavelha.htm",
         ],
     )
+    falhas = []
     for arq in arquivos:
         if (
             "ContosFluminense" in str(arq)
             or "quincasborbaaestacao" in str(arq)
-            or "tx_contosavulsos" in str(arq)
+            or "tx_contosavulsos.htm" in str(arq)
         ):
-            continue
+            pass  # continue
         try:
             print(f"§ Convertendo {arq}")
             processa(arq)
         except AssertionError as e:
+            print(f"asserção {arq}, {e}")
+            falhas.append(arq)
+        except Exception as e:
             print(f"falhou {arq}, {e}")
+            falhas.append(arq)
+    print("*" * 50)
+    print(falhas)
