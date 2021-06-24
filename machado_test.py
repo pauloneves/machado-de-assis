@@ -42,6 +42,51 @@ def test_ajusta_titulo_contos():
     assert b.h2.sup.string == "*", "tem que transformar o * em <sup>*</sup>"
 
 
+def test_ajusta_titulo_contos_retira_br():
+    b = book(
+        """<!-- *********************************** O EMPRESTIMO  ****************************************************** -->
+
+
+<div class="'espacoToptHTX'"><a name="OEI">&nbsp;</a></div>
+
+
+<div id="shadow-container">
+		<div class="shadow1">
+			<div class="shadow2">
+				<div class="shadow3">
+				  <div class="section" lang="de">
+<!-- Inicio CAPITULO I -->
+
+
+<p align="center"><b>O EMPRÉSTIMO <a href="#" id="mynewanchorOE*" onclick="return false;"> * </a></b>
+
+<script type="text/javascript">
+	new HelpBalloon({
+		title: ' * ',
+		content: 'O conto foi publicado pela primeira vez neste volume e, segundo J. Galante de Sousa, é provável que tenha sido composto antes de março de 1905, data da assinatura do contrato de edição do livro, com H. Garnier.',
+		icon: $('mynewanchorPCM*'),
+		useEvent: ['mouseover'],
+        anchorPosition: 'top left',
+		iconStyle: {
+			'cursor': 'pointer',
+			'verticalAlign': 'middle'
+		}
+	});
+</script>
+</p> <br>
+
+<p>início texto</p>
+"""
+    )
+
+    machado.ajusta_titulos_contos(b)
+    print(b)
+    assert b.h2
+    br = b.find("br")
+    assert br is None
+    assert "início texto" == b.h2.next_sibling.string
+
+
 def test_ajusta_inicio_capitulos():
     b = book(
         """

@@ -6,16 +6,22 @@
 
 h1 {
   text-align: left;
+  font-size: 300%;
 }
 
 h2 {
   text-align: left;
   font-weight: 200;
+  font-size: 200%;
+  margin-bottom: 50%;
+  page-break-before: always;
 }
 
 h3 {
-  text-align: center;
+  text-align: left;
   font-weight: 150;
+  font-variant: small-caps;
+  text-transform: uppercase;
 }
 
 ol {
@@ -24,6 +30,10 @@ ol {
 
 ol > li:first-child {
   margin-top: 0.3em;
+}
+
+nav > h2 {
+  margin-bottom: 2em ;
 }
 
 nav[epub|type~="toc"] > ol > li > ol {
@@ -75,10 +85,6 @@ p {
   margin: 0;
 }
 
-h3 + br,
-h3 + br + br {
-  display: none;
-}
 
 a {
   text-decoration: none !important;

@@ -14,4 +14,5 @@
     "[html]": {
         "files.encoding": "windows1252"
     },
+    "python.pythonPath": "bin/python",
 }

@@ -87,6 +87,14 @@ def ajusta_titulos_contos(livro: BeautifulSoup):
             if a:
                 a.wrap(sup)
                 a.string = "*"  # tira espaços
+
+            prox = header.next_sibling
+            while prox is not None and (
+                prox.name == "br"
+                or (prox.string is not None and prox.string.strip() == "")
+            ):
+                prox.extract()
+                prox = header.next_sibling
         secao.insert_before(pg_break(livro))
 
 
@@ -179,13 +187,13 @@ def append_notas(livro: BeautifulSoup, notas: dict):
     for nota, texto in notas.items():
         # note = livro.new_tag("p")
         aside = livro.new_tag("aside", id=nota, **{"epub:type": "footnote"})
-        aside.append("● ")
-        aside.append(BeautifulSoup(texto, "html.parser"))
 
         refback = livro.new_tag("a", href=link_back_nota(nota, livro))
-
-        refback.append(" ☚ ")
+        refback.append("☛ ")
         aside.append(refback)
+
+        aside.append(BeautifulSoup(texto, "html.parser"))
+
         # section.append(note)
         section.append(aside)
     livro.body.append(section)
@@ -475,15 +483,16 @@ if __name__ == "__main__":
     arquivos = Path("livros/www.machadodeassis.net/hiperTx_romances/obras/").glob(
         "tx_*htm"
     )
-    arquivos0 = map(
+    arquivos = map(
         Path,
         [
-            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Historiassemdata.htm",
-            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_brascubas.htm",
-            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_paginasrecolhidas.htm",
-            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_historiasdameianoite.htm",
-            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm",
-            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_variashistorias.htm",
+            # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Historiassemdata.htm",
+            # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_brascubas.htm",
+            # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_paginasrecolhidas.htm",
+            # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_historiasdameianoite.htm",
+            # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm",
+            # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_variashistorias.htm",
+            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_reliquiasdecasavelha.htm",
         ],
     )
     for arq in arquivos:
