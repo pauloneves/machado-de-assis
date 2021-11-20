@@ -9,7 +9,7 @@ lib64
 *.pyi
 *.cpython*
 kindle
-!kindle/*.epub
+!./kindle/*.epub
 Scripts
 livros/samples/
 livro_alterado*.html
