@@ -13,11 +13,11 @@
 - [ ] Advertência duplicado
 - [ ] Nomes de capítulos em maiúsculas
 - [ ] nota linkada de *, o * tem que ter <sup>*</sup>
-- [ ] commitar livros formatados
-- [ ] formatar para kindle usando o previewer
-- [ ] fru fru na formatação
+- [x] commitar livros formatados
+- [x] formatar para kindle usando o previewer
+- [x] fru fru na formatação
 - [c] tirar sublinhado toc
-- [ ] fazer capa
+- [x] fazer capa
 - [ ] fazer código específico para cada livro separado
 - [x] capítulo 0, advertência, está sumido
 - [x] subseções na toc
@@ -34,4 +34,5 @@
 
 ## Publicação final
 
+- Usar Kindle Previewer para exportar arquivos
 - usar Calibre e exportar para KFX
