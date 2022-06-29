@@ -8,10 +8,10 @@ lib64
 *.pyc
 *.pyi
 *.cpython*
-kindle
-!./kindle/*.epub
-!./kindle/*.kfx
 Scripts
 livros/samples/
 livro_alterado*.html
 .venv/pyvenv.cfg
+kindle/*
+!*.epub
+!*.kfx
