@@ -10,6 +10,8 @@ lib64
 *.cpython*
 kindle
 !./kindle/*.epub
+!./kindle/*.kfx
 Scripts
 livros/samples/
 livro_alterado*.html
+.venv/pyvenv.cfg

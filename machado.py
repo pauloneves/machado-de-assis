@@ -386,7 +386,9 @@ def limpa_titulo(titulo_tag: Tag) -> str:
 
 def processa(arq):
     livro = processa_livro(arq)
-    with open(f"kindle/livro_alterado_{get_nome_livro(livro)}.html", "w") as file:
+    with open(
+        f"kindle/livro_alterado_{get_nome_livro(livro)}.html", "w", encoding="utf8"
+    ) as file:
         file.write(livro.prettify())
     valida_estrutura(livro)
     gera_ebook(livro)
@@ -514,18 +516,18 @@ if __name__ == "__main__":
     arquivos = Path("livros/www.machadodeassis.net/hiperTx_romances/obras/").glob(
         "tx_*htm"
     )
-    arquivos0 = map(
+    arquivos = map(
         Path,
         [
             # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Historiassemdata.htm",
             # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_brascubas.htm",
             # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_paginasrecolhidas.htm",
             # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_historiasdameianoite.htm",
-            # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm",
+            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm",
             # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_variashistorias.htm",
             # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_reliquiasdecasavelha.htm",
             # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_quincasborbaaestacao.htm",
-            "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_ContosFluminense.htm",
+            # "livros/www.machadodeassis.net/hiperTx_romances/obras/tx_ContosFluminense.htm",
         ],
     )
     falhas = []
