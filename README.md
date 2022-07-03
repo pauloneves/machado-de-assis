@@ -36,3 +36,9 @@
 
 - Usar Kindle Previewer para exportar arquivos
 - usar Calibre e exportar para KFX
+
+
+## Referências
+
+- [Manual of Linotype Typography](https://archive.org/details/manualoflinotype00merg/page/n5/mode/1up?view=theater)
+- [The art & practice of typography : a manual of American printing](https://archive.org/details/artpracticeoftyp00gres)

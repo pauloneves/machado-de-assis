@@ -1,5 +1,6 @@
 #!/bin/env python
 
+
 import locale
 
 locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
@@ -28,7 +29,12 @@ def get_livro(filename="livros/Papéis avulsos_files/tx_Papeisavulsos.html"):
 
 
 def find_titulo_contos(text):
-    return isinstance(text, Comment) and text.strip().startswith("*******")
+    # O problema é que não dá para diferenciar pelas tags html
+    # o início do conto do início do capítulo. Ambos são div e class section
+    # precio pegar o compentário antes para achar
+    return isinstance(text, Comment) and (
+        text.strip().startswith("*******") or "CAPITULO 0" in text
+    )
 
 
 def get_nome_livro(livro) -> str:
@@ -47,21 +53,19 @@ def limpa_h2(livro):
 
 
 def ajusta_titulo_livro(livro):
-    p = capitaliza_soup(livro.find("p"))
-    p.name = "h1"
-    del p.attrs["align"]
-    autor = p.find_next("p")
-    del autor.attrs["align"]
-    notas = autor.find_next("p")
-    notas.name = "h2"
-    del notas.attrs["align"]
+    # primeiro parágrafo é o título do livro
+    titulo = capitaliza_soup(livro.find("p"))
+    titulo.name = "h1"
+    del titulo.attrs["align"]
 
-    secao = livro.find("div", {"class": "section"})
-    ajusta_secao(secao)
+    autor = titulo.find_next("p")
+    assert autor is not None
+    del autor.attrs["align"]  # type: ignore
 
-    preambulo = secao.find_next("div", {"class": "section"})
-    ajusta_secao(preambulo)
-    preambulo.p.name = "h2"
+    autor.extract()
+    livro.body.insert(0, autor)
+    titulo.extract()
+    livro.body.insert(0, titulo)
 
 
 def pg_break(b):
@@ -75,7 +79,10 @@ def ajusta_titulos_contos(livro: BeautifulSoup):
     comentarios_titulo = livro.find_all(text=find_titulo_contos)
 
     for titulo in comentarios_titulo:
-        secao = titulo.find_next("div", {"class": "section"})
+        if "CAPITULO 0" in titulo:
+            secao = titulo.find_previous("div", {"class": "section"})
+        else:
+            secao = titulo.find_next("div", {"class": "section"})
         ajusta_secao(secao)
 
         header = capitaliza_soup(titulo.find_next("p"))
@@ -84,16 +91,17 @@ def ajusta_titulos_contos(livro: BeautifulSoup):
             del header.attrs["align"]
         if header:
             sup = list(secao.parents)[-1].new_tag("sup")
-            a = header.find(lambda tag: tag.name == "a" and "*" in tag.string)
+            a = header.find(lambda tag: tag.name == "a" and "*" in tag.string)  # type: ignore
             if a:
                 a.wrap(sup)
-                a.string = "*"  # tira espaços
+                # tira espaços
+                a.string = "*"  # type: ignore
 
             prox = header.next_sibling
             while prox is not None and (
-                prox.name == "br"
-                or (prox.string is not None and prox.string.strip() == "")
-                or (prox.string is None and prox.text.strip() == "")
+                prox.name == "br"  # type: ignore
+                or (prox.string is not None and prox.string.strip() == "")  # type: ignore
+                or (prox.string is None and prox.text.strip() == "")  # type: ignore
             ):
                 prox.extract()
                 prox = header.next_sibling
@@ -103,7 +111,7 @@ def ajusta_titulos_contos(livro: BeautifulSoup):
 def ajusta_secao(secao: BeautifulSoup, subsection=False):
     if "lang" in secao.attrs:
         del secao.attrs["lang"]
-    div_inicial = secao.parent.parent.parent.parent
+    div_inicial = secao.parent.parent.parent.parent  # type: ignore
     if div_inicial:
         div_inicial.replace_with(secao)
         if subsection:
@@ -148,8 +156,8 @@ def ajusta_titulos_capitulos(livro: BeautifulSoup):
 
 
 def parse_nota(nota: BeautifulSoup):
-    id_ = re.search(r"icon: \$\('([^']+)", nota.string).group(1)
-    texto = re.search(r"content: '([^']+)", nota.string).group(1)
+    id_ = re.search(r"icon: \$\('([^']+)", nota.string).group(1)  # type: ignore
+    texto = re.search(r"content: '([^']+)", nota.string).group(1)  # type: ignore
     return id_, texto
 
 
@@ -187,10 +195,12 @@ def link_back_nota(nota, livro) -> str:
 
 def append_notas(livro: BeautifulSoup, notas: dict):
     section = livro.new_tag("div")
-    section.attrs["class"] = ["section"]
+    # abaixo tem que atribuir lista
+    section.attrs["class"] = ["section"]  # type: ignore
     h2 = livro.new_tag("h2")
     h2.append("Notas")
     section.append(h2)
+    assert livro.body is not None
     livro.body.append(pg_break(livro))
     for nota, texto in notas.items():
         # note = livro.new_tag("p")
@@ -234,33 +244,14 @@ def prepara_toc(livro):
     return toc
 
 
-def cria_toc(livro, nome_arq):
-    toc = prepara_toc(livro)
-
-    toc_div = livro.new_tag("div", id="toc")
-    for ref, titulo, sub_capitulos in toc:
-        capitulo = toc_div.new_tag("a", href=f"#{ref}")
-        capitulo.append(titulo)
-        toc_div.append(capitulo)
-
-        for sub_ref, sub_titulo in sub_capitulos:
-            sub_capitulo = toc_div.new_tag("a", href=f"#{sub_ref}")
-            sub_capitulo.append(sub_titulo)
-            toc_div.append(sub_capitulo)
-
-    livro.body.insert(0, toc_div)
-
-    h2 = livro.new_tag("h2")
-    h2.append("Índice")
-    livro.body.insert(0, h2)
-
-
 def limpa_scripts(livro):
     for script in livro.find_all("script"):
         script.decompose()
 
 
-def processa_livro(filename="livros/Papéis avulsos_files/tx_Papeisavulsos.html"):
+def processa_livro(
+    filename="livros/www.machadodeassis.net/hiperTx_romances/obras/tx_Papeisavulsos.htm",
+):
     livro = get_livro(filename)
     ajusta_titulos(livro)
     reorganiza_notas(livro)
@@ -290,7 +281,6 @@ def get_capitulo_filename(header) -> str:
 def gera_ebook(livro):
     titulo = get_nome_livro(livro)
     book = epub.EpubBook()
-    book.set_identifier("22061970ni")
     book.set_title(titulo)
     book.set_language("pt")
     book.add_author("Machado de Assis")
@@ -319,6 +309,7 @@ def gera_ebook(livro):
     for section in livro.find_all("div", {"class": ["section", "subsection"]}):
         if section.attrs["class"] == ["section"]:
             if content:
+                assert capitulo is not None
                 capitulo.set_content(faz_correcoes_gerais(content))
                 content = ""
 
@@ -347,7 +338,7 @@ def gera_ebook(livro):
                 )
                 toc[-1][1].append(
                     epub.Link(
-                        href=f"{capitulo.file_name}#{first_id}",
+                        href=f"{capitulo.file_name}#{first_id}",  # type: ignore
                         title=primeiro_capitulo,
                         uid="",
                     )
@@ -355,12 +346,12 @@ def gera_ebook(livro):
 
             toc[-1][1].append(
                 epub.Link(
-                    href=f"{capitulo.file_name}#{h3_id}",
+                    href=f"{capitulo.file_name}#{h3_id}",  # type: ignore
                     title=extrai_subtitulo(section.h3),
                     uid="",
                 )
             )
-    capitulo.set_content(faz_correcoes_gerais(content))
+    capitulo.set_content(faz_correcoes_gerais(content))  # type: ignore
 
     book.toc = toc
 
@@ -380,7 +371,7 @@ def gera_ebook(livro):
 def limpa_titulo(titulo_tag: Tag) -> str:
     titulo = capitaliza_soup(titulo_tag).text.strip(" \n*'$")
     if "FASE" in titulo:
-        titulo = re.search(r"(.*FASE[- ()0-9]+)", titulo).group(1)
+        titulo = re.search(r"(.*FASE[- ()0-9]+)", titulo).group(1)  # type: ignore
     return titulo
 
 
@@ -498,7 +489,7 @@ def capitaliza(text: str) -> str:
 
 def capitaliza_soup(soup: Tag, primeiro=True) -> Tag:
     for el in soup.contents:
-        if el.name == "script":
+        if el.name == "script":  # type: ignore
             continue
         if type(el) is NavigableString:
             txt = capitaliza(str(el))
@@ -508,7 +499,7 @@ def capitaliza_soup(soup: Tag, primeiro=True) -> Tag:
 
             el.replace_with(txt)
         elif not isinstance(el, Comment):
-            capitaliza_soup(el, primeiro)
+            capitaliza_soup(el, primeiro)  # type: ignore
     return soup
 
 

@@ -7,7 +7,9 @@ from bs4 import BeautifulSoup
 
 @pytest.fixture
 def livro():
-    return machado.get_livro("livros/Papéis avulsos_files/tx_Papeisavulsos.html")
+    return machado.get_livro(
+        r"livros\www.machadodeassis.net\hiperTx_romances\obras\tx_Papeisavulsos.htm"
+    )
 
 
 def book(txt):
@@ -39,9 +41,39 @@ def test_ajusta_titulo_contos():
     assert b.h2, "títulos dos contos deveriam ser substituídos por H2"
     assert b.h2.text.lower().startswith("o empréstimo")
     secao = b.find("div", {"class": "section"})
-    assert secao.previous_sibling.name.startswith("mpb")
-    assert not b.find_all(lambda tag: "lang" in tag.attrs)
+    assert secao is not None
+    assert secao.previous_sibling.name.startswith("mpb")  # type: ignore
+    assert not b.find_all(lambda tag: "lang" in tag.attrs)  # type: ignore
+    assert b.h2.sup is not None
     assert b.h2.sup.string == "*", "tem que transformar o * em <sup>*</sup>"
+
+
+def test_ajusta_titulo_contos_preambulo():
+    b = book(
+        """
+<div class="'espacoToptHTX'"><a name="OEI">&nbsp;</a></div>
+
+
+<div id="shadow-container">
+		<div class="shadow1">
+			<div class="shadow2">
+				<div class="shadow3">
+				  <div class="section" lang="de">
+<!-- Inicio CAPITULO 0 -->
+
+
+<p align="center"><b>O EMPRÉSTIMO <a href="#" id="mynewanchorOE*" onclick="return false;"> * </a></b>
+"""
+    )
+
+    machado.ajusta_titulos_contos(b)
+    assert len(b.find_all("div")) == 2, "tem que remover divs"
+    assert b.h2, "títulos dos contos deveriam ser substituídos por H2"
+    assert b.h2.text.lower().startswith("o empréstimo")
+    secao = b.find("div", {"class": "section"})
+    assert secao is not None
+    assert secao.previous_sibling.name.startswith("mpb")  # type: ignore
+    assert not b.find_all(lambda tag: "lang" in tag.attrs)  # type: ignore
 
 
 def test_ajusta_titulo_contos_retira_br():
@@ -85,7 +117,7 @@ def test_ajusta_titulo_contos_retira_br():
     assert b.h2
     br = b.find("br")
     assert br is None
-    assert "início texto" == b.h2.next_sibling.string
+    assert "início texto" == b.h2.next_sibling.string  # type: ignore
 
 
 def test_ajusta_inicio_contos_nao_cria_capitulo_vazio():
@@ -141,7 +173,7 @@ def test_ajusta_inicio_capitulos():
     assert "plus ultra" in b.h3.text.lower()
     subsection = b.find("div", {"class": "subsection"})
     assert subsection
-    assert "lang" not in subsection.attrs
+    assert "lang" not in subsection.attrs  # type: ignore
 
 
 def test_ajusta_inicio_capitulos_somente_um_p_centralizado():
@@ -169,7 +201,7 @@ def test_ajusta_inicio_capitulos_somente_um_p_centralizado():
     assert "CAPÍTULO II" in b.h3.text.upper()
     subsection = b.find("div", {"class": "subsection"})
     assert subsection
-    assert "lang" not in subsection.attrs
+    assert "lang" not in subsection.attrs  # type: ignore
 
 
 def test_ajusta_inicio_capitulos_com_conto():
@@ -260,10 +292,11 @@ def test_ajusta_titulos_ordem_correta():
     machado.ajusta_titulos_contos(b)
     machado.ajusta_titulos_capitulos(b)
 
+    assert b.h2 is not None
     assert b.h2.text.startswith("O Alienista")
 
     assert b.h2.find_next("h3"), "h3 deve vir depois do h2"
-    assert b.h2.find_next("h3").text.startswith("Capítulo")
+    assert b.h2.find_next("h3").text.startswith("Capítulo")  # type: ignore
 
 
 def test_ajusta_titulos_capitulo_primeiro_em_romanos():
@@ -292,7 +325,7 @@ def test_ajusta_titulos_capitulo_primeiro_em_romanos():
     machado.ajusta_titulos_contos(b)
     machado.ajusta_titulos_capitulos(b)
 
-    assert b.h2.find_next("h3").text.startswith("Capítulo I")
+    assert b.h2.find_next("h3").text.startswith("Capítulo I")  # type: ignore
 
 
 def test_parse_nota():
@@ -327,14 +360,14 @@ def test_ajusta_referencia():
         '<a href="#" id="mynewanchorNTA1" onclick="return false;">texto</a>',
         "html.parser",
     ).find("a")
-    machado.ajusta_referencia(ref)
-    assert ref.attrs["href"].endswith("#mynewanchorNTA1"), ref
-    assert ref.text == "texto"
-    assert ref.attrs["id"] == "orig_mynewanchorNTA1"
+    machado.ajusta_referencia(ref)  # type: ignore
+    assert ref.attrs["href"].endswith("#mynewanchorNTA1"), ref  # type: ignore
+    assert ref.text == "texto"  # type: ignore
+    assert ref.attrs["id"] == "orig_mynewanchorNTA1"  # type: ignore
 
 
-def ajusta_todas_referencias():
-    b = machado.get_book(
+def test_ajusta_todas_referencias():
+    b = book(
         """
         <a href="#" id="mynewanchor1" onclick="return false;">texto1</a>"
         <a href="#" id="mynewanchor2" onclick="return false;">texto2</a>"
@@ -393,13 +426,14 @@ def test_cria_toc():
         assert "." in h3.attrs["id"]
 
 
-def test_ajusta_titulos(livro):
+def test_ajusta_titulos_tira_lang(livro):
     machado.ajusta_titulos(livro)
     assert (
         len(livro.find_all("div", lang="de")) == 0
     ), "todas seções com lang foram retiradas"
 
 
+@pytest.mark.lento
 def test_processa_livro():
     machado.processa_livro()
     assert True, "Nenhuma exceção foi disparada"
@@ -442,7 +476,7 @@ def test_ajusta_titulo_capitulo_terror():
 """
     )
     machado.ajusta_titulos_capitulos(b)
-    assert "Terror" in b.h3.get_text()
+    assert "Terror" in b.h3.get_text()  # type: ignore
 
 
 def test_substitui_travessao():
