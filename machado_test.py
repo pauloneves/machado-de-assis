@@ -556,3 +556,41 @@ def test_capitaliza_soup():
     assert book("<h3><b>IV</b> <b>Allegro</i></h3>") == machado.capitaliza_soup(
         book("<h3><b>iv</b> <b>allegro</i></h3>")
     )
+
+
+def test_limpa_titulo():
+    b = book(
+        """
+    <h2 id="5">
+        <b>
+        O Alienista
+        <sup>
+        <a epub:type="noteref" href="notas.html#mynewanchorOA*" id="orig_mynewanchorOA*">
+        *
+        </a>
+        </sup>
+        </b>
+    </h2>    """
+    )
+    assert "O Alienista" == machado.limpa_titulo(b)
+
+
+def test_limpa_titulo_com_subtitulo():
+    # estes subtítulos eu edito manualmente colocando a quebra de linha
+    b = book(
+        """
+    <h2 id="9">
+        <b>
+        D. Benedita
+        <sup>
+        <a epub:type="noteref" href="notas.html#mynewanchorDB*" id="orig_mynewanchorDB*">
+        *
+        </a>
+        </sup>
+        </b>    <br>
+        Um Retrato
+        </br>
+    </h2>
+    """
+    )
+    assert "D. Benedita" == machado.limpa_titulo(b, True)

@@ -4,6 +4,8 @@
 import locale
 
 locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
+
+import copy
 import re
 from pathlib import Path
 
@@ -322,7 +324,13 @@ def gera_ebook(livro):
             book.add_item(capitulo)
             capitulos.append(capitulo)
             toc.append(
-                [epub.Section(title=capitulo.title, href=capitulo.file_name), []]
+                [
+                    epub.Section(
+                        title=limpa_titulo(section.h2, True),
+                        href=capitulo.file_name,
+                    ),
+                    [],
+                ]
             )
             # não pode ter pretiffy que coloca espaços espúrios nos links
             content = str(section)
@@ -368,7 +376,13 @@ def gera_ebook(livro):
     epub.write_epub(f"kindle/{titulo}.epub", book)
 
 
-def limpa_titulo(titulo_tag: Tag) -> str:
+def limpa_titulo(titulo_tag: Tag, tira_subtitulo=False) -> str:
+    titulo_tag = copy.copy(titulo_tag)
+    if tira_subtitulo and titulo_tag.br:
+        while titulo_tag.br.next_sibling:
+            titulo_tag.br.next_sibling.extract()
+        titulo_tag.br.extract()
+
     titulo = capitaliza_soup(titulo_tag).text.strip(" \n*'$")
     if "FASE" in titulo:
         titulo = re.search(r"(.*FASE[- ()0-9]+)", titulo).group(1)  # type: ignore
@@ -439,7 +453,6 @@ roman_RE = re.compile(r"[IVXLC]+\b")
 
 
 def palavra_titulo(palavra: str) -> str:
-
     if roman_RE.match(palavra.upper()):
         return palavra.upper()
     elif (
