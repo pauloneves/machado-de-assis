@@ -355,7 +355,7 @@ def gera_ebook(livro):
             toc[-1][1].append(
                 epub.Link(
                     href=f"{capitulo.file_name}#{h3_id}",  # type: ignore
-                    title=extrai_subtitulo(section.h3),
+                    title=capitaliza(extrai_subtitulo(section.h3)),
                     uid="",
                 )
             )
@@ -492,8 +492,17 @@ def palavra_titulo(palavra: str) -> str:
 def capitaliza(text: str) -> str:
     text = text.title()
     s = []
+    apos_capitulo = False
     for i in text.split():
-        s.append(palavra_titulo(i))
+        pt = palavra_titulo(i)
+        if apos_capitulo:
+            s.append(i.upper())
+            apos_capitulo = False
+        else:
+            s.append(pt)
+        if pt == "Capítulo":
+            apos_capitulo = True
+
     final_text = " ".join(s)
     if text.endswith(" "):
         final_text += " "
